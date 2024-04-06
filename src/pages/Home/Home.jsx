@@ -5,6 +5,7 @@ import burgerBanner from "../../assets/burgerbanner.svg";
 import img1 from "../../assets/img1.svg";
 import img2 from "../../assets/img2.svg";
 import { KeyboardArrowRight } from "@mui/icons-material";
+import { Splide, SplideSlide } from "@splidejs/react-splide";
 
 const Home = () => {
   return (
@@ -54,46 +55,77 @@ const Home = () => {
             }}
           />
         </CenteredBox>
-        <CenteredBox
-          sx={{
-            width: "100%",
-            justifyContent: "space-between",
-            margin: "2em 0",
-          }}
-        >
-          {businesses.map((item) => (
-            <CenteredBox
-              sx={{ flexDirection: "column", cursor: "pointer" }}
-              key={item.id}
-            >
-              <img src={item.image} style={{ width: "12em" }} />
-              <Typography variant="body2" sx={{ fontSize: ".9rem" }}>
-                {item.name}
-              </Typography>
-            </CenteredBox>
-          ))}
-        </CenteredBox>
-        <CenteredBox sx={{ justifyContent: "space-between" }}>
-          {interests.map((item) => (
-            <CenteredBox
-              sx={{
-                borderRadius: "20px",
-                padding: ".8em 1em",
-                width: "30%",
-                flexDirection: "column",
-                backgroundColor: "#fff",
-                cursor: "pointer",
+        <Box sx={{ margin: "1em 0", overflowX: "hidden" }}>
+          <CenteredBox
+            sx={{
+              width: "100%",
+              justifyContent: "space-between",
+              margin: "2em 0",
+            }}
+          >
+            <Splide
+              options={{
+                perPage: 6,
+                arrows: false,
+                pagination: false,
+                drag: true,
               }}
-              key={item.id}
+              style={{ maxWidth: "100%", margin: "0 auto" }}
             >
-              <Box sx={{ width: "18em", borderRadius: "30px" }}>
-                <img src={item.image} alt="" style={{ width: "100%" }} />
-              </Box>
-              <Typography variant="body2" sx={{ fontSize: ".9rem" }}>
-                {item.text}
-              </Typography>
-            </CenteredBox>
-          ))}
+              {businesses.map((item) => (
+                <SplideSlide key={item.id}>
+                  <CenteredBox
+                    sx={{
+                      flexDirection: "column",
+                      cursor: "pointer",
+                      width: "12em",
+                    }}
+                  >
+                    <img src={item.image} style={{ width: "100%" }} />
+                    <Typography variant="body2" sx={{ fontSize: ".9rem" }}>
+                      {item.name}
+                    </Typography>
+                  </CenteredBox>
+                </SplideSlide>
+              ))}
+            </Splide>
+          </CenteredBox>
+        </Box>
+
+        <CenteredBox
+          sx={{ justifyContent: "space-between", overflowX: "hidden" }}
+        >
+          <Splide
+            options={{
+              perPage: 3,
+              arrows: false,
+              pagination: false,
+              drag: true,
+            }}
+            style={{ maxWidth: "100%", margin: "0 auto" }}
+          >
+            {interests.map((item) => (
+              <SplideSlide key={item.id}>
+                <CenteredBox
+                  sx={{
+                    borderRadius: "20px",
+                    padding: ".8em 1em",
+                    margin: "0 1em",
+                    flexDirection: "column",
+                    backgroundColor: "#fff",
+                    cursor: "pointer",
+                  }}
+                >
+                  <Box sx={{ width: "18em", borderRadius: "30px" }}>
+                    <img src={item.image} alt="" style={{ width: "100%" }} />
+                  </Box>
+                  <Typography variant="body2" sx={{ fontSize: ".9rem" }}>
+                    {item.text}
+                  </Typography>
+                </CenteredBox>
+              </SplideSlide>
+            ))}
+          </Splide>
         </CenteredBox>
       </Box>
     </Box>
@@ -126,6 +158,31 @@ const businesses = [
     name: "jame's cafe",
     image: img1,
   },
+  {
+    id: 6,
+    name: "jame's cafe",
+    image: img1,
+  },
+  {
+    id: 7,
+    name: "jame's cafe",
+    image: img1,
+  },
+  {
+    id: 8,
+    name: "jame's cafe",
+    image: img1,
+  },
+  {
+    id: 9,
+    name: "jame's cafe",
+    image: img1,
+  },
+  {
+    id: 10,
+    name: "jame's cafe",
+    image: img1,
+  },
 ];
 
 const interests = [
@@ -141,6 +198,41 @@ const interests = [
   },
   {
     id: 3,
+    text: "Capital Block is having an event this weekend that might interest you.",
+    image: img2,
+  },
+  {
+    id: 4,
+    text: "Capital Block is having an event this weekend that might interest you.",
+    image: img2,
+  },
+  {
+    id: 5,
+    text: "Capital Block is having an event this weekend that might interest you.",
+    image: img2,
+  },
+  {
+    id: 6,
+    text: "Capital Block is having an event this weekend that might interest you.",
+    image: img2,
+  },
+  {
+    id: 7,
+    text: "Capital Block is having an event this weekend that might interest you.",
+    image: img2,
+  },
+  {
+    id: 8,
+    text: "Capital Block is having an event this weekend that might interest you.",
+    image: img2,
+  },
+  {
+    id: 9,
+    text: "Capital Block is having an event this weekend that might interest you.",
+    image: img2,
+  },
+  {
+    id: 10,
     text: "Capital Block is having an event this weekend that might interest you.",
     image: img2,
   },
