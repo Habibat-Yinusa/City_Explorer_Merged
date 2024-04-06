@@ -14,7 +14,7 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import { CenteredBox } from "../styles/styled-components/styledBox";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
-import { Logout } from "@mui/icons-material";
+import { Chat, Logout } from "@mui/icons-material";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import TravelExploreIcon from "@mui/icons-material/TravelExplore";
 import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
@@ -22,6 +22,8 @@ import SearchIcon from "@mui/icons-material/Search";
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import logo from "../assets/logo.svg";
 import "@splidejs/react-splide/css";
+import { useDispatch } from "react-redux";
+import { UserActions } from "../store/user-slice";
 
 const drawerWidth = 240;
 
@@ -30,6 +32,7 @@ function Layout() {
   const [isClosing, setIsClosing] = React.useState(false);
   const navigate = useNavigate();
   const location = useLocation();
+  const dispatch = useDispatch();
 
   const handleDrawerClose = () => {
     setIsClosing(true);
@@ -47,6 +50,7 @@ function Layout() {
   };
 
   const handleLogout = () => {
+    dispatch(UserActions.logout());
     navigate("/login");
   };
 
@@ -206,18 +210,24 @@ const pageLinks = [
   },
   {
     id: 3,
+    name: "Explorer AI",
+    link: "/explore-ai",
+    icon: <Chat />,
+  },
+  {
+    id: 4,
     name: "Wallet",
     link: "/wallet",
     icon: <AccountBalanceWalletIcon />,
   },
   {
-    id: 4,
+    id: 5,
     name: "Search",
     link: "/search",
     icon: <SearchIcon />,
   },
   {
-    id: 5,
+    id: 6,
     name: "Me",
     link: "/me",
     icon: <PersonOutlineIcon />,

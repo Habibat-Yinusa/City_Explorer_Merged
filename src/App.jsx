@@ -8,6 +8,8 @@ import Explore from "./pages/Explore/Explore";
 import Wallet from "./pages/Wallet/Wallet";
 import Search from "./pages/Search/Search";
 import Me from "./pages/Me/Me";
+import Auth from "./pages/Auth/Auth";
+import ExploreAi from "./pages/ExploreAi/ExploreAi";
 
 const routes = [
   {
@@ -17,6 +19,10 @@ const routes = [
   {
     path: "/explore",
     element: <Explore />,
+  },
+  {
+    path: "/explore-ai",
+    element: <ExploreAi />,
   },
   {
     path: "/wallet",
@@ -39,7 +45,15 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         {routes.map((route) => (
-          <Route path="/" element={<Layout />} key={route.path}>
+          <Route
+            path="/"
+            element={
+              <Auth>
+                <Layout />
+              </Auth>
+            }
+            key={route.path}
+          >
             <Route path={route.path} element={route.element} />
           </Route>
         ))}

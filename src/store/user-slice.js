@@ -5,7 +5,7 @@ const initialState = JSON.parse(localStorage.getItem("userState")) || {
   user: null,
 };
 
-export const userSlice = createSlice({
+const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
@@ -24,6 +24,6 @@ export const userSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { login, logout } = userSlice.actions;
+export const UserActions = userSlice.actions;
 
-export default userSlice.reducer;
+export default userSlice;

@@ -16,6 +16,8 @@ import { FilledButton } from "../../styles/styled-components/styledButtons";
 import { Link, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import * as yup from "yup";
+import { useDispatch } from "react-redux";
+import { UserActions } from "../../store/user-slice";
 
 const Login = () => {
   const formik = useFormik({
@@ -35,17 +37,41 @@ const Login = () => {
   const [showPassword, setShowPassword] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
   const handleLogin = async () => {
+    // e.preventDefault();
     setLoading(true);
-    // event.preventDefault();
-    setTimeout(() => {
-      console.log(JSON.stringify(formik.values));
-      setLoading(false);
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_APP_API_URL}/user/login`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formik.values),
+        }
+      );
+
+      if (!response.ok) {
+        console.log(JSON.stringify(formik.values));
+        alert("Failed to Log in! Please try again.");
+        throw new Error("Failed to submit form");
+      }
+      const user = await response.json();
+      // delete user.password;
+      console.log(user);
+      console.log("Form submitted successfully");
+      dispatch(UserActions.login(user));
       navigate("/");
-    }, 2000);
+    } catch (error) {
+      console.error("Error logging user in: ", error.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (

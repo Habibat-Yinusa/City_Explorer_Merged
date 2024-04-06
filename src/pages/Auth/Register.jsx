@@ -21,11 +21,13 @@ const Register = () => {
   const formik = useFormik({
     initialValues: {
       email: "",
+      username: "",
       password: "",
       confirmPassword: "",
     },
     validationSchema: yup.object({
       email: yup.string().required("Email is required"),
+      username: yup.string().required("Username is required"),
       password: yup.string().required("Password is required"),
       confirmPassword: yup
         .string()
@@ -48,19 +50,43 @@ const Register = () => {
 
   const handleRegister = async () => {
     setLoading(true);
-    // event.preventDefault();
-    setTimeout(() => {
-      console.log(JSON.stringify(formik.values));
+    console.log(import.meta.env.VITE_APP_API_URL);
+    // e.preventDefault();
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_APP_API_URL}/user/signup`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formik.values),
+        }
+      );
+
+      if (!response.ok) {
+        console.log(JSON.stringify(formik.values));
+        alert("Failed to Register User");
+        setLoading(false);
+        throw new Error("Failed to submit form");
+      }
+      const user = await response.json();
+      // delete user.password;
+      console.log(user);
+      console.log("Form submitted successfully");
       setLoading(false);
       navigate("/login");
-    }, 2000);
+    } catch (error) {
+      setLoading(false);
+      console.error("Error submitting form: ", error.message);
+    }
   };
 
   return (
-    <Box>
+    <Box sx={{ backgroundColor: "#ececec", height: "100vh" }}>
       <CenteredBox
         sx={{
-          height: "100vh",
+          height: "100%",
         }}
       >
         <CenteredBox
@@ -98,6 +124,21 @@ const Register = () => {
                 error={formik.touched.email && Boolean(formik.errors.email)}
                 helperText={formik.touched.email && formik.errors.email}
                 sx={{ width: "100%", marginTop: "2em" }}
+              />
+            </FormControl>
+            <FormControl error fullWidth>
+              <TextField
+                type="text"
+                id="username"
+                label="Username"
+                value={formik.values.username}
+                name="username"
+                onChange={formik.handleChange}
+                error={
+                  formik.touched.username && Boolean(formik.errors.username)
+                }
+                helperText={formik.touched.username && formik.errors.username}
+                sx={{ width: "100%", marginTop: "1em" }}
               />
             </FormControl>
             <FormControl error fullWidth>
