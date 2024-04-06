@@ -34,7 +34,7 @@ const routes = [
 
 function App() {
   return (
-    <Box>
+    <Box sx={{ backgroundColor: "#ececec" }}>
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />

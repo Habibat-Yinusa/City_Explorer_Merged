@@ -13,7 +13,7 @@ import { CenteredBox } from "../../styles/styled-components/styledBox";
 import React from "react";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { FilledButton } from "../../styles/styled-components/styledButtons";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import * as yup from "yup";
 
@@ -34,7 +34,7 @@ const Login = () => {
 
   const [showPassword, setShowPassword] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
@@ -44,7 +44,7 @@ const Login = () => {
     setTimeout(() => {
       console.log(JSON.stringify(formik.values));
       setLoading(false);
-      // navigate("/");
+      navigate("/");
     }, 2000);
   };
 

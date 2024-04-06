@@ -4,20 +4,24 @@ import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
 import Drawer from "@mui/material/Drawer";
 import IconButton from "@mui/material/IconButton";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import MailIcon from "@mui/icons-material/Mail";
 import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import { Outlet, useLocation, useNavigate } from "react-router-dom";
-import logo from "../assets/logo.svg";
 import { CenteredBox } from "../styles/styled-components/styledBox";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { Logout } from "@mui/icons-material";
+import DashboardIcon from "@mui/icons-material/Dashboard";
+import TravelExploreIcon from "@mui/icons-material/TravelExplore";
+import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
+import SearchIcon from "@mui/icons-material/Search";
+import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
+import logo from "../assets/logo.svg";
+import "@splidejs/react-splide/css";
 
 const drawerWidth = 240;
 
@@ -70,7 +74,7 @@ function Layout() {
                   color: location.pathname === page.link ? "#fff" : "#6c6c6c",
                 }}
               >
-                {page.id % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                {page.icon}
               </ListItemIcon>
               <ListItemText primary={page.name} />
             </ListItemButton>
@@ -111,9 +115,18 @@ function Layout() {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap component="div">
-            City Explorer
-          </Typography>
+          <CenteredBox
+            sx={{
+              justifyContent: "space-between",
+              width: "99%",
+              alignItems: "center",
+            }}
+          >
+            <Typography variant="h6">City Explorer</Typography>
+            <Box sx={{ width: "2em" }}>
+              <img src={logo} alt="" style={{ width: "100%" }} />
+            </Box>
+          </CenteredBox>
         </Toolbar>
       </AppBar>
       <Box
@@ -160,12 +173,17 @@ function Layout() {
         component="main"
         sx={{
           flexGrow: 1,
-          p: 3,
           width: { sm: `calc(100% - ${drawerWidth}px)` },
+          backgroundColor: "#ececec",
         }}
       >
         <Toolbar />
-        <Box sx={{ backgroundColor: "#ececec" }}>
+        <Box
+          sx={{
+            backgroundColor: "#ececec",
+            padding: "1em 2em",
+          }}
+        >
           <Outlet />
         </Box>
       </Box>
@@ -178,26 +196,31 @@ const pageLinks = [
     id: 1,
     name: "Home",
     link: "/",
+    icon: <DashboardIcon />,
   },
   {
     id: 2,
     name: "Explore",
     link: "/explore",
+    icon: <TravelExploreIcon />,
   },
   {
     id: 3,
     name: "Wallet",
     link: "/wallet",
+    icon: <AccountBalanceWalletIcon />,
   },
   {
     id: 4,
     name: "Search",
     link: "/search",
+    icon: <SearchIcon />,
   },
   {
     id: 5,
     name: "Me",
     link: "/me",
+    icon: <PersonOutlineIcon />,
   },
 ];
 

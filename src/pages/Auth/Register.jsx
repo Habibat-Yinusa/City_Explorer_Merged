@@ -15,7 +15,7 @@ import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { FilledButton } from "../../styles/styled-components/styledButtons";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Register = () => {
   const formik = useFormik({
@@ -33,26 +33,26 @@ const Register = () => {
         .required("Please confirm your password"),
     }),
     onSubmit: () => {
-      handleLogin();
+      handleRegister();
     },
   });
 
   const [showPassword, setShowPassword] = React.useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
   const handleClickedShowConfirmPassword = () =>
     setShowConfirmPassword((show) => !show);
 
-  const handleLogin = async () => {
+  const handleRegister = async () => {
     setLoading(true);
     // event.preventDefault();
     setTimeout(() => {
       console.log(JSON.stringify(formik.values));
       setLoading(false);
-      // navigate("/");
+      navigate("/login");
     }, 2000);
   };
 
