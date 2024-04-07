@@ -10,7 +10,15 @@ const Explore = () => {
         <CenteredBox
           sx={{ justifyContent: "space-between", overflowX: "hidden" }}
         >
-          <Grid container spacing={2}>
+          <Grid
+            container
+            spacing={2}
+            sx={{
+              display: "flex",
+              justifyContent: { xs: "center", sm: "flex-start" },
+              alignItems: "center",
+            }}
+          >
             {interests.map((item) => (
               <Grid item xs={10} sm={6} md={6} lg={4} key={item.id}>
                 <CenteredBox

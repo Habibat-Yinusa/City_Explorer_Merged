@@ -1,4 +1,4 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, Button } from "@mui/material";
 import { CenteredBox } from "../../styles/styled-components/styledBox";
 import walletBg from "../../assets/walletBg.svg";
 import { FilledButton } from "../../styles/styled-components/styledButtons";
@@ -27,7 +27,9 @@ const Wallet = () => {
             backgroundSize: "cover",
             backgroundRepeat: "no-repeat",
             borderRadius: "30px",
-            paddingBottom: { xs: "2em", md: "1em" },
+            // paddingBottom: { xs: "5em", md: "1em" },
+            height: { md: "20em", lg: "15em" },
+            // minHeight: "15em",
           }}
         >
           <Box sx={{ textAlign: "center", width: "100%", margin: "2.5em 0" }}>
@@ -37,91 +39,113 @@ const Wallet = () => {
             >
               Balance (NGN)
             </Typography>
-            <Typography variant="h4" sx={{ fontSize: "1.5rem", color: "#fff" }}>
+            <Typography
+              variant="h4"
+              sx={{
+                fontSize: "1.5rem",
+                color: "#fff",
+                marginBottom: "2em",
+                fontWeight: 700,
+              }}
+            >
               339,876,543.21
             </Typography>
           </Box>
         </CenteredBox>
-        <CenteredBox sx={{ gap: { xs: 1, md: 3 }, padding: "1em 0" }}>
-          <Box sx={{ textAlign: "center", width: "100%" }}>
-            <FilledButton sx={{ width: "5%" }}>
-              <CallMade sx={{ fontSize: { xs: ".9rem", md: "1rem" } }} />
-            </FilledButton>
-            <Typography
-              variant="body2"
-              sx={{
-                fontSize: { xs: ".8em", md: "1rem" },
-                color: "#758BFD",
-                marginTop: ".5em",
-              }}
-            >
-              Send
-            </Typography>
-          </Box>
-          <Box sx={{ textAlign: "center", width: "100%" }}>
-            <FilledButton sx={{ width: "5%" }}>
-              <CallReceived sx={{ fontSize: { xs: ".9rem", md: "1rem" } }} />
-            </FilledButton>
-            <Typography
-              variant="body2"
-              sx={{
-                fontSize: { xs: ".8em", md: "1rem" },
-                color: "#758BFD",
-                marginTop: ".5em",
-              }}
-            >
-              Receive
-            </Typography>
-          </Box>
-          <Box sx={{ textAlign: "center", width: "100%" }}>
-            <FilledButton sx={{ width: "5%" }}>
-              <AddCircleOutline
-                sx={{ fontSize: { xs: ".9rem", md: "1rem" } }}
-              />
-            </FilledButton>
-            <Typography
-              variant="body2"
-              sx={{
-                fontSize: { xs: ".8em", md: "1rem" },
-                color: "#758BFD",
-                marginTop: ".5em",
-              }}
-            >
-              Top-Up
-            </Typography>
-          </Box>
-          <Box sx={{ textAlign: "center", width: "100%" }}>
-            <FilledButton sx={{ width: "5%" }}>
-              <PhoneAndroid sx={{ fontSize: { xs: ".9rem", md: "1rem" } }} />
-            </FilledButton>
-            <Typography
-              variant="body2"
-              sx={{
-                fontSize: { xs: ".8em", md: "1rem" },
-                color: "#758BFD",
-                marginTop: ".5em",
-              }}
-            >
-              Airtime
-            </Typography>
-          </Box>
-          <Box sx={{ textAlign: "center", width: "100%" }}>
-            <FilledButton sx={{ width: "5%" }}>
-              <WorkspacesOutlined
-                sx={{ fontSize: { xs: ".9rem", md: "1rem" } }}
-              />
-            </FilledButton>
-            <Typography
-              variant="body2"
-              sx={{
-                fontSize: { xs: ".8em", md: "1rem" },
-                color: "#758BFD",
-                marginTop: ".5em",
-              }}
-            >
-              More
-            </Typography>
-          </Box>
+        <CenteredBox>
+          <CenteredBox
+            sx={{
+              gap: { xs: 1, md: 2 },
+              padding: "1em 0",
+              width: { md: "80%" },
+            }}
+          >
+            <Box sx={{ textAlign: "center", width: "100%" }}>
+              <Button sx={{ backgroundColor: "#758BFD" }}>
+                <CallMade
+                  sx={{ fontSize: { xs: ".9rem", md: "1rem" }, color: "#fff" }}
+                />
+              </Button>
+              <Typography
+                variant="body2"
+                sx={{
+                  fontSize: { xs: ".8em", md: "1rem" },
+                  color: "#758BFD",
+                  marginTop: ".5em",
+                }}
+              >
+                Send
+              </Typography>
+            </Box>
+            <Box sx={{ textAlign: "center", width: "100%" }}>
+              <Button sx={{ backgroundColor: "#758BFD" }}>
+                <CallReceived
+                  sx={{ fontSize: { xs: ".9rem", md: "1rem" }, color: "#fff" }}
+                />
+              </Button>
+              <Typography
+                variant="body2"
+                sx={{
+                  fontSize: { xs: ".8em", md: "1rem" },
+                  color: "#758BFD",
+                  marginTop: ".5em",
+                }}
+              >
+                Receive
+              </Typography>
+            </Box>
+            <Box sx={{ textAlign: "center", width: "100%" }}>
+              <Button sx={{ backgroundColor: "#758BFD" }}>
+                <AddCircleOutline
+                  sx={{ fontSize: { xs: ".9rem", md: "1rem" }, color: "#fff" }}
+                />
+              </Button>
+              <Typography
+                variant="body2"
+                sx={{
+                  fontSize: { xs: ".8em", md: "1rem" },
+                  color: "#758BFD",
+                  marginTop: ".5em",
+                }}
+              >
+                Top-Up
+              </Typography>
+            </Box>
+            <Box sx={{ textAlign: "center", width: "100%" }}>
+              <Button sx={{ backgroundColor: "#758BFD" }}>
+                <PhoneAndroid
+                  sx={{ fontSize: { xs: ".9rem", md: "1rem" }, color: "#fff" }}
+                />
+              </Button>
+              <Typography
+                variant="body2"
+                sx={{
+                  fontSize: { xs: ".8em", md: "1rem" },
+                  color: "#758BFD",
+                  marginTop: ".5em",
+                }}
+              >
+                Airtime
+              </Typography>
+            </Box>
+            <Box sx={{ textAlign: "center", width: "100%" }}>
+              <Button sx={{ backgroundColor: "#758BFD" }}>
+                <WorkspacesOutlined
+                  sx={{ fontSize: { xs: ".9rem", md: "1rem" }, color: "#fff" }}
+                />
+              </Button>
+              <Typography
+                variant="body2"
+                sx={{
+                  fontSize: { xs: ".8em", md: "1rem" },
+                  color: "#758BFD",
+                  marginTop: ".5em",
+                }}
+              >
+                More
+              </Typography>
+            </Box>
+          </CenteredBox>
         </CenteredBox>
       </Box>
       <CenteredBox sx={{ width: "100%", margin: "1em 0" }}>
@@ -129,28 +153,40 @@ const Wallet = () => {
           sx={{
             flexDirection: "column",
             backgroundColor: "#758BFD",
-            width: "80%",
+            width: { xs: "100%", md: "80%" },
             padding: "1em",
             borderRadius: "30px",
           }}
         >
           <Typography
             variant="body2"
-            sx={{ fontWeight: 700, fontSize: "1rem" }}
+            sx={{ fontWeight: 700, fontSize: { xs: ".9rem", md: "1rem" } }}
           >
             Use your explore points to purchase airtime or mobile data
           </Typography>
-          <CenteredBox sx={{ gap: 1.5, marginTop: "1em" }}>
-            <Box sx={{ width: "4em" }}>
-              <img src={medal} alt="" style={{ width: "100%" }} />
-            </Box>
-            <Typography variant="body2" sx={{ fontSize: "1rem" }}>
-              Use the explore app daily to get more points
-            </Typography>
+          <CenteredBox
+            sx={{
+              gap: 1.5,
+              marginTop: "1em",
+              flexDirection: { xs: "column", md: "row" },
+            }}
+          >
+            <CenteredBox sx={{ gap: 1 }}>
+              <Box sx={{ width: "4em" }}>
+                <img src={medal} alt="" style={{ width: "100%" }} />
+              </Box>
+              <Typography
+                variant="body2"
+                sx={{ fontSize: { xs: ".9rem", md: "1rem" } }}
+              >
+                Use the explore app daily to get more points
+              </Typography>
+            </CenteredBox>
             <FilledButton
               sx={{
                 backgroundColor: "#fff",
                 color: "#758BFD",
+                fontSize: { xs: ".9rem", md: "1rem" },
                 "&:hover": {
                   backgroundColor: "#758BFD",
                   color: "#fff",
@@ -164,17 +200,23 @@ const Wallet = () => {
         </CenteredBox>
       </CenteredBox>
       <CenteredBox>
-        <CenteredBox sx={{ width: "80%", flexDirection: "column" }}>
+        <CenteredBox
+          sx={{ width: { xs: "100%", md: "80%" }, flexDirection: "column" }}
+        >
           <CenteredBox sx={{ justifyContent: "space-between", width: "100%" }}>
             <Typography
               variant="h4"
-              sx={{ fontSize: "1.2rem", fontWeight: 700 }}
+              sx={{ fontSize: { xs: "1rem", md: "1.2rem" }, fontWeight: 700 }}
             >
               Transactions
             </Typography>
             <Typography
               variant="h4"
-              sx={{ fontSize: "1.2rem", fontWeight: 700, color: "#758BFD" }}
+              sx={{
+                fontSize: { xs: "1rem", md: "1.2rem" },
+                fontWeight: 700,
+                color: "#758BFD",
+              }}
             >
               <Link to="#" style={{ textDecoration: "none", color: "inherit" }}>
                 See all
@@ -207,17 +249,24 @@ const Wallet = () => {
                       padding: ".7em",
                       borderRadius: "50px",
                       color: "#fff",
+                      fontSize: { xs: ".8rem", md: "1rem" },
                     }}
                   >
                     {transaction.transactionIcon}
                   </CenteredBox>
                   <Box>
-                    <Typography variant="h4" sx={{ fontSize: "1rem" }}>
+                    <Typography
+                      variant="h4"
+                      sx={{ fontSize: { xs: ".9rem", md: "1rem" } }}
+                    >
                       {transaction.from}
                     </Typography>
                     <Typography
                       variant="body2"
-                      sx={{ fontSize: ".6rem", color: "#898989" }}
+                      sx={{
+                        fontSize: { xs: ".5rem", md: ".6rem" },
+                        color: "#898989",
+                      }}
                     >
                       {transaction.date}
                     </Typography>
@@ -226,14 +275,17 @@ const Wallet = () => {
                 <Box sx={{ textAlign: "right" }}>
                   <Typography
                     variant="h4"
-                    sx={{ fontSize: "1rem", fontWeight: 700 }}
+                    sx={{
+                      fontSize: { xs: ".9rem", md: "1rem" },
+                      fontWeight: 700,
+                    }}
                   >
                     ₦{transaction.amount}
                   </Typography>
                   <Typography
                     variant="body2"
                     sx={{
-                      fontSize: ".6rem",
+                      fontSize: { xs: ".5rem", md: ".6rem" },
                       color:
                         transaction.status === "Successful"
                           ? "#1A992E80"

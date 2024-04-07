@@ -94,7 +94,7 @@ const Register = () => {
             backgroundColor: "#ececec",
             flexDirection: "column",
             padding: "0 5em",
-            width: "50vw",
+            width: { xs: "90vw", md: "50vw" },
             borderRadius: "10px",
             minHeight: "88vh",
           }}
@@ -109,7 +109,10 @@ const Register = () => {
             Create an account
           </Typography>
           <CenteredBox
-            sx={{ flexDirection: "column", width: "50%" }}
+            sx={{
+              flexDirection: "column",
+              width: { xs: "100%", sm: "70%", md: "60%" },
+            }}
             component="form"
             onSubmit={formik.handleSubmit}
           >

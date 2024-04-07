@@ -46,12 +46,15 @@ const Home = () => {
             marginBottom: "2em",
           }}
         >
-          <Typography variant="h3" sx={{ fontWeight: 700, fontSize: "2em" }}>
+          <Typography
+            variant="h3"
+            sx={{ fontWeight: 700, fontSize: { xs: "1.7rem", md: "2rem" } }}
+          >
             Explore these businesses
           </Typography>
           <KeyboardArrowRight
             sx={{
-              fontSize: "2rem",
+              fontSize: { xs: "1.7rem", md: "2rem" },
               cursor: "pointer",
               "&:hover": { color: "#6c6c6c" },
             }}
@@ -80,7 +83,16 @@ const Home = () => {
           ))}
         </Grid>
 
-        <Grid container spacing={2} sx={{ marginTop: "5em" }}>
+        <Grid
+          container
+          spacing={2}
+          sx={{
+            marginTop: "5em",
+            display: "flex",
+            justifyContent: { xs: "center", sm: "flex-start" },
+            alignItems: "center",
+          }}
+        >
           {interests.map((item) => (
             <Grid item xs={7} sm={6} md={4} key={item.id}>
               <CenteredBox

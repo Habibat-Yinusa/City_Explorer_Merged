@@ -86,7 +86,7 @@ const Login = () => {
             backgroundColor: "#ececec",
             flexDirection: "column",
             padding: "0em 5em",
-            width: "50vw",
+            width: { xs: "90vw", md: "50vw" },
             minHeight: "88vh",
             borderRadius: "10px",
           }}
@@ -101,7 +101,10 @@ const Login = () => {
             Welcome back!
           </Typography>
           <CenteredBox
-            sx={{ flexDirection: "column", width: "50%" }}
+            sx={{
+              flexDirection: "column",
+              width: { xs: "100%", sm: "70%", md: "60%" },
+            }}
             component="form"
             onSubmit={formik.handleSubmit}
           >
