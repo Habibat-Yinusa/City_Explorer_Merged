@@ -1,8 +1,7 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, Grid } from "@mui/material";
 import { CenteredBox } from "../../styles/styled-components/styledBox";
 import img2 from "../../assets/img2.svg";
 import { FilledButton } from "../../styles/styled-components/styledButtons";
-import { Splide, SplideSlide } from "@splidejs/react-splide";
 
 const Explore = () => {
   return (
@@ -11,17 +10,9 @@ const Explore = () => {
         <CenteredBox
           sx={{ justifyContent: "space-between", overflowX: "hidden" }}
         >
-          <Splide
-            options={{
-              perPage: 3,
-              arrows: false,
-              pagination: false,
-              drag: true,
-            }}
-            style={{ width: "100%", margin: "0 auto" }}
-          >
+          <Grid container spacing={2}>
             {interests.map((item) => (
-              <SplideSlide key={item.id}>
+              <Grid item xs={10} sm={6} md={6} lg={4} key={item.id}>
                 <CenteredBox
                   sx={{
                     borderRadius: "20px",
@@ -34,30 +25,46 @@ const Explore = () => {
                     maxWidth: "20em",
                   }}
                 >
-                  <Box sx={{ width: "18em", borderRadius: "30px" }}>
-                    <img src={item.image} alt="" style={{ width: "100%" }} />
-                  </Box>
-                  <Typography
-                    variant="body2"
+                  <CenteredBox
                     sx={{
-                      fontSize: "1.1rem",
-                      fontWeight: 700,
-                      textAlign: "left",
-                      margin: ".1em 0",
+                      width: "100%",
+                      flexDirection: "column",
                     }}
                   >
-                    {item.header}
-                  </Typography>
-                  <Typography variant="body2" sx={{ fontSize: ".9rem" }}>
-                    {item.text}
-                  </Typography>
-                  <FilledButton sx={{ width: "100%", marginTop: ".7em" }}>
-                    Check it out
-                  </FilledButton>
+                    <Box sx={{ width: "100%", borderRadius: "30px" }}>
+                      <img src={item.image} alt="" style={{ width: "100%" }} />
+                    </Box>
+                    <Typography
+                      variant="body2"
+                      sx={{
+                        fontSize: { xs: ".9em", md: "1.1rem" },
+                        fontWeight: 700,
+                        textAlign: "left",
+                        margin: ".1em 0",
+                      }}
+                    >
+                      {item.header}
+                    </Typography>
+                    <Typography
+                      variant="body2"
+                      sx={{ fontSize: { xs: ".7em", md: ".9rem" } }}
+                    >
+                      {item.text}
+                    </Typography>
+                    <FilledButton
+                      sx={{
+                        width: "100%",
+                        marginTop: ".7em",
+                        fontSize: { xs: ".9em", md: "1.2rem" },
+                      }}
+                    >
+                      Check it out
+                    </FilledButton>
+                  </CenteredBox>
                 </CenteredBox>
-              </SplideSlide>
+              </Grid>
             ))}
-          </Splide>
+          </Grid>
         </CenteredBox>
       </CenteredBox>
     </Box>

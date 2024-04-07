@@ -27,6 +27,7 @@ const Wallet = () => {
             backgroundSize: "cover",
             backgroundRepeat: "no-repeat",
             borderRadius: "30px",
+            paddingBottom: { xs: "2em", md: "1em" },
           }}
         >
           <Box sx={{ textAlign: "center", width: "100%", margin: "2.5em 0" }}>
@@ -41,58 +42,82 @@ const Wallet = () => {
             </Typography>
           </Box>
         </CenteredBox>
-        <CenteredBox sx={{ gap: 3, padding: "1em 0" }}>
-          <Box sx={{ textAlign: "center" }}>
-            <FilledButton>
-              <CallMade />
+        <CenteredBox sx={{ gap: { xs: 1, md: 3 }, padding: "1em 0" }}>
+          <Box sx={{ textAlign: "center", width: "100%" }}>
+            <FilledButton sx={{ width: "5%" }}>
+              <CallMade sx={{ fontSize: { xs: ".9rem", md: "1rem" } }} />
             </FilledButton>
             <Typography
               variant="body2"
-              sx={{ fontSize: "1rem", color: "#758BFD", marginTop: ".5em" }}
+              sx={{
+                fontSize: { xs: ".8em", md: "1rem" },
+                color: "#758BFD",
+                marginTop: ".5em",
+              }}
             >
               Send
             </Typography>
           </Box>
-          <Box sx={{ textAlign: "center" }}>
-            <FilledButton>
-              <CallReceived />
+          <Box sx={{ textAlign: "center", width: "100%" }}>
+            <FilledButton sx={{ width: "5%" }}>
+              <CallReceived sx={{ fontSize: { xs: ".9rem", md: "1rem" } }} />
             </FilledButton>
             <Typography
               variant="body2"
-              sx={{ fontSize: "1rem", color: "#758BFD", marginTop: ".5em" }}
+              sx={{
+                fontSize: { xs: ".8em", md: "1rem" },
+                color: "#758BFD",
+                marginTop: ".5em",
+              }}
             >
               Receive
             </Typography>
           </Box>
-          <Box sx={{ textAlign: "center" }}>
-            <FilledButton>
-              <AddCircleOutline />
+          <Box sx={{ textAlign: "center", width: "100%" }}>
+            <FilledButton sx={{ width: "5%" }}>
+              <AddCircleOutline
+                sx={{ fontSize: { xs: ".9rem", md: "1rem" } }}
+              />
             </FilledButton>
             <Typography
               variant="body2"
-              sx={{ fontSize: "1rem", color: "#758BFD", marginTop: ".5em" }}
+              sx={{
+                fontSize: { xs: ".8em", md: "1rem" },
+                color: "#758BFD",
+                marginTop: ".5em",
+              }}
             >
               Top-Up
             </Typography>
           </Box>
-          <Box sx={{ textAlign: "center" }}>
-            <FilledButton>
-              <PhoneAndroid />
+          <Box sx={{ textAlign: "center", width: "100%" }}>
+            <FilledButton sx={{ width: "5%" }}>
+              <PhoneAndroid sx={{ fontSize: { xs: ".9rem", md: "1rem" } }} />
             </FilledButton>
             <Typography
               variant="body2"
-              sx={{ fontSize: "1rem", color: "#758BFD", marginTop: ".5em" }}
+              sx={{
+                fontSize: { xs: ".8em", md: "1rem" },
+                color: "#758BFD",
+                marginTop: ".5em",
+              }}
             >
               Airtime
             </Typography>
           </Box>
-          <Box sx={{ textAlign: "center" }}>
-            <FilledButton>
-              <WorkspacesOutlined />
+          <Box sx={{ textAlign: "center", width: "100%" }}>
+            <FilledButton sx={{ width: "5%" }}>
+              <WorkspacesOutlined
+                sx={{ fontSize: { xs: ".9rem", md: "1rem" } }}
+              />
             </FilledButton>
             <Typography
               variant="body2"
-              sx={{ fontSize: "1rem", color: "#758BFD", marginTop: ".5em" }}
+              sx={{
+                fontSize: { xs: ".8em", md: "1rem" },
+                color: "#758BFD",
+                marginTop: ".5em",
+              }}
             >
               More
             </Typography>

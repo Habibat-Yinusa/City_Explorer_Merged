@@ -13,9 +13,11 @@ import { useNavigate } from "react-router-dom";
 import meBanner from "../../assets/meBanner.svg";
 import profileImg from "../../assets/profileImg.svg";
 import { FilledButton } from "../../styles/styled-components/styledButtons";
+import { useSelector } from "react-redux";
 
 const Me = () => {
   const navigate = useNavigate();
+  const user = useSelector((state) => state.auth.user);
 
   return (
     <Box>
@@ -49,17 +51,18 @@ const Me = () => {
             variant="h3"
             sx={{
               fontWeight: 700,
-              fontSize: "2em",
+              fontSize: { xs: "1.7rem", md: "2rem" },
               color: "#fff",
               marginTop: ".4em",
+              textTransform: "capitalize",
             }}
           >
-            Aisha Eeshat
+            {user.username}
           </Typography>
           <Typography
             variant="body2"
             sx={{
-              fontSize: "1em",
+              fontSize: { xs: ".85rem", md: "1rem" },
               color: "#fff",
               margin: ".3em 0",
             }}
@@ -70,7 +73,7 @@ const Me = () => {
             <Typography
               variant="body2"
               sx={{
-                fontSize: "1.4em",
+                fontSize: { xs: "1.1rem", md: "1.4eem" },
                 color: "#fff",
                 textAlign: "center",
                 padding: "0 1em",
@@ -82,7 +85,7 @@ const Me = () => {
             <Typography
               variant="body2"
               sx={{
-                fontSize: "1.4em",
+                fontSize: { xs: "1.1rem", md: "1.4eem" },
                 color: "#fff",
                 textAlign: "center",
                 padding: "0 1em",
@@ -97,7 +100,7 @@ const Me = () => {
             <Typography
               variant="body2"
               sx={{
-                fontSize: "1.4em",
+                fontSize: { xs: "1.1rem", md: "1.4eem" },
                 color: "#fff",
                 textAlign: "center",
                 padding: "0 1em",
@@ -112,16 +115,27 @@ const Me = () => {
       <CenteredBox sx={{ flexDirection: "column" }}>
         <CenteredBox
           sx={{
-            width: "80%",
+            width: { xs: "100%", sm: "90%", md: "90%", lg: "80%" },
             marginTop: ".5em",
             justifyContent: "space-between",
           }}
         >
-          <FilledButton sx={{ width: "48%" }}>My Business Page</FilledButton>
-          <FilledButton sx={{ width: "48%" }}>Plan My Day</FilledButton>
+          <FilledButton
+            sx={{ width: "48%", fontSize: { xs: ".9rem", md: "1.2rem" } }}
+          >
+            My Business Page
+          </FilledButton>
+          <FilledButton
+            sx={{ width: "48%", fontSize: { xs: ".9rem", md: "1.2rem" } }}
+          >
+            Plan My Day
+          </FilledButton>
         </CenteredBox>
         {meLinks.map((link) => (
-          <CenteredBox sx={{ width: "80%" }} key={link.id}>
+          <CenteredBox
+            sx={{ width: { xs: "100%", sm: "90%", md: "90%", lg: "80%" } }}
+            key={link.id}
+          >
             <FilledButton
               sx={{
                 width: "100%",
@@ -132,6 +146,7 @@ const Me = () => {
                 padding: ".2em .6em",
                 backgroundColor: "#fff",
                 color: "#1E1E1E",
+                fontSize: { xs: ".9rem", md: "1.2rem" },
                 "&:hover": {
                   backgroundColor: "#758BFD",
                   color: "#fff",

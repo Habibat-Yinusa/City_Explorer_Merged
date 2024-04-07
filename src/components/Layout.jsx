@@ -21,7 +21,6 @@ import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
 import SearchIcon from "@mui/icons-material/Search";
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import logo from "../assets/logo.svg";
-import "@splidejs/react-splide/css";
 import { useDispatch } from "react-redux";
 import { UserActions } from "../store/user-slice";
 
@@ -97,12 +96,18 @@ function Layout() {
   );
 
   return (
-    <Box sx={{ display: "flex", backgroundColor: "#ececec", height: "100vh" }}>
+    <Box
+      sx={{
+        display: "flex",
+        backgroundColor: "#ececec",
+        height: "100vh",
+      }}
+    >
       <CssBaseline />
       <AppBar
         position="fixed"
         sx={{
-          width: { sm: `calc(100% - ${drawerWidth}px)` },
+          width: { md: `calc(100% - ${drawerWidth}px)` },
           ml: { sm: `${drawerWidth}px` },
           backgroundColor: "#ececec",
           boxShadow: "none",
@@ -115,7 +120,7 @@ function Layout() {
             aria-label="open drawer"
             edge="start"
             onClick={handleDrawerToggle}
-            sx={{ mr: 2, display: { sm: "none" } }}
+            sx={{ mr: 2, display: { md: "none" } }}
           >
             <MenuIcon />
           </IconButton>
@@ -135,8 +140,10 @@ function Layout() {
       </AppBar>
       <Box
         component="nav"
-        sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
-        aria-label="mailbox folders"
+        sx={{
+          width: { md: drawerWidth },
+          flexShrink: { md: 0 },
+        }}
       >
         {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
         <Drawer
@@ -148,7 +155,7 @@ function Layout() {
             keepMounted: true, // Better open performance on mobile.
           }}
           sx={{
-            display: { xs: "block", sm: "none" },
+            display: { xs: "block", md: "none" },
             "& .MuiDrawer-paper": {
               boxSizing: "border-box",
               width: drawerWidth,
@@ -161,7 +168,7 @@ function Layout() {
         <Drawer
           variant="permanent"
           sx={{
-            display: { xs: "none", sm: "block" },
+            display: { xs: "none", md: "block" },
             "& .MuiDrawer-paper": {
               boxSizing: "border-box",
               width: drawerWidth,
@@ -174,10 +181,9 @@ function Layout() {
         </Drawer>
       </Box>
       <Box
-        component="main"
         sx={{
-          flexGrow: 1,
-          width: { sm: `calc(100% - ${drawerWidth}px)` },
+          // width: { md: `calc(100% - ${drawerWidth}px)` },
+          width: "100%",
           backgroundColor: "#ececec",
         }}
       >
@@ -185,7 +191,8 @@ function Layout() {
         <Box
           sx={{
             backgroundColor: "#ececec",
-            padding: "1em 2em",
+            padding: { xs: "1em", md: "1em 2em" },
+            width: "100%",
           }}
         >
           <Outlet />
@@ -210,7 +217,7 @@ const pageLinks = [
   },
   {
     id: 3,
-    name: "Explorer AI",
+    name: "Explore AI",
     link: "/explore-ai",
     icon: <Chat />,
   },
