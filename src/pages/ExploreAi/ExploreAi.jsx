@@ -34,7 +34,7 @@ const ExploreAi = () => {
         { text: data, type: "received" },
       ]);
       setNewMessage("");
-      console.log(data);
+      // console.log(data);
     } catch (error) {
       console.error("Error sending message:", error);
     } finally {

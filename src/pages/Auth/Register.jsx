@@ -50,7 +50,7 @@ const Register = () => {
 
   const handleRegister = async () => {
     setLoading(true);
-    console.log(import.meta.env.VITE_APP_API_URL);
+    // console.log(import.meta.env.VITE_APP_API_URL);
     // e.preventDefault();
     try {
       const response = await fetch(
@@ -65,15 +65,15 @@ const Register = () => {
       );
 
       if (!response.ok) {
-        console.log(JSON.stringify(formik.values));
+        // console.log(JSON.stringify(formik.values));
         alert("Failed to Register User");
         setLoading(false);
         throw new Error("Failed to submit form");
       }
       const user = await response.json();
       // delete user.password;
-      console.log(user);
-      console.log("Form submitted successfully");
+      // console.log(user);
+      // console.log("Form submitted successfully");
       setLoading(false);
       navigate("/login");
     } catch (error) {

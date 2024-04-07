@@ -57,14 +57,14 @@ const Login = () => {
       );
 
       if (!response.ok) {
-        console.log(JSON.stringify(formik.values));
+        // console.log(JSON.stringify(formik.values));
         alert("Failed to Log in! Please try again.");
         throw new Error("Failed to submit form");
       }
       const user = await response.json();
       // delete user.password;
-      console.log(user);
-      console.log("Form submitted successfully");
+      // console.log(user);
+      // console.log("Form submitted successfully");
       dispatch(UserActions.login(user));
       navigate("/");
     } catch (error) {
