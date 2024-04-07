@@ -65,7 +65,7 @@ const Home = () => {
           >
             <Splide
               options={{
-                perPage: 6,
+                perPage: 8,
                 arrows: false,
                 pagination: false,
                 drag: true,
@@ -92,41 +92,47 @@ const Home = () => {
           </CenteredBox>
         </Box>
 
-        <CenteredBox
-          sx={{ justifyContent: "space-between", overflowX: "hidden" }}
-        >
-          <Splide
-            options={{
-              perPage: 3,
-              arrows: false,
-              pagination: false,
-              drag: true,
-            }}
-            style={{ maxWidth: "100%", margin: "0 auto" }}
-          >
-            {interests.map((item) => (
-              <SplideSlide key={item.id}>
-                <CenteredBox
-                  sx={{
-                    borderRadius: "20px",
-                    padding: ".8em 1em",
-                    margin: "0 1em",
-                    flexDirection: "column",
-                    backgroundColor: "#fff",
-                    cursor: "pointer",
-                  }}
-                >
-                  <Box sx={{ width: "18em", borderRadius: "30px" }}>
-                    <img src={item.image} alt="" style={{ width: "100%" }} />
-                  </Box>
-                  <Typography variant="body2" sx={{ fontSize: ".9rem" }}>
-                    {item.text}
-                  </Typography>
-                </CenteredBox>
-              </SplideSlide>
-            ))}
-          </Splide>
-        </CenteredBox>
+        <Box sx={{ overflowX: "hidden" }}>
+          <CenteredBox sx={{ justifyContent: "space-between" }}>
+            <Splide
+              options={{
+                perPage: 3,
+                arrows: false,
+                pagination: false,
+                drag: true,
+              }}
+              style={{
+                margin: "0 auto",
+                width: "100%",
+              }}
+            >
+              {interests.map((item) => (
+                <SplideSlide key={item.id}>
+                  <CenteredBox
+                    sx={{
+                      borderRadius: "20px",
+                      padding: ".8em 1em",
+                      // width: "30%%",
+                      flexDirection: "column",
+                      backgroundColor: "#fff",
+                      cursor: "pointer",
+                      // margin: "0 1em",
+                      border: "1px solid red",
+                      maxWidth: "20em",
+                    }}
+                  >
+                    <Box sx={{ width: "18em", borderRadius: "30px" }}>
+                      <img src={item.image} alt="" style={{ width: "100%" }} />
+                    </Box>
+                    <Typography variant="body2" sx={{ fontSize: ".9rem" }}>
+                      {item.text}
+                    </Typography>
+                  </CenteredBox>
+                </SplideSlide>
+              ))}
+            </Splide>
+          </CenteredBox>
+        </Box>
       </Box>
     </Box>
   );
