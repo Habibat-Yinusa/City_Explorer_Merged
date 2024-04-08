@@ -28,6 +28,7 @@ const ExploreAi = () => {
         }
       );
       const data = await response.json();
+      // console.log(data);
       setMessages([
         ...messages,
         { text: newMessage, type: "sent" },
@@ -54,12 +55,13 @@ const ExploreAi = () => {
         <CenteredBox
           sx={{
             flexDirection: "column",
-            height: "62vh",
+            height: "66vh",
             overflowY: "auto",
             scrollbarWidth: "none",
             "::-webkit-scrollbar": {
               display: "none",
             },
+            justifyContent: "start",
           }}
         >
           {messages?.map((message, index) => (
@@ -68,7 +70,7 @@ const ExploreAi = () => {
               sx={{
                 fontSize: "1rem",
                 margin: ".5em",
-                backgroundColor: message.type === "sent" ? "#758BFD" : "#fff",
+                backgroundColor: message.type === "sent" ? "#3884FD" : "#fff",
                 color: message.type === "sent" ? "#fff" : "#000",
                 padding: "1em",
                 borderRadius: "10px",

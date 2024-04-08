@@ -10,7 +10,7 @@ import "@splidejs/react-splide/css";
 const Home = () => {
   return (
     <Box sx={{ backgroundColor: "#ececec" }}>
-      <CenteredBox sx={{ backgroundColor: "#758BFD", borderRadius: "30px" }}>
+      <CenteredBox sx={{ backgroundColor: "#3884FD", borderRadius: "30px" }}>
         <CenteredBox
           sx={{
             width: "80%",
@@ -115,23 +115,12 @@ const Home = () => {
                 }}
               >
                 <CenteredBox sx={{ width: "100%", flexDirection: "column" }}>
-                  <Box
-                    sx={{
-                      // width: {
-                      //   xs: "12em",
-                      //   sm: "14em",
-                      //   md: "16em",
-                      //   lg: "18em",
-                      // },
-                      width: "100%",
-                      borderRadius: "30px",
-                    }}
-                  >
+                  <Box sx={{ width: "100%", borderRadius: "30px" }}>
                     <img src={item.image} alt="" style={{ width: "100%" }} />
                   </Box>
                   <Typography
                     variant="body2"
-                    sx={{ fontSize: { xs: ".7em", lg: ".9rem" } }}
+                    sx={{ fontSize: { xs: ".7em", md: ".9rem" } }}
                   >
                     {item.text}
                   </Typography>

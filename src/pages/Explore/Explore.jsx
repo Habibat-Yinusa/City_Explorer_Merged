@@ -1,15 +1,49 @@
-import { Box, Typography, Grid } from "@mui/material";
+import { Box, Typography, Grid, TextField, Autocomplete } from "@mui/material";
 import { CenteredBox } from "../../styles/styled-components/styledBox";
 import img2 from "../../assets/img2.svg";
 import { FilledButton } from "../../styles/styled-components/styledButtons";
+import React from "react";
 
 const Explore = () => {
+  const [searchQuery, setSearchQuery] = React.useState("");
+
+  const handleSearchChange = (event) => {
+    setSearchQuery(event.target.value);
+  };
+
+  const getSearchedItems = () => {
+    const filteredItems = interests.filter((item) =>
+      item.header.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+    const rearrangedItems = filteredItems.sort(
+      (a, b) =>
+        a.header.toLowerCase().indexOf(searchQuery.toLowerCase()) -
+        b.header.toLowerCase().indexOf(searchQuery.toLowerCase())
+    );
+    return rearrangedItems;
+  };
+
   return (
     <Box>
+      <Autocomplete
+        freeSolo
+        id="free-solo-2-demo"
+        disableClearable
+        options={interests.map((item) => item.header)}
+        renderInput={(params) => (
+          <TextField
+            {...params}
+            label="Search event"
+            onChange={handleSearchChange}
+            InputProps={{
+              type: "search",
+            }}
+          />
+        )}
+        sx={{ marginBottom: "1em" }}
+      />
       <CenteredBox>
-        <CenteredBox
-          sx={{ justifyContent: "space-between", overflowX: "hidden" }}
-        >
+        <CenteredBox sx={{ justifyContent: "space-between" }}>
           <Grid
             container
             spacing={2}
@@ -19,7 +53,7 @@ const Explore = () => {
               alignItems: "center",
             }}
           >
-            {interests.map((item) => (
+            {getSearchedItems().map((item) => (
               <Grid item xs={10} sm={6} md={6} lg={4} key={item.id}>
                 <CenteredBox
                   sx={{

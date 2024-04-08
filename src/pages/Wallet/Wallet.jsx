@@ -14,11 +14,12 @@ import {
 } from "@mui/icons-material";
 import medal from "../../assets/medal.svg";
 import { Link } from "react-router-dom";
+import cityDebit from "../../assets/citydebit.png";
 
 const Wallet = () => {
   return (
     <Box>
-      <Box sx={{ backgroundColor: "#fff", borderRadius: "30px" }}>
+      <Box sx={{ backgroundColor: "#3884FD", borderRadius: "30px" }}>
         <CenteredBox
           sx={{
             justifyContent: "start",
@@ -52,7 +53,66 @@ const Wallet = () => {
             </Typography>
           </Box>
         </CenteredBox>
-        <CenteredBox>
+        <CenteredBox sx={{ flexDirection: "column" }}>
+          <CenteredBox
+            sx={{
+              width: "100%",
+              justifyContent: "space-between",
+              padding: { xs: ".5em", md: "1em", lg: "2em" },
+              flexDirection: { xs: "column", md: "row" },
+            }}
+          >
+            {/*  */}
+            <CenteredBox
+              sx={{
+                width: { xs: "100%", sm: "80%", md: "50%", lg: "45%" },
+                flexDirection: "column",
+                alignItems: { xs: "center", md: "start" },
+              }}
+            >
+              <Typography
+                variant="h3"
+                sx={{
+                  fontSize: {
+                    xs: "2.5rem",
+                    sm: "3rem",
+                    md: "2.5rem",
+                    lg: "3rem",
+                  },
+                  color: "#fff",
+                }}
+              >
+                Your new debit card awaits.
+              </Typography>
+              <Typography
+                variant="body2"
+                sx={{
+                  fontSize: { xs: "1rem", md: ".9rem" },
+                  color: "#fff",
+                  margin: "2em 0",
+                }}
+              >
+                For any payment - anywhere in the world. The city explorer Debit
+                Card does not have an annual card fee
+              </Typography>
+              <FilledButton
+                sx={{
+                  backgroundColor: "#fff",
+                  color: "#3884FD",
+                  "&:hover": {
+                    color: "#fff",
+                    backgroundColor: "#3884FD",
+                    border: "1px solid #fff",
+                  },
+                }}
+              >
+                Get Started
+              </FilledButton>
+            </CenteredBox>
+            <CenteredBox sx={{ width: "50%" }}>
+              <img src={cityDebit} alt="" style={{ width: "100%" }} />
+            </CenteredBox>
+          </CenteredBox>
           <CenteredBox
             sx={{
               gap: { xs: 1, md: 2 },
@@ -61,16 +121,29 @@ const Wallet = () => {
             }}
           >
             <Box sx={{ textAlign: "center", width: "100%" }}>
-              <Button sx={{ backgroundColor: "#758BFD" }}>
+              <Button
+                sx={{
+                  backgroundColor: "#fff",
+                  border: "1px solid #fff",
+                  color: "#3884FD",
+                  "&:hover": {
+                    border: "1px solid #fff",
+                    color: "#fff",
+                  },
+                }}
+              >
                 <CallMade
-                  sx={{ fontSize: { xs: ".9rem", md: "1rem" }, color: "#fff" }}
+                  sx={{
+                    fontSize: { xs: ".9rem", md: "1rem" },
+                    color: "#inherit",
+                  }}
                 />
               </Button>
               <Typography
                 variant="body2"
                 sx={{
                   fontSize: { xs: ".8em", md: "1rem" },
-                  color: "#758BFD",
+                  color: "#fff",
                   marginTop: ".5em",
                 }}
               >
@@ -78,16 +151,29 @@ const Wallet = () => {
               </Typography>
             </Box>
             <Box sx={{ textAlign: "center", width: "100%" }}>
-              <Button sx={{ backgroundColor: "#758BFD" }}>
+              <Button
+                sx={{
+                  backgroundColor: "#fff",
+                  border: "1px solid #fff",
+                  color: "#3884FD",
+                  "&:hover": {
+                    border: "1px solid #fff",
+                    color: "#fff",
+                  },
+                }}
+              >
                 <CallReceived
-                  sx={{ fontSize: { xs: ".9rem", md: "1rem" }, color: "#fff" }}
+                  sx={{
+                    fontSize: { xs: ".9rem", md: "1rem" },
+                    color: "#inherit",
+                  }}
                 />
               </Button>
               <Typography
                 variant="body2"
                 sx={{
                   fontSize: { xs: ".8em", md: "1rem" },
-                  color: "#758BFD",
+                  color: "#fff",
                   marginTop: ".5em",
                 }}
               >
@@ -95,16 +181,29 @@ const Wallet = () => {
               </Typography>
             </Box>
             <Box sx={{ textAlign: "center", width: "100%" }}>
-              <Button sx={{ backgroundColor: "#758BFD" }}>
+              <Button
+                sx={{
+                  backgroundColor: "#fff",
+                  border: "1px solid #fff",
+                  color: "#3884FD",
+                  "&:hover": {
+                    border: "1px solid #fff",
+                    color: "#fff",
+                  },
+                }}
+              >
                 <AddCircleOutline
-                  sx={{ fontSize: { xs: ".9rem", md: "1rem" }, color: "#fff" }}
+                  sx={{
+                    fontSize: { xs: ".9rem", md: "1rem" },
+                    color: "#inherit",
+                  }}
                 />
               </Button>
               <Typography
                 variant="body2"
                 sx={{
                   fontSize: { xs: ".8em", md: "1rem" },
-                  color: "#758BFD",
+                  color: "#fff",
                   marginTop: ".5em",
                 }}
               >
@@ -112,16 +211,29 @@ const Wallet = () => {
               </Typography>
             </Box>
             <Box sx={{ textAlign: "center", width: "100%" }}>
-              <Button sx={{ backgroundColor: "#758BFD" }}>
+              <Button
+                sx={{
+                  backgroundColor: "#fff",
+                  border: "1px solid #fff",
+                  color: "#3884FD",
+                  "&:hover": {
+                    border: "1px solid #fff",
+                    color: "#fff",
+                  },
+                }}
+              >
                 <PhoneAndroid
-                  sx={{ fontSize: { xs: ".9rem", md: "1rem" }, color: "#fff" }}
+                  sx={{
+                    fontSize: { xs: ".9rem", md: "1rem" },
+                    color: "#inherit",
+                  }}
                 />
               </Button>
               <Typography
                 variant="body2"
                 sx={{
                   fontSize: { xs: ".8em", md: "1rem" },
-                  color: "#758BFD",
+                  color: "#fff",
                   marginTop: ".5em",
                 }}
               >
@@ -129,16 +241,29 @@ const Wallet = () => {
               </Typography>
             </Box>
             <Box sx={{ textAlign: "center", width: "100%" }}>
-              <Button sx={{ backgroundColor: "#758BFD" }}>
+              <Button
+                sx={{
+                  backgroundColor: "#fff",
+                  border: "1px solid #fff",
+                  color: "#3884FD",
+                  "&:hover": {
+                    border: "1px solid #fff",
+                    color: "#fff",
+                  },
+                }}
+              >
                 <WorkspacesOutlined
-                  sx={{ fontSize: { xs: ".9rem", md: "1rem" }, color: "#fff" }}
+                  sx={{
+                    fontSize: { xs: ".9rem", md: "1rem" },
+                    color: "#inherit",
+                  }}
                 />
               </Button>
               <Typography
                 variant="body2"
                 sx={{
                   fontSize: { xs: ".8em", md: "1rem" },
-                  color: "#758BFD",
+                  color: "#fff",
                   marginTop: ".5em",
                 }}
               >
@@ -152,7 +277,7 @@ const Wallet = () => {
         <CenteredBox
           sx={{
             flexDirection: "column",
-            backgroundColor: "#758BFD",
+            backgroundColor: "#3884FD",
             width: { xs: "100%", md: "80%" },
             padding: "1em",
             borderRadius: "30px",
@@ -160,7 +285,11 @@ const Wallet = () => {
         >
           <Typography
             variant="body2"
-            sx={{ fontWeight: 700, fontSize: { xs: ".9rem", md: "1rem" } }}
+            sx={{
+              fontWeight: 700,
+              fontSize: { xs: ".9rem", md: "1rem" },
+              color: "#fff",
+            }}
           >
             Use your explore points to purchase airtime or mobile data
           </Typography>
@@ -177,7 +306,7 @@ const Wallet = () => {
               </Box>
               <Typography
                 variant="body2"
-                sx={{ fontSize: { xs: ".9rem", md: "1rem" } }}
+                sx={{ fontSize: { xs: ".9rem", md: "1rem" }, color: "#fff" }}
               >
                 Use the explore app daily to get more points
               </Typography>
@@ -185,10 +314,10 @@ const Wallet = () => {
             <FilledButton
               sx={{
                 backgroundColor: "#fff",
-                color: "#758BFD",
+                color: "#3884FD",
                 fontSize: { xs: ".9rem", md: "1rem" },
                 "&:hover": {
-                  backgroundColor: "#758BFD",
+                  backgroundColor: "#3884FD",
                   color: "#fff",
                   borderColor: "#fff",
                 },
@@ -215,7 +344,7 @@ const Wallet = () => {
               sx={{
                 fontSize: { xs: "1rem", md: "1.2rem" },
                 fontWeight: 700,
-                color: "#758BFD",
+                color: "#3884FD",
               }}
             >
               <Link to="#" style={{ textDecoration: "none", color: "inherit" }}>

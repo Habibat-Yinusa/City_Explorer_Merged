@@ -148,7 +148,7 @@ const Me = () => {
                 color: "#1E1E1E",
                 fontSize: { xs: ".9rem", md: "1.2rem" },
                 "&:hover": {
-                  backgroundColor: "#758BFD",
+                  backgroundColor: "#3884FD",
                   color: "#fff",
                 },
               }}
@@ -159,7 +159,7 @@ const Me = () => {
                   backgroundColor: "#ececec",
                   padding: ".5em",
                   borderRadius: "50px",
-                  color: "#758BFD",
+                  color: "#3884FD",
                 }}
               >
                 {link.icon}

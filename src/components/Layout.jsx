@@ -67,7 +67,7 @@ function Layout() {
             disablePadding
             sx={{
               backgroundColor:
-                location.pathname === page.link ? "#758BFD" : "ingerit",
+                location.pathname === page.link ? "#3884FD" : "ingerit",
               color: location.pathname === page.link ? "#fff" : "#6c6c6c",
             }}
           >

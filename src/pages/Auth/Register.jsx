@@ -104,7 +104,7 @@ const Register = () => {
           </Box>
           <Typography
             variant="body2"
-            sx={{ color: "#758BFD", fontSize: "2.2em", fontWeight: 900 }}
+            sx={{ color: "#3884FD", fontSize: "2.2em", fontWeight: 900 }}
           >
             Create an account
           </Typography>
@@ -228,7 +228,7 @@ const Register = () => {
               to="/login"
               style={{
                 fontSize: "1rem",
-                color: "#758BFD",
+                color: "#3884FD",
                 textDecoration: "none",
                 marginTop: "1em",
               }}

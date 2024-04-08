@@ -2,7 +2,7 @@ import { Button, styled } from "@mui/material";
 
 const FilledButton = styled(Button)(({ theme }) => ({
   color: "white",
-  backgroundColor: "#758BFD",
+  backgroundColor: "#3884FD",
   border: "1px solid transparent",
   padding: " .5em 2em",
   fontSize: "18px",
@@ -16,8 +16,8 @@ const FilledButton = styled(Button)(({ theme }) => ({
   textTransform: "none",
 
   "&:hover": {
-    borderColor: "#758BFD",
-    color: "#758BFD",
+    borderColor: "#3884FD",
+    color: "#3884FD",
   },
 
   "&.outlined": {
