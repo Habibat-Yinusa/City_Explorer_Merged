@@ -10,6 +10,7 @@ import Search from "./pages/Search/Search";
 import Me from "./pages/Me/Me";
 import Auth from "./pages/Auth/Auth";
 import ExploreAi from "./pages/ExploreAi/ExploreAi";
+import Points from "./pages/Points/Points";
 
 const routes = [
   {
@@ -27,6 +28,10 @@ const routes = [
   {
     path: "/wallet",
     element: <Wallet />,
+  },
+  {
+    path: "/points",
+    element: <Points />,
   },
   {
     path: "/search",

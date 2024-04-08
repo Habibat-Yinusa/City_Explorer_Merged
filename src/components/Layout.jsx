@@ -14,7 +14,7 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import { CenteredBox } from "../styles/styled-components/styledBox";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
-import { Chat, Logout } from "@mui/icons-material";
+import { Chat, Logout, MonetizationOnOutlined } from "@mui/icons-material";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import TravelExploreIcon from "@mui/icons-material/TravelExplore";
 import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
@@ -83,7 +83,7 @@ function Layout() {
             </ListItemButton>
           </ListItem>
         ))}
-        <ListItem disablePadding sx={{ marginTop: "12em" }}>
+        <ListItem disablePadding sx={{ marginTop: "9em" }}>
           <ListItemButton onClick={handleLogout}>
             <ListItemIcon>
               <Logout />
@@ -229,12 +229,18 @@ const pageLinks = [
   },
   {
     id: 5,
+    name: "NFTs",
+    link: "/points",
+    icon: <MonetizationOnOutlined />,
+  },
+  {
+    id: 6,
     name: "Search",
     link: "/search",
     icon: <SearchIcon />,
   },
   {
-    id: 6,
+    id: 7,
     name: "Me",
     link: "/me",
     icon: <PersonOutlineIcon />,

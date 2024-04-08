@@ -1,18 +1,14 @@
 import React from "react";
-import {
-  Box,
-  Typography,
-  FormControl,
-  TextField,
-  CircularProgress,
-} from "@mui/material";
+import { Box, FormControl, TextField, CircularProgress } from "@mui/material";
 import { CenteredBox } from "../../styles/styled-components/styledBox";
 import { FilledButton } from "../../styles/styled-components/styledButtons";
+import { useSelector } from "react-redux";
 
 const ExploreAi = () => {
   const [messages, setMessages] = React.useState([]);
   const [newMessage, setNewMessage] = React.useState("");
   const [loading, setLoading] = React.useState(false);
+  const user = useSelector((state) => state.auth.user);
 
   const sendMessage = async () => {
     try {
@@ -24,7 +20,7 @@ const ExploreAi = () => {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ message: newMessage }),
+          body: JSON.stringify({ message: newMessage, _id: user.id }),
         }
       );
       const data = await response.json();
@@ -65,8 +61,8 @@ const ExploreAi = () => {
           }}
         >
           {messages?.map((message, index) => (
-            <Typography
-              variant="body2"
+            <Box
+              // variant="body2"
               sx={{
                 fontSize: "1rem",
                 margin: ".5em",
@@ -79,7 +75,7 @@ const ExploreAi = () => {
               key={index}
             >
               {message.text}
-            </Typography>
+            </Box>
           ))}
         </CenteredBox>
         <Box sx={{ width: "100%", paddingBottom: "1em" }}>
