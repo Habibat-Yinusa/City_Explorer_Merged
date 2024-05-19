@@ -70,7 +70,7 @@ const Register = () => {
         setLoading(false);
         throw new Error("Failed to submit form");
       }
-      const user = await response.json();
+      // const user = await response.json();
       // delete user.password;
       // console.log(user);
       // console.log("Form submitted successfully");

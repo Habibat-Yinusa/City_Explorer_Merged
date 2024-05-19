@@ -1,4 +1,4 @@
-import { Box, Typography, Button } from "@mui/material";
+import { Box, Typography, Button, Grid } from "@mui/material";
 import { CenteredBox } from "../../styles/styled-components/styledBox";
 import walletBg from "../../assets/walletBg.svg";
 import { FilledButton } from "../../styles/styled-components/styledButtons";
@@ -113,14 +113,18 @@ const Wallet = () => {
               <img src={cityDebit} alt="" style={{ width: "100%" }} />
             </CenteredBox>
           </CenteredBox>
-          <CenteredBox
-            sx={{
-              gap: { xs: 1, md: 2 },
-              padding: "1em 0",
-              width: { md: "80%" },
-            }}
+          <Grid
+            container
+            spacing={2}
+            // sx={{
+            //   gap: { xs: 1, md: 2 },
+            //   padding: "1em 0",
+            //   width: { md: "80%" },
+            //   display: "flex",
+            //   flexDirection: "row",
+            // }}
           >
-            <Box sx={{ textAlign: "center", width: "100%" }}>
+            <Grid item sx={{ textAlign: "center", width: "100%" }}>
               <Button
                 sx={{
                   backgroundColor: "#fff",
@@ -149,8 +153,8 @@ const Wallet = () => {
               >
                 Send
               </Typography>
-            </Box>
-            <Box sx={{ textAlign: "center", width: "100%" }}>
+            </Grid>
+            <Grid item lg={0} sx={{ textAlign: "center", width: "100%" }}>
               <Button
                 sx={{
                   backgroundColor: "#fff",
@@ -179,8 +183,8 @@ const Wallet = () => {
               >
                 Receive
               </Typography>
-            </Box>
-            <Box sx={{ textAlign: "center", width: "100%" }}>
+            </Grid>
+            <Grid item lg={0} sx={{ textAlign: "center", width: "100%" }}>
               <Button
                 sx={{
                   backgroundColor: "#fff",
@@ -209,8 +213,8 @@ const Wallet = () => {
               >
                 Top-Up
               </Typography>
-            </Box>
-            <Box sx={{ textAlign: "center", width: "100%" }}>
+            </Grid>
+            <Grid item lg={0} sx={{ textAlign: "center", width: "100%" }}>
               <Button
                 sx={{
                   backgroundColor: "#fff",
@@ -239,8 +243,8 @@ const Wallet = () => {
               >
                 Airtime
               </Typography>
-            </Box>
-            <Box sx={{ textAlign: "center", width: "100%" }}>
+            </Grid>
+            <Grid item lg={0} sx={{ textAlign: "center", width: "100%" }}>
               <Button
                 sx={{
                   backgroundColor: "#fff",
@@ -269,8 +273,8 @@ const Wallet = () => {
               >
                 More
               </Typography>
-            </Box>
-          </CenteredBox>
+            </Grid>
+          </Grid>
         </CenteredBox>
       </Box>
       <CenteredBox sx={{ width: "100%", margin: "1em 0" }}>
