@@ -1,11 +1,18 @@
 import mongoose, { Document, Schema } from 'mongoose';
 
-// Define the interface for the item
+// defining the interfaces
 interface Item {
     name: string;
     description: string;
     price: string;
     image: string;
+}
+
+interface Event {
+    title: string;
+    description: string;
+    date: Date;
+    venue: string;
 }
 
 // Define the interface for the business
@@ -14,9 +21,10 @@ interface Business extends Document {
     category: string;
     logo: string;
     items: Item[];
+    events: Event[];
 }
 
-// Define the schema for the item
+// schema for the item
 const itemSchema = new Schema<Item>({
     name: { type: String, required: true },
     description: { type: String, required: true },
@@ -24,12 +32,21 @@ const itemSchema = new Schema<Item>({
     image: { type: String, required: true }
 });
 
-// Define the schema for the business
+// schema for the event
+const eventSchema = new Schema<Event>({
+    title: { type: String, required: true },
+    description: { type: String, required: true },
+    date: { type: Date, required: true },
+    venue: { type: String, required: true }
+});
+
+//  schema for the business
 const businessSchema = new Schema<Business>({
     name: { type: String, required: true },
     category: { type: String, required: true },
     logo: { type: String, required: true },
-    items: { type: [itemSchema], required: true }
+    items: { type: [itemSchema], required: true },
+    events: { type: [eventSchema], default: [] }
 });
 
 const BusinessModel = mongoose.model<Business>('Business', businessSchema);

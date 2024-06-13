@@ -35,6 +35,8 @@ import BusinessModel from '../models/businessPage';
         res.status(500).send({ message: error.message });
     }
 };
+
+//
  const getAllBusinesses = async (req: Request, res: Response) => {
     try {
         const businesses = await BusinessModel.find();
