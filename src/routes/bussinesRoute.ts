@@ -5,7 +5,7 @@ const router = Router();
 
 router.post('/register', registerBusiness);
 router.get('/:id', getBusinessDetails);
-router.get('/all', getAllBusinesses);
+router.get('/', getAllBusinesses);
 
 
 export default router;
