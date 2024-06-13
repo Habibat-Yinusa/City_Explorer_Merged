@@ -7,6 +7,7 @@ import * as dotenv from "dotenv"
 import { connectDB } from "./config/db"
 import userRoutes from "./routes/userRoutes";
 import chatbotRoute from "./routes/chatbotRoute";
+import businessRoute from "./routes/bussinesRoute"
 import { protect } from "./middlewares/authMiddleware";
 import {botware} from "./middlewares/botMiddleware"
 
@@ -31,6 +32,7 @@ app.use(express.json())
 //end-points
 app.use("/user", userRoutes)
 app.use("/", chatbotRoute)
+app.use("/business", businessRoute)
 app.options('/*', cors());
 app.options('/chatbot', cors());
 
