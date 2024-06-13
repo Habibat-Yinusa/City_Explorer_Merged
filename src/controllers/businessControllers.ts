@@ -36,5 +36,14 @@ import BusinessModel from '../models/businessPage';
     }
 };
 
+export const getAllBusinesses = async (req: Request, res: Response) => {
+    try {
+        const businesses = await BusinessModel.find();
+
+        res.status(200).send(businesses);
+    } catch (error: any) {
+        res.status(500).send({ message: error.message });
+    }
+};
 
 export { registerBusiness, getBusinessDetails }
