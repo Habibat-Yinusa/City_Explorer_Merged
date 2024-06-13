@@ -35,8 +35,7 @@ import BusinessModel from '../models/businessPage';
         res.status(500).send({ message: error.message });
     }
 };
-
-export const getAllBusinesses = async (req: Request, res: Response) => {
+ const getAllBusinesses = async (req: Request, res: Response) => {
     try {
         const businesses = await BusinessModel.find();
 
@@ -46,4 +45,4 @@ export const getAllBusinesses = async (req: Request, res: Response) => {
     }
 };
 
-export { registerBusiness, getBusinessDetails }
+export { registerBusiness, getBusinessDetails, getAllBusinesses }
