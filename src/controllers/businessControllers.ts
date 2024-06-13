@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import BusinessModel from '../models/businessPage';
 
-export const registerBusiness = async (req: Request, res: Response) => {
+ const registerBusiness = async (req: Request, res: Response) => {
     try {
         const { name, category, logo, items } = req.body;
 
@@ -19,3 +19,22 @@ export const registerBusiness = async (req: Request, res: Response) => {
         res.status(500).send({ message: error.message });
     }
 };
+
+ const getBusinessDetails = async (req: Request, res: Response) => {
+    try {
+        const businessId = req.params.id;
+
+        const business = await BusinessModel.findById(businessId);
+
+        if (!business) {
+            return res.status(404).send({ message: 'Business not found' });
+        }
+
+        res.status(200).send(business);
+    } catch (error: any) {
+        res.status(500).send({ message: error.message });
+    }
+};
+
+
+export { registerBusiness, getBusinessDetails }
