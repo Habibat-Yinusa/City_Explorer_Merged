@@ -1,8 +1,10 @@
 import { Router } from 'express';
-import { registerBusiness } from '../controllers/businessControllers';
+import { getBusinessDetails, registerBusiness } from '../controllers/businessControllers';
 
 const router = Router();
 
 router.post('/register', registerBusiness);
+router.get('/:id', getBusinessDetails);
+
 
 export default router;
