@@ -11,7 +11,7 @@ interface Item {
 interface Event {
     title: string;
     description: string;
-    date: Date;
+    date: string;
     venue: string;
 }
  
@@ -54,7 +54,7 @@ const itemSchema = new Schema<Item>({
 const eventSchema = new Schema<Event>({
     title: { type: String, required: true },
     description: { type: String, required: true },
-    date: { type: Date, required: true },
+    date: { type: String, required: true },
     venue: { type: String, required: true }
 });
 // schema for promos
