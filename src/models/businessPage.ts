@@ -14,14 +14,32 @@ interface Event {
     date: Date;
     venue: string;
 }
+ 
+interface Promos {
+    name: string;
+    description: string;
+    timeValid: string;
+}
+interface Hours {
+    day: string;
+    time: string;
+}
 
 // Define the interface for the business
 interface Business extends Document {
     name: string;
+    description: string;
     category: string;
     logo: string;
     items: Item[];
     events: Event[];
+    promos: Promos[];
+    location: string;
+    openHours: Hours[];
+    phone: string;
+    email: string;
+    website: string; 
+
 }
 
 // schema for the item
