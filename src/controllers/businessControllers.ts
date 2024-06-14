@@ -52,4 +52,30 @@ import BusinessModel from '../models/businessPage';
     }
 };
 
-export { registerBusiness, getBusinessDetails, getAllBusinesses }
+// Add an event to a business
+
+ const addEventToBusiness = async (req: Request, res: Response) => {
+    try {
+        const businessId = req.params.id;
+        const { title, description, venue, date } = req.body;
+
+        
+        const business = await BusinessModel.findById(businessId);
+
+        if (!business) {
+            return res.status(404).send({ message: 'Business not found' });
+        }
+
+        const newEvent = { title, description, venue, date };
+
+        business.events.push(newEvent);
+
+        await business.save();
+
+        res.status(201).send({ message: 'Event added successfully', event: newEvent });
+    } catch (error: any) {
+        res.status(500).send({ message: error.message });
+    }
+};
+
+export { registerBusiness, getBusinessDetails, getAllBusinesses, addEventToBusiness }
