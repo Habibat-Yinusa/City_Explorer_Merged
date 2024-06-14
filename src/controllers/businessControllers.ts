@@ -78,4 +78,20 @@ import BusinessModel from '../models/businessPage';
     }
 };
 
+//get an event
+const getAllEventsByBusiness = async (req: Request, res: Response) => {
+    try {
+        const businessId = req.params.id;
+        const business = await BusinessModel.findById(businessId);
+
+        if (!business) {
+            return res.status(404).send({ message: 'Business not found' });
+        }
+
+        res.status(200).send(business.events);
+    } catch (error: any) {
+        res.status(500).send({ message: error.message });
+    }
+};
+
 export { registerBusiness, getBusinessDetails, getAllBusinesses, addEventToBusiness }
