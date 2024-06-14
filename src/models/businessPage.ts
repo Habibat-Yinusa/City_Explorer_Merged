@@ -15,7 +15,7 @@ interface Event {
     venue: string;
 }
  
-interface Promos {
+interface Promo {
     name: string;
     description: string;
     timeValid: string;
@@ -33,7 +33,7 @@ interface Business extends Document {
     logo: string;
     items: Item[];
     events: Event[];
-    promos: Promos[];
+    promo: Promo[];
     location: string;
     openHours: Hours[];
     phone: string;
@@ -57,6 +57,13 @@ const eventSchema = new Schema<Event>({
     date: { type: Date, required: true },
     venue: { type: String, required: true }
 });
+// schema for promos
+const promoSchema = new Schema<Promo>({
+    name: { type: String, required: true },
+    description: { type: String, required: true },
+    timeValid: { type: String, required: true },
+   
+});
 
 //  schema for the business
 const businessSchema = new Schema<Business>({
@@ -64,7 +71,8 @@ const businessSchema = new Schema<Business>({
     category: { type: String, required: true },
     logo: { type: String, required: true },
     items: { type: [itemSchema], required: true },
-    events: { type: [eventSchema], default: [] }
+    events: { type: [eventSchema], default: [] },
+    promo: { type: [promoSchema], default: [] }
 });
 
 const BusinessModel = mongoose.model<Business>('Business', businessSchema);
