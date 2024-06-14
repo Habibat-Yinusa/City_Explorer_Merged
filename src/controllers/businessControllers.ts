@@ -79,7 +79,7 @@ import BusinessModel from '../models/businessPage';
 };
 
 //get an event
-const getAllEventsByBusiness = async (req: Request, res: Response) => {
+const getAllEvents = async (req: Request, res: Response) => {
     try {
         const businessId = req.params.id;
         const business = await BusinessModel.findById(businessId);
@@ -94,4 +94,4 @@ const getAllEventsByBusiness = async (req: Request, res: Response) => {
     }
 };
 
-export { registerBusiness, getBusinessDetails, getAllBusinesses, addEventToBusiness }
+export { registerBusiness, getBusinessDetails, getAllBusinesses, addEventToBusiness, getAllEvents }
