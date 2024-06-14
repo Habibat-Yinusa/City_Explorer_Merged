@@ -14,7 +14,7 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import { CenteredBox } from "../styles/styled-components/styledBox";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
-import { Chat, Logout, MonetizationOnOutlined } from "@mui/icons-material";
+import { Chat, Logout } from "@mui/icons-material";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import TravelExploreIcon from "@mui/icons-material/TravelExplore";
 import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
@@ -55,26 +55,37 @@ function Layout() {
 
   const drawer = (
     <div>
-      <CenteredBox sx={{ marginTop: "2em" }}>
-        <Box sx={{ width: "3em" }}>
-          <img src={logo} alt="" style={{ width: "100%" }} />
-        </Box>
-      </CenteredBox>
       <List>
+        <Toolbar />
         {pageLinks.map((page) => (
           <ListItem
             key={page.id}
             disablePadding
-            sx={{
-              backgroundColor:
-                location.pathname === page.link ? "#3884FD" : "ingerit",
-              color: location.pathname === page.link ? "#fff" : "#6c6c6c",
-            }}
+            // sx={{
+            //   backgroundColor:
+            //     location.pathname === page.link ? "#758BFD" : "inherit",
+            //   color: location.pathname === page.link ? "#fff" : "#6c6c6c",
+            //   // margin: ".3em",
+            // }}
           >
-            <ListItemButton onClick={() => navigate(page.link)} disableRipple>
+            <ListItemButton
+              onClick={() => navigate(page.link)}
+              disableRipple
+              sx={{
+                margin: ".2em .7em",
+                backgroundColor:
+                  location.pathname === page.link ? "#758BFD" : "inherit",
+                color: location.pathname === page.link ? "#fff" : "#6c6c6c",
+                borderRadius: "10px",
+                "&:hover": {
+                  backgroundColor: "#6E83F3",
+                  color: "#fff",
+                },
+              }}
+            >
               <ListItemIcon
                 sx={{
-                  color: location.pathname === page.link ? "#fff" : "#6c6c6c",
+                  color: "inherit",
                 }}
               >
                 {page.icon}
@@ -84,8 +95,20 @@ function Layout() {
           </ListItem>
         ))}
         <ListItem disablePadding sx={{ marginTop: "9em" }}>
-          <ListItemButton onClick={handleLogout}>
-            <ListItemIcon>
+          <ListItemButton
+            onClick={handleLogout}
+            sx={{
+              margin: "0 .7em",
+              backgroundColor: "inherit",
+              color: "#6c6c6c",
+              borderRadius: "10px",
+              "&:hover": {
+                backgroundColor: "#6E83F3",
+                color: "#fff",
+              },
+            }}
+          >
+            <ListItemIcon sx={{ color: "inherit" }}>
               <Logout />
             </ListItemIcon>
             <ListItemText primary={"Log out"} />
@@ -129,12 +152,13 @@ function Layout() {
               justifyContent: "space-between",
               width: "99%",
               alignItems: "center",
+              padding: "1em 0",
             }}
           >
-            <Typography variant="h6">City Explorer</Typography>
-            <Box sx={{ width: "2em" }}>
+            <Box sx={{ width: "3em" }}>
               <img src={logo} alt="" style={{ width: "100%" }} />
             </Box>
+            <Typography variant="h6">City Explorer</Typography>
           </CenteredBox>
         </Toolbar>
       </AppBar>
@@ -187,7 +211,7 @@ function Layout() {
           backgroundColor: "#ececec",
         }}
       >
-        <Toolbar />
+        {/* <Toolbar /> */}
         <Box
           sx={{
             backgroundColor: "#ececec",
@@ -195,6 +219,8 @@ function Layout() {
             width: "100%",
           }}
         >
+          <Toolbar />
+          <Toolbar />
           <Outlet />
         </Box>
       </Box>
@@ -217,30 +243,30 @@ const pageLinks = [
   },
   {
     id: 3,
-    name: "Explore AI",
-    link: "/explore-ai",
-    icon: <Chat />,
-  },
-  {
-    id: 4,
     name: "Wallet",
     link: "/wallet",
     icon: <AccountBalanceWalletIcon />,
   },
   {
-    id: 5,
-    name: "NFTs",
-    link: "/points",
-    icon: <MonetizationOnOutlined />,
+    id: 4,
+    name: "Explore AI",
+    link: "/explore-ai",
+    icon: <Chat />,
   },
+  // {
+  //   id: 5,
+  //   name: "NFTs",
+  //   link: "/points",
+  //   icon: <MonetizationOnOutlined />,
+  // },
   {
-    id: 6,
+    id: 5,
     name: "Search",
     link: "/search",
     icon: <SearchIcon />,
   },
   {
-    id: 7,
+    id: 6,
     name: "Me",
     link: "/me",
     icon: <PersonOutlineIcon />,

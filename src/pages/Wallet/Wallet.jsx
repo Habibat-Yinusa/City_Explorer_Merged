@@ -19,7 +19,7 @@ import cityDebit from "../../assets/citydebit.png";
 const Wallet = () => {
   return (
     <Box>
-      <Box sx={{ backgroundColor: "#3884FD", borderRadius: "30px" }}>
+      <Box sx={{ backgroundColor: "#758BFD", borderRadius: "30px" }}>
         <CenteredBox
           sx={{
             justifyContent: "start",
@@ -98,10 +98,10 @@ const Wallet = () => {
               <FilledButton
                 sx={{
                   backgroundColor: "#fff",
-                  color: "#3884FD",
+                  color: "#758BFD",
                   "&:hover": {
                     color: "#fff",
-                    backgroundColor: "#3884FD",
+                    backgroundColor: "#758BFD",
                     border: "1px solid #fff",
                   },
                 }}
@@ -129,7 +129,7 @@ const Wallet = () => {
                 sx={{
                   backgroundColor: "#fff",
                   border: "1px solid #fff",
-                  color: "#3884FD",
+                  color: "#758BFD",
                   "&:hover": {
                     border: "1px solid #fff",
                     color: "#fff",
@@ -159,7 +159,7 @@ const Wallet = () => {
                 sx={{
                   backgroundColor: "#fff",
                   border: "1px solid #fff",
-                  color: "#3884FD",
+                  color: "#758BFD",
                   "&:hover": {
                     border: "1px solid #fff",
                     color: "#fff",
@@ -189,7 +189,7 @@ const Wallet = () => {
                 sx={{
                   backgroundColor: "#fff",
                   border: "1px solid #fff",
-                  color: "#3884FD",
+                  color: "#758BFD",
                   "&:hover": {
                     border: "1px solid #fff",
                     color: "#fff",
@@ -219,7 +219,7 @@ const Wallet = () => {
                 sx={{
                   backgroundColor: "#fff",
                   border: "1px solid #fff",
-                  color: "#3884FD",
+                  color: "#758BFD",
                   "&:hover": {
                     border: "1px solid #fff",
                     color: "#fff",
@@ -249,7 +249,7 @@ const Wallet = () => {
                 sx={{
                   backgroundColor: "#fff",
                   border: "1px solid #fff",
-                  color: "#3884FD",
+                  color: "#758BFD",
                   "&:hover": {
                     border: "1px solid #fff",
                     color: "#fff",
@@ -281,7 +281,7 @@ const Wallet = () => {
         <CenteredBox
           sx={{
             flexDirection: "column",
-            backgroundColor: "#3884FD",
+            backgroundColor: "#758BFD",
             width: { xs: "100%", md: "80%" },
             padding: "1em",
             borderRadius: "30px",
@@ -318,10 +318,10 @@ const Wallet = () => {
             <FilledButton
               sx={{
                 backgroundColor: "#fff",
-                color: "#3884FD",
+                color: "#758BFD",
                 fontSize: { xs: ".9rem", md: "1rem" },
                 "&:hover": {
-                  backgroundColor: "#3884FD",
+                  backgroundColor: "#758BFD",
                   color: "#fff",
                   borderColor: "#fff",
                 },
@@ -348,7 +348,7 @@ const Wallet = () => {
               sx={{
                 fontSize: { xs: "1rem", md: "1.2rem" },
                 fontWeight: 700,
-                color: "#3884FD",
+                color: "#758BFD",
               }}
             >
               <Link to="#" style={{ textDecoration: "none", color: "inherit" }}>

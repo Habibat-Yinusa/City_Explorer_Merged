@@ -66,7 +66,7 @@ const ExploreAi = () => {
               sx={{
                 fontSize: "1rem",
                 margin: ".5em",
-                backgroundColor: message.type === "sent" ? "#3884FD" : "#fff",
+                backgroundColor: message.type === "sent" ? "#758BFD" : "#fff",
                 color: message.type === "sent" ? "#fff" : "#000",
                 padding: "1em",
                 borderRadius: "10px",

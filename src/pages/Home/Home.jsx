@@ -10,7 +10,7 @@ import "@splidejs/react-splide/css";
 const Home = () => {
   return (
     <Box sx={{ backgroundColor: "#ececec" }}>
-      <CenteredBox sx={{ backgroundColor: "#3884FD", borderRadius: "30px" }}>
+      <CenteredBox sx={{ backgroundColor: "#758BFD", borderRadius: "30px" }}>
         <CenteredBox
           sx={{
             width: "80%",
@@ -46,6 +46,7 @@ const Home = () => {
             marginBottom: "2em",
           }}
         >
+          hello
           <Typography
             variant="h3"
             sx={{ fontWeight: 700, fontSize: { xs: "1.7rem", md: "2rem" } }}
@@ -60,7 +61,6 @@ const Home = () => {
             }}
           />
         </CenteredBox>
-
         <Grid container spacing={2}>
           {businesses.map((item) => (
             <Grid item xs={3.1} sm={2.5} md={2.6} lg={2.3} key={item.id}>
@@ -82,7 +82,6 @@ const Home = () => {
             </Grid>
           ))}
         </Grid>
-
         <Grid
           container
           spacing={2}

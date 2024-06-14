@@ -12,7 +12,7 @@ import logo from "../../assets/logo.svg";
 import { CenteredBox } from "../../styles/styled-components/styledBox";
 import React from "react";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-import { FilledButton } from "../../styles/styled-components/styledButtons";
+import { BgButton } from "../../styles/styled-components/styledButtons";
 import { Link, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import * as yup from "yup";
@@ -83,27 +83,53 @@ const Login = () => {
       >
         <CenteredBox
           sx={{
-            backgroundColor: "#ececec",
+            backgroundColor: "#fff",
             flexDirection: "column",
             padding: "0em 5em",
-            width: { xs: "90vw", md: "50vw" },
-            minHeight: "88vh",
-            borderRadius: "10px",
+            width: "50%",
+            minHeight: "100vh",
+            // borderRadius: "10px",
+            display: { xs: "none", md: "flex" },
           }}
         >
-          <Box sx={{ width: "4em" }}>
+          <Box sx={{ width: "10em" }}>
             <img src={logo} alt="" style={{ width: "100%" }} />
           </Box>
           <Typography
             variant="body2"
-            sx={{ color: "#3884FD", fontSize: "2.2em", fontWeight: 900 }}
+            sx={{
+              color: "#758BFD",
+              fontSize: "2.2em",
+              fontWeight: 900,
+              textTransform: "uppercase",
+              marginTop: ".2em",
+            }}
+          >
+            City Explorer
+          </Typography>
+        </CenteredBox>
+        <CenteredBox
+          sx={{
+            backgroundColor: "#ececec",
+            flexDirection: "column",
+            padding: "0em 5em",
+            width: { xs: "100%", md: "50%" },
+            // width: { xs: "90vw", md: "50vw" },
+            minHeight: "88vh",
+            borderRadius: "10px",
+          }}
+        >
+          <Typography
+            variant="body2"
+            sx={{ color: "#758BFD", fontSize: "1.9em", fontWeight: 900 }}
           >
             Welcome back!
           </Typography>
           <CenteredBox
             sx={{
               flexDirection: "column",
-              width: { xs: "100%", sm: "70%", md: "60%" },
+              width: { xs: "100%", sm: "70%", md: "100%" },
+              maxWidth: "350px",
             }}
             component="form"
             onSubmit={formik.handleSubmit}
@@ -148,13 +174,13 @@ const Login = () => {
                 sx={{ width: "100%", marginTop: "1em" }}
               />
             </FormControl>
-            <FilledButton
+            <BgButton
               sx={{
                 margin: "1em 0",
                 width: "100%",
                 color: "#fff",
                 "&:hover": {
-                  color: "#1976D2",
+                  color: "#fff8",
                 },
               }}
               type="submit"
@@ -165,12 +191,12 @@ const Login = () => {
               ) : (
                 "Login"
               )}
-            </FilledButton>
+            </BgButton>
             <Link
               to="/register"
               style={{
                 fontSize: "1rem",
-                color: "#3884FD",
+                color: "#758BFD",
                 textDecoration: "none",
                 marginTop: "1em",
               }}
