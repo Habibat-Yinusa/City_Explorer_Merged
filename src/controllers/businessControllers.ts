@@ -3,13 +3,18 @@ import BusinessModel from '../models/businessPage';
 
  const registerBusiness = async (req: Request, res: Response) => {
     try {
-        const { name, category, logo, items } = req.body;
+        const { name, category, logo, items, location, openHours, phone, email, website } = req.body;
 
         const newBusiness = new BusinessModel({
             name,
             category,
             logo,
-            items
+            items,
+            location,
+            openHours,
+            phone,
+            email,
+            website
         });
 
         await newBusiness.save();
