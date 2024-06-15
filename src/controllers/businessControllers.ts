@@ -150,4 +150,4 @@ const getPromo = async (req: Request, res: Response) => {
         res.status(500).send({ message: error.message });
     }
 };
-export { registerBusiness, getBusinessDetails, getAllBusinesses, addEventToBusiness, getEvents, getAllEvents, addPromo }
+export { registerBusiness, getBusinessDetails, getAllBusinesses, addEventToBusiness, getEvents, getAllEvents, addPromo, getPromo }
