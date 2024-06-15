@@ -112,6 +112,7 @@ const getAllEvents = async (req: Request, res: Response) => {
     }
 };
 
+//add business promo
 const addPromo = async (req: Request, res: Response) => {
     try {
         const businessId = req.params.id;
@@ -136,6 +137,7 @@ const addPromo = async (req: Request, res: Response) => {
     }
 };
 
+//get business promos
 const getPromo = async (req: Request, res: Response) => {
     try {
         const businessId = req.params.id;
