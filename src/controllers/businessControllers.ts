@@ -136,4 +136,4 @@ const addPromo = async (req: Request, res: Response) => {
     }
 };
 
-export { registerBusiness, getBusinessDetails, getAllBusinesses, addEventToBusiness, getEvents, getAllEvents }
+export { registerBusiness, getBusinessDetails, getAllBusinesses, addEventToBusiness, getEvents, getAllEvents, addPromo }
