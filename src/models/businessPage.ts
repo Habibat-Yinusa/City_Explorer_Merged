@@ -15,6 +15,13 @@ interface Event {
     venue: string;
 }
  
+export interface BusinessEvent {
+    title: string;
+    description: string;
+    venue: string;
+    date: string;
+}
+
 interface Promo {
     name: string;
     description: string;

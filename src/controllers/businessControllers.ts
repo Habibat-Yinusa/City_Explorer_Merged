@@ -1,5 +1,7 @@
 import { Request, Response } from 'express';
-import BusinessModel from '../models/businessPage';
+import BusinessModel, { BusinessEvent } from '../models/businessPage';
+
+let allEvents = [];
 
  const registerBusiness = async (req: Request, res: Response) => {
     try {
@@ -79,7 +81,7 @@ import BusinessModel from '../models/businessPage';
 };
 
 //get an event
-const getAllEvents = async (req: Request, res: Response) => {
+const getEvents = async (req: Request, res: Response) => {
     try {
         const businessId = req.params.id;
         const business = await BusinessModel.findById(businessId);
@@ -94,4 +96,20 @@ const getAllEvents = async (req: Request, res: Response) => {
     }
 };
 
-export { registerBusiness, getBusinessDetails, getAllBusinesses, addEventToBusiness, getAllEvents }
+//get all events
+const getAllEvents = async (req: Request, res: Response) => {
+    try {
+        const businesses = await BusinessModel.find();
+        const allEvents: BusinessEvent[] = [];
+
+        businesses.forEach(business => {
+            allEvents.push(...business.events);
+        });
+
+        res.status(200).send(allEvents);
+    } catch (error: any) {
+        res.status(500).send({ message: error.message });
+    }
+};
+
+export { registerBusiness, getBusinessDetails, getAllBusinesses, addEventToBusiness, getEvents, getAllEvents }
