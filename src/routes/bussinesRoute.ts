@@ -3,12 +3,13 @@ import { addEventToBusiness, getAllBusinesses, getEvents, getAllEvents, getBusin
 
 const router = Router();
 
+router.get('/events', getAllEvents)
 router.post('/register', registerBusiness);
 router.get('/:id', getBusinessDetails);
 router.get('/', getAllBusinesses);
 router.post('/createevent/:id', addEventToBusiness);
 router.get('/event/:id', getEvents)
-router.get('/events', getAllEvents)
+
 
 
 export default router;
