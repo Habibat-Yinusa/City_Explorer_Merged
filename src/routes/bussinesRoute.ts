@@ -6,7 +6,7 @@ const router = Router();
 router.post('/register', registerBusiness);
 router.get('/:id', getBusinessDetails);
 router.get('/', getAllBusinesses);
-router.post('/event/create/:id', addEventToBusiness);
+router.post('/createevent/:id', addEventToBusiness);
 router.get('/event/:id', getAllEvents)
 
 
