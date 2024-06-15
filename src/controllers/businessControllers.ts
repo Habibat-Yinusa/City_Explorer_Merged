@@ -112,4 +112,28 @@ const getAllEvents = async (req: Request, res: Response) => {
     }
 };
 
+const addPromo = async (req: Request, res: Response) => {
+    try {
+        const businessId = req.params.id;
+        const { name, description, timeValid } = req.body;
+
+        
+        const business = await BusinessModel.findById(businessId);
+
+        if (!business) {
+            return res.status(404).send({ message: 'Business not found' });
+        }
+
+        const newPromo = { name, description, timeValid };
+
+        business.promo.push(newPromo);
+
+        await business.save();
+
+        res.status(201).send({ message: 'Event added successfully', event: newPromo});
+    } catch (error: any) {
+        res.status(500).send({ message: error.message });
+    }
+};
+
 export { registerBusiness, getBusinessDetails, getAllBusinesses, addEventToBusiness, getEvents, getAllEvents }
