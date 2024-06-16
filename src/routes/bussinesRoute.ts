@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { addEventToBusiness, getAllBusinesses, getEvents, getAllEvents, getBusinessDetails, registerBusiness, addPromo, getPromo } from '../controllers/businessControllers';
+import { addEventToBusiness, getAllBusinesses, getEvents, getAllEvents, getBusinessDetails, registerBusiness, addPromo, getPromo, getAllPromos } from '../controllers/businessControllers';
 
 const router = Router();
 
@@ -11,6 +11,7 @@ router.post('/createevent/:id', addEventToBusiness);
 router.get('/event/:id', getEvents)
 router.post('/promo/:id', addPromo)
 router.get('/promo/:id', getPromo)
+router.get('/promo/', getAllPromos)
 
 
 export default router;
