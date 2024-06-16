@@ -1,7 +1,6 @@
 import { Request, Response } from 'express';
-import BusinessModel, { BusinessEvent } from '../models/businessPage';
+import BusinessModel, { BusinessEvent, PromoDeal } from '../models/businessPage';
 
-let allEvents = [];
 
  const registerBusiness = async (req: Request, res: Response) => {
     try {
@@ -148,6 +147,21 @@ const getPromo = async (req: Request, res: Response) => {
         }
 
         res.status(200).send(business.promo);
+    } catch (error: any) {
+        res.status(500).send({ message: error.message });
+    }
+};
+
+const getAllPromos = async (req: Request, res: Response) => {
+    try {
+        const businesses = await BusinessModel.find();
+        const allPromos: PromoDeal[] = [];
+
+        businesses.forEach(business => {
+            allPromos.push(...business.promo);
+        });
+
+        res.status(200).send(allPromos);
     } catch (error: any) {
         res.status(500).send({ message: error.message });
     }

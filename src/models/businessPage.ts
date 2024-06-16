@@ -27,6 +27,13 @@ interface Promo {
     description: string;
     timeValid: string;
 }
+
+export interface PromoDeal {
+    name: string;
+    description: string;
+    timeValid: string;
+}
+
 interface Hours {
     day: string;
     time: string;
