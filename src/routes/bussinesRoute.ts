@@ -11,7 +11,7 @@ router.post('/createevent/:id', addEventToBusiness);
 router.get('/event/:id', getEvents)
 router.post('/promo/:id', addPromo)
 router.get('/promo/:id', getPromo)
-router.get('/promo/', getAllPromos)
+router.get('/promos', getAllPromos)
 
 
 export default router;
