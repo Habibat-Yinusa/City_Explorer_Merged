@@ -1,4 +1,4 @@
-import mongoose, { Document, Schema } from 'mongoose';
+import mongoose, { Document, Schema, Types } from 'mongoose';
 
 // defining the interfaces
 interface Item {
@@ -22,13 +22,16 @@ export interface BusinessEvent {
     date: string;
 }
 
+
 interface Promo {
+    _id: string;
     name: string;
     description: string;
     timeValid: string;
 }
 
 export interface PromoDeal {
+    _id: string;
     name: string;
     description: string;
     timeValid: string;

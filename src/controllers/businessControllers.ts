@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import BusinessModel, { BusinessEvent, PromoDeal } from '../models/businessPage';
-
+import { Types } from 'mongoose';
 
  const registerBusiness = async (req: Request, res: Response) => {
     try {
@@ -115,7 +115,7 @@ const getAllEvents = async (req: Request, res: Response) => {
 const addPromo = async (req: Request, res: Response) => {
     try {
         const businessId = req.params.id;
-        const { name, description, timeValid } = req.body;
+        const { _id, name, description, timeValid } = req.body;
 
         
         const business = await BusinessModel.findById(businessId);
@@ -124,7 +124,7 @@ const addPromo = async (req: Request, res: Response) => {
             return res.status(404).send({ message: 'Business not found' });
         }
 
-        const newPromo = { name, description, timeValid };
+        const newPromo = { _id, name, description, timeValid };
 
         business.promo.push(newPromo);
 
@@ -166,4 +166,35 @@ const getAllPromos = async (req: Request, res: Response) => {
         res.status(500).send({ message: error.message });
     }
 };
+
+const deletePromoDeal = async (req: Request, res: Response) => {
+    try {
+        const { businessId, promoId } = req.params;
+
+        // // Validate ObjectId format
+        // if (!Types.ObjectId.isValid(businessId) || !Types.ObjectId.isValid(promoId)) {
+        //     return res.status(400).send({ message: 'Invalid ID format' });
+        // }
+
+        const business = await BusinessModel.findById(businessId);
+
+        if (!business) {
+            return res.status(404).send({ message: 'Business not found' });
+        }
+
+        const promoIndex = business.promo.findIndex(promo => promo._id.toString() === promoId);
+
+        if (promoIndex === -1) {
+            return res.status(404).send({ message: 'Promo deal not found' });
+        }
+
+        business.promo.splice(promoIndex, 1);
+        await business.save();
+
+        res.status(200).send({ message: 'Promo deal deleted successfully' });
+    } catch (error: any) {
+        res.status(500).send({ message: error.message });
+    }
+};
+
 export { registerBusiness, getBusinessDetails, getAllBusinesses, addEventToBusiness, getEvents, getAllEvents, addPromo, getPromo, getAllPromos }
