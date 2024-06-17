@@ -22,7 +22,7 @@ const options: cors.CorsOptions = {
 };
 
 const app = express();
-app.use(cors())
+app.use(cors(options));
 const port = 3000;
 
 // app.use(cors({
