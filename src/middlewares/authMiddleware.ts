@@ -23,7 +23,7 @@ const protect = async (req: AuthenticatedRequest, res: Response, next: NextFunct
             throw new Error("Invalid token");
         }
 
-        req.user = { userId: user._id };
+        // req.user = { userId: user._id };
 
         next();
     } catch (error: any) {
