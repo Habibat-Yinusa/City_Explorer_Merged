@@ -15,6 +15,12 @@ import {botware} from "./middlewares/botMiddleware"
 dotenv.config();
 connectDB();
 
+// Configure CORS
+const allowedOrigins = ['http://localhost:3000', 'https://sulky-acoustics-perfect-tub-production.pipeops.app/']; 
+const options: cors.CorsOptions = {
+    origin: allowedOrigins
+};
+
 const app = express();
 app.use(cors())
 const port = 3000;
