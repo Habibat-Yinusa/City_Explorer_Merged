@@ -167,14 +167,9 @@ const getAllPromos = async (req: Request, res: Response) => {
     }
 };
 
-const deletePromoDeal = async (req: Request, res: Response) => {
+const deletePromo = async (req: Request, res: Response) => {
     try {
         const { businessId, promoId } = req.params;
-
-        // // Validate ObjectId format
-        // if (!Types.ObjectId.isValid(businessId) || !Types.ObjectId.isValid(promoId)) {
-        //     return res.status(400).send({ message: 'Invalid ID format' });
-        // }
 
         const business = await BusinessModel.findById(businessId);
 
@@ -197,4 +192,4 @@ const deletePromoDeal = async (req: Request, res: Response) => {
     }
 };
 
-export { registerBusiness, getBusinessDetails, getAllBusinesses, addEventToBusiness, getEvents, getAllEvents, addPromo, getPromo, getAllPromos }
+export { registerBusiness, getBusinessDetails, getAllBusinesses, addEventToBusiness, getEvents, getAllEvents, addPromo, getPromo, getAllPromos, deletePromo }
