@@ -8,6 +8,7 @@ interface UserAttributes {
   passwordResetTokenExpires: Date;
   userMessages: string[];
   botReplies: string[];
+  role: string;
   
 }
 
@@ -23,6 +24,7 @@ const userSchema = new Schema<UserDocument>({
   passwordResetTokenExpires: { type: Date },
   userMessages: { type: [String], default: [] },
   botReplies: { type: [String], default: [] },
+  role: { type: String, enum: ['user', 'business'], default: 'user' } 
   // createResetPasswordToken(): { type: string },
   
 });
