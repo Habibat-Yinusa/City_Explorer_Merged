@@ -56,6 +56,7 @@ interface Business extends Document {
     phone: string;
     email: string;
     website: string; 
+    role: string;
 
 }
 
@@ -89,7 +90,8 @@ const businessSchema = new Schema<Business>({
     logo: { type: String, required: true },
     items: { type: [itemSchema], required: true },
     events: { type: [eventSchema], default: [] },
-    promo: { type: [promoSchema], default: [] }
+    promo: { type: [promoSchema], default: [] },
+    role: { type: String, enum: ['user', 'business'], default: 'business' }
 });
 
 const BusinessModel = mongoose.model<Business>('Business', businessSchema);
