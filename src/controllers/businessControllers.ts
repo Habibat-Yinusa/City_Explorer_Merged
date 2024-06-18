@@ -236,4 +236,4 @@ const addProduct = async (req: Request, res: Response) => {
 
 export default { addProduct };
 
-export { registerBusiness, getBusinessDetails, getAllBusinesses, addEventToBusiness, getEvents, getAllEvents, addPromo, getPromo, getAllPromos, deletePromo }
+export { registerBusiness, getBusinessDetails, getAllBusinesses, addEventToBusiness, getEvents, getAllEvents, addPromo, getPromo, getAllPromos, deletePromo, addProduct }

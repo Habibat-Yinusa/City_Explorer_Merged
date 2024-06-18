@@ -7,6 +7,12 @@ interface Item {
     price: string;
     image: string;
 }
+export interface Items {
+    name: string;
+    description: string;
+    price: string;
+    image: string;
+}
 
 interface Event {
     title: string;
