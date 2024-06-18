@@ -4,13 +4,15 @@ import Login from "./pages/Auth/Login";
 import Register from "./pages/Auth/Register";
 import Layout from "./components/Layout";
 import Home from "./pages/Home/Home";
-import Explore from "./pages/Explore/Explore";
+// import Explore from "./pages/Explore/Explore";
 import Wallet from "./pages/Wallet/Wallet";
 import Search from "./pages/Search/Search";
 import Me from "./pages/Me/Me";
 import Auth from "./pages/Auth/Auth";
 import ExploreAi from "./pages/ExploreAi/ExploreAi";
 import Points from "./pages/Points/Points";
+import Business from "./pages/Explore/Business";
+import BusinessOpen from "./pages/Explore/BusinessOpen";
 
 const routes = [
   {
@@ -19,7 +21,11 @@ const routes = [
   },
   {
     path: "/explore",
-    element: <Explore />,
+    element: <Business />,
+  },
+  {
+    path: "/business",
+    element: <BusinessOpen />,
   },
   {
     path: "/explore-ai",

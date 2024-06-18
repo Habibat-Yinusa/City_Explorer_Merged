@@ -3,6 +3,7 @@ import { Box, FormControl, TextField, CircularProgress } from "@mui/material";
 import { CenteredBox } from "../../styles/styled-components/styledBox";
 import { FilledButton } from "../../styles/styled-components/styledButtons";
 import { useSelector } from "react-redux";
+import { SendRounded } from "@mui/icons-material";
 
 const ExploreAi = () => {
   const [messages, setMessages] = React.useState([]);
@@ -78,22 +79,37 @@ const ExploreAi = () => {
             </Box>
           ))}
         </CenteredBox>
-        <Box sx={{ width: "100%", paddingBottom: "1em" }}>
-          <FormControl error fullWidth sx={{ marginTop: "1em" }}>
+        <Box
+          sx={{
+            width: "100%",
+            // paddingBottom: "1em",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            // border: "1px solid red",
+          }}
+        >
+          <FormControl error fullWidth sx={{ width: "92%" }}>
             <TextField
               label="Type in your message"
               id="text"
               type="text"
               value={newMessage}
               onChange={(e) => setNewMessage(e.target.value)}
+              fullWidth
             />
           </FormControl>
           <FilledButton
             onClick={sendMessage}
-            sx={{ width: "100%", marginTop: ".5em" }}
+            sx={{
+              width: "5%",
+              // marginTop: ".5em",
+              // backgroundColor: "transparent",
+              padding: ".8em 2em",
+            }}
             disabled={loading}
           >
-            {loading ? <CircularProgress size={24} /> : "Send"}
+            {loading ? <CircularProgress size={26} /> : <SendRounded />}
           </FilledButton>
         </Box>
       </CenteredBox>

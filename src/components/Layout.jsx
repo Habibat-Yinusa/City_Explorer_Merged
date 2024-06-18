@@ -14,21 +14,29 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import { CenteredBox } from "../styles/styled-components/styledBox";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
-import { Chat, Logout } from "@mui/icons-material";
+import {
+  Chat,
+  Logout,
+  Notifications,
+  Person,
+  SmartToy,
+} from "@mui/icons-material";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import TravelExploreIcon from "@mui/icons-material/TravelExplore";
 import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
 import SearchIcon from "@mui/icons-material/Search";
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import logo from "../assets/logo.svg";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { UserActions } from "../store/user-slice";
+import { FilledButton } from "../styles/styled-components/styledButtons";
 
 const drawerWidth = 240;
 
 function Layout() {
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [isClosing, setIsClosing] = React.useState(false);
+  const user = useSelector((state) => state.auth.user);
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
@@ -94,7 +102,7 @@ function Layout() {
             </ListItemButton>
           </ListItem>
         ))}
-        <ListItem disablePadding sx={{ marginTop: "9em" }}>
+        <ListItem disablePadding sx={{ marginTop: "11em" }}>
           <ListItemButton
             onClick={handleLogout}
             sx={{
@@ -158,7 +166,13 @@ function Layout() {
             <Box sx={{ width: "3em" }}>
               <img src={logo} alt="" style={{ width: "100%" }} />
             </Box>
-            <Typography variant="h6">City Explorer</Typography>
+            {/* <Typography variant="h6">City Explorer</Typography> */}
+            <FilledButton
+              sx={{ textTransform: "capitalize", gap: 1 }}
+              onClick={() => navigate(`/me`)}
+            >
+              <Person /> {user?.username}
+            </FilledButton>
           </CenteredBox>
         </Toolbar>
       </AppBar>
@@ -249,9 +263,15 @@ const pageLinks = [
   },
   {
     id: 4,
+    name: "Chat",
+    link: "#",
+    icon: <Chat />,
+  },
+  {
+    id: 5,
     name: "Explore AI",
     link: "/explore-ai",
-    icon: <Chat />,
+    icon: <SmartToy />,
   },
   // {
   //   id: 5,
@@ -260,17 +280,17 @@ const pageLinks = [
   //   icon: <MonetizationOnOutlined />,
   // },
   {
-    id: 5,
-    name: "Search",
-    link: "/search",
-    icon: <SearchIcon />,
-  },
-  {
     id: 6,
-    name: "Me",
-    link: "/me",
-    icon: <PersonOutlineIcon />,
+    name: "Notification",
+    link: "/search",
+    icon: <Notifications />,
   },
+  // {
+  //   id: 7,
+  //   name: "Me",
+  //   link: "/me",
+  //   icon: <PersonOutlineIcon />,
+  // },
 ];
 
 export default Layout;
