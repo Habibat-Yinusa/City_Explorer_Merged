@@ -1,4 +1,5 @@
 import User from "../models/user";
+import Business from "../models/businessPage";
 import { hash, compare } from "bcrypt"
 import jwt from "jsonwebtoken"
 import bcrypt from 'bcrypt';
@@ -8,6 +9,7 @@ import bcrypt from 'bcrypt';
 
 
 import { Request, Response, NextFunction } from 'express';
+import BusinessModel from "../models/businessPage";
 
 let messages: string[] = [];
 
@@ -47,7 +49,11 @@ const loginUser = async (req: Request, res: Response): Promise<void> => {
     try {
         const { email, password } = req.body;
 
-        const user = await User.findOne({ email });
+        let user = await User.findOne({ email });
+
+        if (!user) {
+            user = await BusinessModel.findOne({ email });
+          }
 
         if (!user) {
             throw new Error("User not found");
@@ -60,11 +66,11 @@ const loginUser = async (req: Request, res: Response): Promise<void> => {
         }
 
         const token = jwt.sign({
-            userId: user._id, email: user.email, username: user.username
+            userId: user._id, email: user.email, username: user.username, role: user.role
         }, process.env.JWT_SECRET!, { expiresIn: "90d" });
 
         res.status(200).send({
-            token, id: user.id, username: user.username
+            token, id: user.id, username: user.username, role: user.role
         });
     } catch (error: any) {
         res.status(400).send({ message: error.message });
