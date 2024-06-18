@@ -10,6 +10,7 @@ import chatbotRoute from "./routes/chatbotRoute";
 import businessRoute from "./routes/bussinesRoute"
 import { protect } from "./middlewares/authMiddleware";
 import {botware} from "./middlewares/botMiddleware"
+import uploadRoute from './routes/uploadRoute';
 
 
 dotenv.config();
@@ -39,6 +40,7 @@ app.use(express.json())
 app.use("/user", userRoutes)
 app.use("/", chatbotRoute)
 app.use("/business", businessRoute)
+app.use("/business", uploadRoute)
 app.options('/*', cors());
 app.options('/chatbot', cors());
 
