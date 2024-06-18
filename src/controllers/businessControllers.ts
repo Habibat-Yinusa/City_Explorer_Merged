@@ -1,6 +1,10 @@
 import { Request, Response } from 'express';
-import BusinessModel, { BusinessEvent, PromoDeal } from '../models/businessPage';
+import BusinessModel, { BusinessEvent, PromoDeal, Items } from '../models/businessPage';
 import { Types } from 'mongoose';
+
+import cloudinary from '../config/cloudinary';
+
+// import BusinessModel  from '../models/businessPage';
 
  const registerBusiness = async (req: Request, res: Response) => {
     try {
@@ -191,5 +195,45 @@ const deletePromo = async (req: Request, res: Response) => {
         res.status(500).send({ message: error.message });
     }
 };
+
+
+
+const addProduct = async (req: Request, res: Response) => {
+  try {
+    const { businessId, name, description, price } = req.body;
+    const file = req.file?.path;
+
+    if (!file) {
+      return res.status(400).json({ message: 'No image uploaded' });
+    }
+
+    const result = await cloudinary.uploader.upload(file, {
+      folder: 'products'
+    });
+
+    const newProduct = {
+      name,
+      description,
+      price,
+      image: result.secure_url
+    };
+
+    const updatedBusinessPage = await BusinessModel.findByIdAndUpdate(
+        businessId,
+        { $push: { items: newProduct } },
+        { new: true }
+      );
+  
+      if (!updatedBusinessPage) {
+        return res.status(404).json({ message: 'Business not found' });
+      }
+  
+      res.status(200).json({ message: 'Product added successfully', product: newProduct });
+    } catch (error: any) {
+      res.status(500).json({ message: error.message });
+    }
+};
+
+export default { addProduct };
 
 export { registerBusiness, getBusinessDetails, getAllBusinesses, addEventToBusiness, getEvents, getAllEvents, addPromo, getPromo, getAllPromos, deletePromo }
