@@ -35,10 +35,16 @@ const dotenv = __importStar(require("dotenv"));
 const db_1 = require("./config/db");
 const userRoutes_1 = __importDefault(require("./routes/userRoutes"));
 const chatbotRoute_1 = __importDefault(require("./routes/chatbotRoute"));
+const bussinesRoute_1 = __importDefault(require("./routes/bussinesRoute"));
 dotenv.config();
 (0, db_1.connectDB)();
+// Configure CORS
+const allowedOrigins = ['http://localhost:3000', 'https://sulky-acoustics-perfect-tub-production.pipeops.app/'];
+const options = {
+    origin: allowedOrigins
+};
 const app = (0, express_1.default)();
-app.use((0, cors_1.default)());
+app.use((0, cors_1.default)(options));
 const port = 3000;
 // app.use(cors({
 //   credentials: true,
@@ -51,6 +57,7 @@ app.use(express_1.default.json());
 //end-points
 app.use("/user", userRoutes_1.default);
 app.use("/", chatbotRoute_1.default);
+app.use("/business", bussinesRoute_1.default);
 app.options('/*', (0, cors_1.default)());
 app.options('/chatbot', (0, cors_1.default)());
 app.listen(port, () => {
