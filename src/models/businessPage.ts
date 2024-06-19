@@ -61,6 +61,7 @@ interface Business extends Document {
     openHours: Hours[];
     phone: string;
     email: string;
+    password: string;
     website: string; 
     role: string;
 
@@ -97,6 +98,7 @@ const businessSchema = new Schema<Business>({
     items: { type: [itemSchema], required: true },
     events: { type: [eventSchema], default: [] },
     promo: { type: [promoSchema], default: [] },
+    password: { type: String, required: true},
     role: { type: String, enum: ['user', 'business'], default: 'business' }
 });
 

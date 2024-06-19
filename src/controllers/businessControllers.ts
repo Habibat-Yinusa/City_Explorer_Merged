@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import BusinessModel, { BusinessEvent, PromoDeal, Items } from '../models/businessPage';
 import { Types } from 'mongoose';
+import { hash, compare } from "bcrypt"
 
 import cloudinary from '../config/cloudinary';
 
@@ -8,7 +9,15 @@ import cloudinary from '../config/cloudinary';
 
  const registerBusiness = async (req: Request, res: Response) => {
     try {
-        const { name, category, logo, items, location, openHours, phone, email, website } = req.body;
+        const { name, category, logo, items, location, openHours, phone, email, password, website } = req.body;
+
+        const existingBusiness = await BusinessModel.findOne({ email });
+
+        if (existingBusiness) {
+            throw new Error("This email already exists");
+        }
+
+        const hashedPassword = await hash(password, 10);
 
         const newBusiness = new BusinessModel({
             name,
@@ -19,6 +28,7 @@ import cloudinary from '../config/cloudinary';
             openHours,
             phone,
             email,
+            password: hashedPassword,
             website
         });
 
