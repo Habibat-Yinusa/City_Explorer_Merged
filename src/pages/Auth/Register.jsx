@@ -261,6 +261,17 @@ const Register = () => {
             >
               Login?
             </Link>
+            <Link
+              to="/register-business"
+              style={{
+                fontSize: "1rem",
+                color: "#758BFD",
+                textDecoration: "none",
+                marginTop: "1em",
+              }}
+            >
+              Register a business?
+            </Link>
           </CenteredBox>
         </CenteredBox>
       </CenteredBox>

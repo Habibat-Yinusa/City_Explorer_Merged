@@ -19,7 +19,7 @@ import cityDebit from "../../assets/citydebit.png";
 const Wallet = () => {
   return (
     <Box>
-      <Box sx={{ backgroundColor: "#758BFD", borderRadius: "30px" }}>
+      <Box sx={{ borderRadius: "30px" }}>
         <CenteredBox
           sx={{
             justifyContent: "start",
@@ -31,6 +31,7 @@ const Wallet = () => {
             // paddingBottom: { xs: "5em", md: "1em" },
             height: { md: "20em", lg: "15em" },
             // minHeight: "15em",
+            position: "relative",
           }}
         >
           <Box sx={{ textAlign: "center", width: "100%", margin: "2.5em 0" }}>
@@ -45,236 +46,192 @@ const Wallet = () => {
               sx={{
                 fontSize: "1.5rem",
                 color: "#fff",
-                marginBottom: "2em",
+                marginBottom: { xs: "5em", md: "2em" },
                 fontWeight: 700,
               }}
             >
               339,876,543.21
             </Typography>
           </Box>
-        </CenteredBox>
-        <CenteredBox sx={{ flexDirection: "column" }}>
           <CenteredBox
             sx={{
-              width: "100%",
-              justifyContent: "space-between",
-              padding: { xs: ".5em", md: "1em", lg: "2em" },
-              flexDirection: { xs: "column", md: "row" },
+              position: "absolute",
+              top: { xs: "50%", md: "60%" },
+              left: { xs: "7.5%", md: "15%" },
+              width: { xs: "85%", md: "70%" },
             }}
           >
-            {/*  */}
-            <CenteredBox
+            <Grid
+              container
+              // spacing={2}
               sx={{
-                width: { xs: "100%", sm: "80%", md: "50%", lg: "45%" },
-                flexDirection: "column",
-                alignItems: { xs: "center", md: "start" },
+                padding: "1em 0",
+                // width: { md: "80%" },
+                display: "flex",
+                // flexDirection: "row",
+                justifyContent: "center",
+                backgroundColor: "#fff",
+                borderRadius: "30px",
               }}
+              gap={1}
             >
-              <Typography
-                variant="h3"
-                sx={{
-                  fontSize: {
-                    xs: "2.5rem",
-                    sm: "3rem",
-                    md: "2.5rem",
-                    lg: "3rem",
-                  },
-                  color: "#fff",
-                }}
-              >
-                Your new debit card awaits.
-              </Typography>
-              <Typography
-                variant="body2"
-                sx={{
-                  fontSize: { xs: "1rem", md: ".9rem" },
-                  color: "#fff",
-                  margin: "2em 0",
-                }}
-              >
-                For any payment - anywhere in the world. The city explorer Debit
-                Card does not have an annual card fee
-              </Typography>
-              <FilledButton
-                sx={{
-                  backgroundColor: "#fff",
-                  color: "#758BFD",
-                  "&:hover": {
-                    color: "#fff",
-                    backgroundColor: "#758BFD",
+              <Grid item xs={2} sx={{ textAlign: "center", width: "100%" }}>
+                <FilledButton
+                  sx={{
+                    // backgroundColor: "#fff",
                     border: "1px solid #fff",
-                  },
-                }}
-              >
-                Get Started
-              </FilledButton>
-            </CenteredBox>
-            <CenteredBox sx={{ width: "50%" }}>
-              <img src={cityDebit} alt="" style={{ width: "100%" }} />
-            </CenteredBox>
+                    // color: "#758BFD",
+                    padding: { xs: "1em" },
+                    "&:hover": {
+                      border: "1px solid #fff",
+                      // color: "#fff",
+                    },
+                  }}
+                >
+                  <CallMade
+                    sx={{
+                      fontSize: { xs: ".9rem", md: "1rem" },
+                      color: "#inherit",
+                    }}
+                  />
+                </FilledButton>
+                <Typography
+                  variant="body2"
+                  sx={{
+                    fontSize: { xs: ".8em", md: "1rem" },
+                    color: "#758BFD",
+                    marginTop: ".5em",
+                  }}
+                >
+                  Send
+                </Typography>
+              </Grid>
+              <Grid item xs={2} sx={{ textAlign: "center", width: "100%" }}>
+                <FilledButton
+                  sx={{
+                    // backgroundColor: "#fff",
+                    border: "1px solid #fff",
+                    // color: "#758BFD",
+                    padding: { xs: "1em" },
+                    "&:hover": {
+                      border: "1px solid #fff",
+                      // color: "#fff",
+                    },
+                  }}
+                >
+                  <CallReceived
+                    sx={{
+                      fontSize: { xs: ".9rem", md: "1rem" },
+                      color: "#inherit",
+                    }}
+                  />
+                </FilledButton>
+                <Typography
+                  variant="body2"
+                  sx={{
+                    fontSize: { xs: ".8em", md: "1rem" },
+                    color: "#758BFD",
+                    marginTop: ".5em",
+                  }}
+                >
+                  Receive
+                </Typography>
+              </Grid>
+              <Grid item xs={2} sx={{ textAlign: "center", width: "100%" }}>
+                <FilledButton
+                  sx={{
+                    // backgroundColor: "#fff",
+                    border: "1px solid #fff",
+                    // color: "#758BFD",
+                    padding: { xs: "1em" },
+                    "&:hover": {
+                      border: "1px solid #fff",
+                      // color: "#fff",
+                    },
+                  }}
+                >
+                  <AddCircleOutline
+                    sx={{
+                      fontSize: { xs: ".9rem", md: "1rem" },
+                      color: "#inherit",
+                    }}
+                  />
+                </FilledButton>
+                <Typography
+                  variant="body2"
+                  sx={{
+                    fontSize: { xs: ".8em", md: "1rem" },
+                    color: "#758BFD",
+                    marginTop: ".5em",
+                  }}
+                >
+                  Top-Up
+                </Typography>
+              </Grid>
+              <Grid item xs={2} sx={{ textAlign: "center", width: "100%" }}>
+                <FilledButton
+                  sx={{
+                    // backgroundColor: "#fff",
+                    border: "1px solid #fff",
+                    // color: "#758BFD",
+                    padding: { xs: "1em" },
+                    "&:hover": {
+                      border: "1px solid #fff",
+                      // color: "#fff",
+                    },
+                  }}
+                >
+                  <PhoneAndroid
+                    sx={{
+                      fontSize: { xs: ".9rem", md: "1rem" },
+                      color: "#inherit",
+                    }}
+                  />
+                </FilledButton>
+                <Typography
+                  variant="body2"
+                  sx={{
+                    fontSize: { xs: ".8em", md: "1rem" },
+                    color: "#758BFD",
+                    marginTop: ".5em",
+                  }}
+                >
+                  Airtime
+                </Typography>
+              </Grid>
+              <Grid item xs={2} sx={{ textAlign: "center", width: "100%" }}>
+                <FilledButton
+                  sx={{
+                    // backgroundColor: "#fff",
+                    border: "1px solid #fff",
+                    // color: "#758BFD",
+                    padding: { xs: "1em" },
+                    "&:hover": {
+                      border: "1px solid #fff",
+                      // color: "#fff",
+                    },
+                  }}
+                >
+                  <WorkspacesOutlined
+                    sx={{
+                      fontSize: { xs: ".9rem", md: "1rem" },
+                      color: "#inherit",
+                    }}
+                  />
+                </FilledButton>
+                <Typography
+                  variant="body2"
+                  sx={{
+                    fontSize: { xs: ".8em", md: "1rem" },
+                    color: "#758BFD",
+                    marginTop: ".5em",
+                  }}
+                >
+                  More
+                </Typography>
+              </Grid>
+            </Grid>
           </CenteredBox>
-          <Grid
-            container
-            spacing={2}
-            // sx={{
-            //   gap: { xs: 1, md: 2 },
-            //   padding: "1em 0",
-            //   width: { md: "80%" },
-            //   display: "flex",
-            //   flexDirection: "row",
-            // }}
-          >
-            <Grid item sx={{ textAlign: "center", width: "100%" }}>
-              <Button
-                sx={{
-                  backgroundColor: "#fff",
-                  border: "1px solid #fff",
-                  color: "#758BFD",
-                  "&:hover": {
-                    border: "1px solid #fff",
-                    color: "#fff",
-                  },
-                }}
-              >
-                <CallMade
-                  sx={{
-                    fontSize: { xs: ".9rem", md: "1rem" },
-                    color: "#inherit",
-                  }}
-                />
-              </Button>
-              <Typography
-                variant="body2"
-                sx={{
-                  fontSize: { xs: ".8em", md: "1rem" },
-                  color: "#fff",
-                  marginTop: ".5em",
-                }}
-              >
-                Send
-              </Typography>
-            </Grid>
-            <Grid item lg={0} sx={{ textAlign: "center", width: "100%" }}>
-              <Button
-                sx={{
-                  backgroundColor: "#fff",
-                  border: "1px solid #fff",
-                  color: "#758BFD",
-                  "&:hover": {
-                    border: "1px solid #fff",
-                    color: "#fff",
-                  },
-                }}
-              >
-                <CallReceived
-                  sx={{
-                    fontSize: { xs: ".9rem", md: "1rem" },
-                    color: "#inherit",
-                  }}
-                />
-              </Button>
-              <Typography
-                variant="body2"
-                sx={{
-                  fontSize: { xs: ".8em", md: "1rem" },
-                  color: "#fff",
-                  marginTop: ".5em",
-                }}
-              >
-                Receive
-              </Typography>
-            </Grid>
-            <Grid item lg={0} sx={{ textAlign: "center", width: "100%" }}>
-              <Button
-                sx={{
-                  backgroundColor: "#fff",
-                  border: "1px solid #fff",
-                  color: "#758BFD",
-                  "&:hover": {
-                    border: "1px solid #fff",
-                    color: "#fff",
-                  },
-                }}
-              >
-                <AddCircleOutline
-                  sx={{
-                    fontSize: { xs: ".9rem", md: "1rem" },
-                    color: "#inherit",
-                  }}
-                />
-              </Button>
-              <Typography
-                variant="body2"
-                sx={{
-                  fontSize: { xs: ".8em", md: "1rem" },
-                  color: "#fff",
-                  marginTop: ".5em",
-                }}
-              >
-                Top-Up
-              </Typography>
-            </Grid>
-            <Grid item lg={0} sx={{ textAlign: "center", width: "100%" }}>
-              <Button
-                sx={{
-                  backgroundColor: "#fff",
-                  border: "1px solid #fff",
-                  color: "#758BFD",
-                  "&:hover": {
-                    border: "1px solid #fff",
-                    color: "#fff",
-                  },
-                }}
-              >
-                <PhoneAndroid
-                  sx={{
-                    fontSize: { xs: ".9rem", md: "1rem" },
-                    color: "#inherit",
-                  }}
-                />
-              </Button>
-              <Typography
-                variant="body2"
-                sx={{
-                  fontSize: { xs: ".8em", md: "1rem" },
-                  color: "#fff",
-                  marginTop: ".5em",
-                }}
-              >
-                Airtime
-              </Typography>
-            </Grid>
-            <Grid item lg={0} sx={{ textAlign: "center", width: "100%" }}>
-              <Button
-                sx={{
-                  backgroundColor: "#fff",
-                  border: "1px solid #fff",
-                  color: "#758BFD",
-                  "&:hover": {
-                    border: "1px solid #fff",
-                    color: "#fff",
-                  },
-                }}
-              >
-                <WorkspacesOutlined
-                  sx={{
-                    fontSize: { xs: ".9rem", md: "1rem" },
-                    color: "#inherit",
-                  }}
-                />
-              </Button>
-              <Typography
-                variant="body2"
-                sx={{
-                  fontSize: { xs: ".8em", md: "1rem" },
-                  color: "#fff",
-                  marginTop: ".5em",
-                }}
-              >
-                More
-              </Typography>
-            </Grid>
-          </Grid>
         </CenteredBox>
       </Box>
       <CenteredBox sx={{ width: "100%", margin: "1em 0" }}>
@@ -285,6 +242,7 @@ const Wallet = () => {
             width: { xs: "100%", md: "80%" },
             padding: "1em",
             borderRadius: "30px",
+            marginTop: "2em",
           }}
         >
           <Typography

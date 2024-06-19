@@ -13,6 +13,7 @@ import ExploreAi from "./pages/ExploreAi/ExploreAi";
 import Points from "./pages/Points/Points";
 import Business from "./pages/Explore/Business";
 import BusinessOpen from "./pages/Explore/BusinessOpen";
+import RegisterBusiness from "./pages/Auth/RegisterBusiness";
 
 const routes = [
   {
@@ -55,6 +56,7 @@ function App() {
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/register-business" element={<RegisterBusiness />} />
         {routes.map((route) => (
           <Route
             path="/"

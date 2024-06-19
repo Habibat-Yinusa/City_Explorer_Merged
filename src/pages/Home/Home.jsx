@@ -17,9 +17,49 @@ import {
 } from "@mui/icons-material";
 import "@splidejs/react-splide/css";
 import { useNavigate } from "react-router-dom";
+import React from "react";
 
 const Home = () => {
   const navigate = useNavigate();
+  // const [loading, setLoading] = React.useState(false);
+  // const [business, setBusiness] = React.useState([]);
+
+  // const getBusinesses = async () => {
+  //   // setLoading(true);
+  //   // console.log(import.meta.env.VITE_APP_API_URL);
+  //   // e.preventDefault();
+  //   try {
+  //     const response = await fetch(
+  //       `${import.meta.env.VITE_APP_API_URL}/business`,
+  //       {
+  //         method: "GET",
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //         },
+  //         // body: JSON.stringify(formik.values),
+  //       }
+  //     );
+
+  //     if (!response.ok) {
+  //       // console.log(JSON.stringify(formik.values));
+  //       alert("Failed to Register User");
+  //       setLoading(false);
+  //       throw new Error("Failed to submit form");
+  //     }
+  //     // const user = await response.json();
+  //     // delete user.password;
+  //     // console.log(user);
+  //     // console.log("Form submitted successfully");
+  //     // setLoading(false);
+  //     // navigate("/login");
+  //     console.log(response);
+  //     // setBusinesses(response.data)
+  //   } catch (error) {
+  //     setLoading(false);
+  //     console.error("Error fetching businesses: ", error.message);
+  //   }
+  // };
+  // getBusinesses();
 
   return (
     <Box sx={{ backgroundColor: "#ececec" }}>
