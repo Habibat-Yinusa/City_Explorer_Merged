@@ -87,19 +87,31 @@ const promoSchema = new Schema<Promo>({
     name: { type: String, required: true },
     description: { type: String, required: true },
     timeValid: { type: String, required: true },
+// schema for promos
+})
+
+const hoursSchema = new Schema<Hours>({
+    day: { type: String, required: true },
+    time: { type: String, required: true },
    
 });
 
+
 //  schema for the business
 const businessSchema = new Schema<Business>({
-    name: { type: String, required: true },
-    category: { type: String, required: true },
-    logo: { type: String, required: true },
-    items: { type: [itemSchema], required: true },
-    events: { type: [eventSchema], default: [] },
+    name: { type: String},
+    category: { type: String},
+    logo: { type: String},
+    email: {type:String, required: true },
+    phone: { type: String},
+    items: { type: [itemSchema], default: [] },
+    events: { type: [eventSchema], default: []},
     promo: { type: [promoSchema], default: [] },
     password: { type: String, required: true},
-    role: { type: String, enum: ['user', 'business'], default: 'business' }
+    role: { type: String, enum: ['user', 'business'], default: 'business' },
+    location: { type: String},
+    openHours: { type: [hoursSchema], default: []},
+    website: { type: String }
 });
 
 const BusinessModel = mongoose.model<Business>('Business', businessSchema);
