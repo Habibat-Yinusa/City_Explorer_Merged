@@ -12,6 +12,8 @@ import { protect } from "./middlewares/authMiddleware";
 import {botware} from "./middlewares/botMiddleware"
 import uploadRoute from './routes/uploadRoute';
 
+const app = express();
+app.use(cors())
 
 dotenv.config();
 connectDB();
@@ -23,8 +25,7 @@ connectDB();
 // };
 
 
-const app = express();
-app.use(cors())
+
 // app.use(cors(options));
 const port = 3000;
 
