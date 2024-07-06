@@ -17,13 +17,15 @@ dotenv.config();
 connectDB();
 
 // Configure CORS
-const allowedOrigins = ['http://localhost:5173', 'https://sulky-acoustics-perfect-tub-production.pipeops.app/']; 
-const options: cors.CorsOptions = {
-    origin: allowedOrigins
-};
+// const allowedOrigins = ['http://localhost:5173', 'https://sulky-acoustics-perfect-tub-production.pipeops.app/']; 
+// const options: cors.CorsOptions = {
+//     origin: allowedOrigins
+// };
+
 
 const app = express();
-app.use(cors(options));
+app.use(cors())
+// app.use(cors(options));
 const port = 3000;
 
 // app.use(cors({
