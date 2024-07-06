@@ -13,7 +13,16 @@ import {botware} from "./middlewares/botMiddleware"
 import uploadRoute from './routes/uploadRoute';
 
 const app = express();
-app.use(cors())
+// CORS configuration
+const corsOptions = {
+  origin: 'http://localhost:4200',
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  preflightContinue: false,
+  optionsSuccessStatus: 204
+};
+
+app.use(cors(corsOptions))
+app.options('*', cors(corsOptions));
 
 dotenv.config();
 connectDB();
