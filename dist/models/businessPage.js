@@ -43,15 +43,27 @@ const promoSchema = new mongoose_1.Schema({
     name: { type: String, required: true },
     description: { type: String, required: true },
     timeValid: { type: String, required: true },
+    // schema for promos
+});
+const hoursSchema = new mongoose_1.Schema({
+    day: { type: String, required: true },
+    time: { type: String, required: true },
 });
 //  schema for the business
 const businessSchema = new mongoose_1.Schema({
-    name: { type: String, required: true },
-    category: { type: String, required: true },
-    logo: { type: String, required: true },
-    items: { type: [itemSchema], required: true },
+    name: { type: String },
+    category: { type: String },
+    logo: { type: String },
+    email: { type: String, required: true },
+    phone: { type: String },
+    items: { type: [itemSchema], default: [] },
     events: { type: [eventSchema], default: [] },
-    promo: { type: [promoSchema], default: [] }
+    promo: { type: [promoSchema], default: [] },
+    password: { type: String, required: true },
+    role: { type: String, enum: ['user', 'business'], default: 'business' },
+    location: { type: String },
+    openHours: { type: [hoursSchema], default: [] },
+    website: { type: String }
 });
 const BusinessModel = mongoose_1.default.model('Business', businessSchema);
 exports.default = BusinessModel;

@@ -17,6 +17,7 @@ const user_1 = __importDefault(require("../models/user"));
 const bcrypt_1 = require("bcrypt");
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const bcrypt_2 = __importDefault(require("bcrypt"));
+const businessPage_1 = __importDefault(require("../models/businessPage"));
 let messages = [];
 exports.messages = messages;
 //Signup
@@ -46,7 +47,10 @@ exports.createUser = createUser;
 const loginUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { email, password } = req.body;
-        const user = yield user_1.default.findOne({ email });
+        let user = yield user_1.default.findOne({ email });
+        if (!user) {
+            user = yield businessPage_1.default.findOne({ email });
+        }
         if (!user) {
             throw new Error("User not found");
         }
@@ -55,10 +59,10 @@ const loginUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             throw new Error("Incorrect password!");
         }
         const token = jsonwebtoken_1.default.sign({
-            userId: user._id, email: user.email, username: user.username
+            userId: user._id, email: user.email, username: user.username, role: user.role
         }, process.env.JWT_SECRET, { expiresIn: "90d" });
         res.status(200).send({
-            token, id: user.id, username: user.username
+            token, id: user.id, username: user.username, role: user.role
         });
     }
     catch (error) {

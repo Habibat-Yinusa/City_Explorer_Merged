@@ -36,19 +36,27 @@ const db_1 = require("./config/db");
 const userRoutes_1 = __importDefault(require("./routes/userRoutes"));
 const chatbotRoute_1 = __importDefault(require("./routes/chatbotRoute"));
 const bussinesRoute_1 = __importDefault(require("./routes/bussinesRoute"));
+const uploadRoute_1 = __importDefault(require("./routes/uploadRoute"));
 dotenv.config();
 (0, db_1.connectDB)();
-// Configure CORS
-const allowedOrigins = ['http://localhost:3000', 'https://sulky-acoustics-perfect-tub-production.pipeops.app/'];
-const options = {
-    origin: allowedOrigins
-};
 const app = (0, express_1.default)();
-app.use((0, cors_1.default)(options));
+app.use((0, cors_1.default)());
+// // CORS configuration
+const corsOptions = {
+    origin: true, // Allow requests from any origin
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    optionsSuccessStatus: 204
+};
+app.options('*', (0, cors_1.default)(corsOptions));
+// Handle preflight requests manually
+app.options('*', (req, res) => {
+    res.header('Access-Control-Allow-Origin', '*'); // Allow any origin
+    res.header('Access-Control-Allow-Methods', 'GET,HEAD,PUT,PATCH,POST,DELETE');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    res.sendStatus(204);
+});
 const port = 3000;
-// app.use(cors({
-//   credentials: true,
-// }));
 //middlewares
 app.use((0, compression_1.default)());
 app.use((0, cookie_parser_1.default)());
@@ -58,8 +66,10 @@ app.use(express_1.default.json());
 app.use("/user", userRoutes_1.default);
 app.use("/", chatbotRoute_1.default);
 app.use("/business", bussinesRoute_1.default);
+app.use("/business", uploadRoute_1.default);
 app.options('/*', (0, cors_1.default)());
 app.options('/chatbot', (0, cors_1.default)());
+app.options('/user', (0, cors_1.default)());
 app.listen(port, () => {
     console.log(`Server running at http://localhost:${port}`);
 });

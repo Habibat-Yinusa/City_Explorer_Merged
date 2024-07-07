@@ -12,11 +12,19 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deletePromo = exports.getAllPromos = exports.getPromo = exports.addPromo = exports.getAllEvents = exports.getEvents = exports.addEventToBusiness = exports.getAllBusinesses = exports.getBusinessDetails = exports.registerBusiness = void 0;
+exports.addProduct = exports.deletePromo = exports.getAllPromos = exports.getPromo = exports.addPromo = exports.getAllEvents = exports.getEvents = exports.addEventToBusiness = exports.getAllBusinesses = exports.getBusinessDetails = exports.registerBusiness = void 0;
 const businessPage_1 = __importDefault(require("../models/businessPage"));
+const bcrypt_1 = require("bcrypt");
+const cloudinary_1 = __importDefault(require("../config/cloudinary"));
+// import BusinessModel  from '../models/businessPage';
 const registerBusiness = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { name, category, logo, items, location, openHours, phone, email, website } = req.body;
+        const { name, category, logo, items, location, openHours, phone, email, password, website } = req.body;
+        const existingBusiness = yield businessPage_1.default.findOne({ email });
+        if (existingBusiness) {
+            throw new Error("This email already exists");
+        }
+        const hashedPassword = yield (0, bcrypt_1.hash)(password, 10);
         const newBusiness = new businessPage_1.default({
             name,
             category,
@@ -26,6 +34,7 @@ const registerBusiness = (req, res) => __awaiter(void 0, void 0, void 0, functio
             openHours,
             phone,
             email,
+            password: hashedPassword,
             website
         });
         yield newBusiness.save();
@@ -178,3 +187,32 @@ const deletePromo = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
     }
 });
 exports.deletePromo = deletePromo;
+const addProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a;
+    try {
+        const { businessId, name, description, price } = req.body;
+        const file = (_a = req.file) === null || _a === void 0 ? void 0 : _a.path;
+        if (!file) {
+            return res.status(400).json({ message: 'No image uploaded' });
+        }
+        const result = yield cloudinary_1.default.uploader.upload(file, {
+            folder: 'products'
+        });
+        const newProduct = {
+            name,
+            description,
+            price,
+            image: result.secure_url
+        };
+        const updatedBusinessPage = yield businessPage_1.default.findByIdAndUpdate(businessId, { $push: { items: newProduct } }, { new: true });
+        if (!updatedBusinessPage) {
+            return res.status(404).json({ message: 'Business not found' });
+        }
+        res.status(200).json({ message: 'Product added successfully', product: newProduct });
+    }
+    catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
+exports.addProduct = addProduct;
+exports.default = { addProduct };
