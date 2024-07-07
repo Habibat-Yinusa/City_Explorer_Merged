@@ -20,33 +20,28 @@ app.use(cors());
 
 
 // // CORS configuration
-// const corsOptions = {
-//   origin: 'http://localhost:4200',
-//   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-//   allowedHeaders: ['Content-Type', 'Authorization'],
-//   preflightContinue: false,
-//   optionsSuccessStatus: 204
-// };
+const corsOptions = {
+  origin: true, // Allow requests from any origin
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  optionsSuccessStatus: 204
+};
+
+app.options('*', cors(corsOptions));
+
+// Handle preflight requests manually
+app.options('*', (req, res) => {
+  res.header('Access-Control-Allow-Origin', '*'); // Allow any origin
+  res.header('Access-Control-Allow-Methods', 'GET,HEAD,PUT,PATCH,POST,DELETE');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  res.sendStatus(204);
+});
 
 
-// app.options('*', cors(corsOptions));
 
 
-
-// Configure CORS
-// const allowedOrigins = ['http://localhost:5173', 'https://sulky-acoustics-perfect-tub-production.pipeops.app/']; 
-// const options: cors.CorsOptions = {
-//     origin: allowedOrigins
-// };
-
-
-
-// app.use(cors(options));
 const port = 3000;
 
-// app.use(cors({
-//   credentials: true,
-// }));
 
 //middlewares
 app.use(compression());
