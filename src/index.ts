@@ -61,6 +61,7 @@ app.use("/business", businessRoute)
 app.use("/business", uploadRoute)
 app.options('/*', cors());
 app.options('/chatbot', cors());
+app.options('/user', cors());
 
 
 app.listen(port, () => {
