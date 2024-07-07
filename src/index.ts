@@ -12,20 +12,26 @@ import { protect } from "./middlewares/authMiddleware";
 import {botware} from "./middlewares/botMiddleware"
 import uploadRoute from './routes/uploadRoute';
 
-const app = express();
-// CORS configuration
-const corsOptions = {
-  origin: 'http://localhost:4200',
-  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-  preflightContinue: false,
-  optionsSuccessStatus: 204
-};
-
-app.use(cors(corsOptions))
-app.options('*', cors(corsOptions));
-
 dotenv.config();
 connectDB();
+
+const app = express();
+app.use(cors());
+
+
+// // CORS configuration
+// const corsOptions = {
+//   origin: 'http://localhost:4200',
+//   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+//   allowedHeaders: ['Content-Type', 'Authorization'],
+//   preflightContinue: false,
+//   optionsSuccessStatus: 204
+// };
+
+
+// app.options('*', cors(corsOptions));
+
+
 
 // Configure CORS
 // const allowedOrigins = ['http://localhost:5173', 'https://sulky-acoustics-perfect-tub-production.pipeops.app/']; 
