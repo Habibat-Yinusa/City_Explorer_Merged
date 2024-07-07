@@ -8,8 +8,8 @@ import { FilledButton } from "../../styles/styled-components/styledButtons";
 import { useSelector } from "react-redux";
 
 const BusinessOpen = () => {
-  const navigate = useNavigate();
-  const user = useSelector((state) => state.auth.user);
+  // const navigate = useNavigate();
+  const user = useSelector((state) => state.user.user);
 
   return (
     <Box>

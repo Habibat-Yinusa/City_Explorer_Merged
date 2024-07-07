@@ -36,7 +36,7 @@ const drawerWidth = 240;
 function Layout() {
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [isClosing, setIsClosing] = React.useState(false);
-  const user = useSelector((state) => state.auth.user);
+  const user = useSelector((state) => state.user.user);
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();

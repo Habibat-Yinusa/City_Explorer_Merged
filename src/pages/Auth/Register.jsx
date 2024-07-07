@@ -16,6 +16,7 @@ import { BgButton } from "../../styles/styled-components/styledButtons";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { Link, useNavigate } from "react-router-dom";
+import { useRegisterMutation } from "./authApi";
 
 const Register = () => {
   const formik = useFormik({
@@ -34,51 +35,26 @@ const Register = () => {
         .oneOf([yup.ref("password"), null], "Passwords much match")
         .required("Please confirm your password"),
     }),
-    onSubmit: () => {
-      handleRegister();
+    onSubmit: (values) => {
+      handleRegister(values);
     },
   });
 
   const [showPassword, setShowPassword] = React.useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = React.useState(false);
-  const [loading, setLoading] = React.useState(false);
+  const [register, { isLoading }] = useRegisterMutation();
   const navigate = useNavigate();
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
   const handleClickedShowConfirmPassword = () =>
     setShowConfirmPassword((show) => !show);
 
-  const handleRegister = async () => {
-    setLoading(true);
-    // console.log(import.meta.env.VITE_APP_API_URL);
-    // e.preventDefault();
+  const handleRegister = async (values) => {
     try {
-      const response = await fetch(
-        `${import.meta.env.VITE_APP_API_URL}/user/signup`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(formik.values),
-        }
-      );
-
-      if (!response.ok) {
-        // console.log(JSON.stringify(formik.values));
-        alert("Failed to Register User");
-        setLoading(false);
-        throw new Error("Failed to submit form");
-      }
-      // const user = await response.json();
-      // delete user.password;
-      // console.log(user);
-      // console.log("Form submitted successfully");
-      setLoading(false);
+      await register(values).unwrap();
       navigate("/login");
     } catch (error) {
-      setLoading(false);
-      console.error("Error submitting form: ", error.message);
+      console.error(error);
     }
   };
 
@@ -242,9 +218,9 @@ const Register = () => {
                 },
               }}
               type="submit"
-              disabled={loading}
+              disabled={isLoading}
             >
-              {loading ? (
+              {isLoading ? (
                 <CircularProgress size={24} color="inherit" />
               ) : (
                 "Sign up"

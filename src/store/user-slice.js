@@ -26,4 +26,4 @@ const userSlice = createSlice({
 // Action creators are generated for each case reducer function
 export const UserActions = userSlice.actions;
 
-export default userSlice;
+export default userSlice.reducer; // Export the reducer, not the entire slice

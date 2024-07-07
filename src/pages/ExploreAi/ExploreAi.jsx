@@ -9,7 +9,7 @@ const ExploreAi = () => {
   const [messages, setMessages] = React.useState([]);
   const [newMessage, setNewMessage] = React.useState("");
   const [loading, setLoading] = React.useState(false);
-  const user = useSelector((state) => state.auth.user);
+  const user = useSelector((state) => state.user.user);
 
   const sendMessage = async () => {
     try {

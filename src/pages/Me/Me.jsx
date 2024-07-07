@@ -17,7 +17,7 @@ import { useSelector } from "react-redux";
 
 const Me = () => {
   const navigate = useNavigate();
-  const user = useSelector((state) => state.auth.user);
+  const user = useSelector((state) => state.user.user);
 
   return (
     <Box>

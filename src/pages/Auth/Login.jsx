@@ -18,6 +18,7 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 import { useDispatch } from "react-redux";
 import { UserActions } from "../../store/user-slice";
+import { useLoginMutation } from "./authApi";
 
 const Login = () => {
   const formik = useFormik({
@@ -29,48 +30,31 @@ const Login = () => {
       email: yup.string().required("Email is required"),
       password: yup.string().required("Password is required"),
     }),
-    onSubmit: () => {
-      handleLogin();
+    onSubmit: (values) => {
+      handleLogin(values);
     },
   });
 
   const [showPassword, setShowPassword] = React.useState(false);
-  const [loading, setLoading] = React.useState(false);
+  const [login, { isLoading }] = useLoginMutation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
-  const handleLogin = async () => {
-    // e.preventDefault();
-    setLoading(true);
+  const handleLogin = async (values) => {
     try {
-      const response = await fetch(
-        `${import.meta.env.VITE_APP_API_URL}/user/login`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(formik.values),
-        }
-      );
-
-      if (!response.ok) {
-        // console.log(JSON.stringify(formik.values));
-        alert("Failed to Log in! Please try again.");
-        throw new Error("Failed to submit form");
-      }
-      const user = await response.json();
-      // delete user.password;
-      // console.log(user);
-      // console.log("Form submitted successfully");
-      dispatch(UserActions.login(user));
+      const userData = await login(values).unwrap();
+      // console.log(userData);
+      dispatch(UserActions.login(userData));
       navigate("/");
     } catch (error) {
-      console.error("Error logging user in: ", error.message);
-    } finally {
-      setLoading(false);
+      if (error.status === 401 || error.status === 404) {
+        alert("Incorrect username or passsord");
+      } else {
+        console.log(error);
+        alert(error.data.message);
+      }
     }
   };
 
@@ -184,9 +168,9 @@ const Login = () => {
                 },
               }}
               type="submit"
-              disabled={loading}
+              disabled={isLoading}
             >
-              {loading ? (
+              {isLoading ? (
                 <CircularProgress size={24} color="inherit" />
               ) : (
                 "Login"

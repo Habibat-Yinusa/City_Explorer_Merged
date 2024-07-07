@@ -17,7 +17,7 @@ import {
 } from "@mui/icons-material";
 import "@splidejs/react-splide/css";
 import { useNavigate } from "react-router-dom";
-import React from "react";
+// import React from "react";
 
 const Home = () => {
   const navigate = useNavigate();
