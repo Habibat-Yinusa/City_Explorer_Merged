@@ -7,31 +7,27 @@ import IconButton from "@mui/material/IconButton";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
-import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import { CenteredBox } from "../styles/styled-components/styledBox";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import {
-  Chat,
+  // Chat,
   Logout,
-  Notifications,
+  // Notifications,
   Person,
   SmartToy,
 } from "@mui/icons-material";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import TravelExploreIcon from "@mui/icons-material/TravelExplore";
 import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
-import SearchIcon from "@mui/icons-material/Search";
-import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import logo from "../assets/logo.svg";
 import { useDispatch, useSelector } from "react-redux";
 import { UserActions } from "../store/user-slice";
 import { FilledButton } from "../styles/styled-components/styledButtons";
+import menuIconLogo from "../assets/menu-icon.svg";
 
-const drawerWidth = 240;
+const drawerWidth = 200;
 
 function Layout() {
   const [mobileOpen, setMobileOpen] = React.useState(false);
@@ -63,50 +59,57 @@ function Layout() {
 
   const drawer = (
     <div>
-      <List>
+      <List
+        sx={{
+          height: "100vh",
+          display: "flex",
+          justifyContent: "space-around",
+          flexDirection: "column",
+        }}
+      >
         <Toolbar />
-        {pageLinks.map((page) => (
-          <ListItem
-            key={page.id}
-            disablePadding
-            // sx={{
-            //   backgroundColor:
-            //     location.pathname === page.link ? "#758BFD" : "inherit",
-            //   color: location.pathname === page.link ? "#fff" : "#6c6c6c",
-            //   // margin: ".3em",
-            // }}
-          >
-            <ListItemButton
-              onClick={() => navigate(page.link)}
-              disableRipple
-              sx={{
-                margin: ".2em .7em",
-                backgroundColor:
-                  location.pathname === page.link ? "#758BFD" : "inherit",
-                color: location.pathname === page.link ? "#fff" : "#6c6c6c",
-                borderRadius: "10px",
-                "&:hover": {
-                  backgroundColor: "#6E83F3",
-                  color: "#fff",
-                },
-              }}
-            >
-              <ListItemIcon
+        <Box sx={{ height: "100%" }}>
+          {pageLinks.map((page) => (
+            <ListItem key={page.id} disablePadding>
+              <ListItemButton
+                onClick={() => navigate(page.link)}
+                disableRipple
                 sx={{
-                  color: "inherit",
+                  margin: ".2em .7em",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 2,
+                  width: "100%",
+                  backgroundColor:
+                    location.pathname === page.link ? "#758BFD" : "inherit",
+                  color: location.pathname === page.link ? "#fff" : "#6c6c6c",
+                  borderRadius: "10px",
+                  "&:hover": {
+                    backgroundColor: "#6E83F3",
+                    color: "#fff",
+                  },
                 }}
               >
-                {page.icon}
-              </ListItemIcon>
-              <ListItemText primary={page.name} />
-            </ListItemButton>
-          </ListItem>
-        ))}
-        <ListItem disablePadding sx={{ marginTop: "11em" }}>
+                <Box>{page.icon}</Box>
+                <Typography variant="body2" sx={{ textAlign: "left" }}>
+                  {page.name}
+                </Typography>
+              </ListItemButton>
+            </ListItem>
+          ))}
+        </Box>
+        <ListItem disablePadding>
           <ListItemButton
             onClick={handleLogout}
+            disableRipple
             sx={{
-              margin: "0 .7em",
+              margin: ".2em .7em",
+              display: "flex",
+              // justifyContent: "space-between",
+              alignItems: "center",
+              gap: 2,
+              width: "100%",
+              // border: "1px solid red",
               backgroundColor: "inherit",
               color: "#6c6c6c",
               borderRadius: "10px",
@@ -116,10 +119,12 @@ function Layout() {
               },
             }}
           >
-            <ListItemIcon sx={{ color: "inherit" }}>
+            <Box>
               <Logout />
-            </ListItemIcon>
-            <ListItemText primary={"Log out"} />
+            </Box>
+            <Typography variant="body2" sx={{ textAlign: "left" }}>
+              Log out
+            </Typography>
           </ListItemButton>
         </ListItem>
       </List>
@@ -130,7 +135,7 @@ function Layout() {
     <Box
       sx={{
         display: "flex",
-        backgroundColor: "#ececec",
+        backgroundColor: "#fff",
         height: "100vh",
       }}
     >
@@ -146,34 +151,43 @@ function Layout() {
         }}
       >
         <Toolbar sx={{ borderBottom: "1px solid #cfcfcf" }}>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            edge="start"
-            onClick={handleDrawerToggle}
-            sx={{ mr: 2, display: { md: "none" } }}
-          >
-            <MenuIcon />
-          </IconButton>
-          <CenteredBox
+          <Box
             sx={{
-              justifyContent: "space-between",
-              width: "99%",
+              display: "flex",
               alignItems: "center",
+              justifyContent: "space-between",
+              width: "100%",
               padding: "1em 0",
             }}
           >
-            <Box sx={{ width: "3em" }}>
-              <img src={logo} alt="" style={{ width: "100%" }} />
-            </Box>
-            {/* <Typography variant="h6">City Explorer</Typography> */}
-            <FilledButton
-              sx={{ textTransform: "capitalize", gap: 1 }}
-              onClick={() => navigate(`/me`)}
+            <IconButton
+              onClick={handleDrawerToggle}
+              sx={{ display: { md: "none" } }}
+              disableRipple
             >
-              <Person /> {user?.username}
-            </FilledButton>
-          </CenteredBox>
+              <Box sx={{ width: "1em" }}>
+                <img src={menuIconLogo} style={{ width: "100%" }} />
+              </Box>
+            </IconButton>
+            <CenteredBox
+              sx={{
+                justifyContent: "space-between",
+                alignItems: "center",
+                width: { md: "100%" },
+              }}
+            >
+              <Box sx={{ width: "3em", display: { xs: "none", md: "block" } }}>
+                <img src={logo} alt="" style={{ width: "100%" }} />
+              </Box>
+              {/* <Typography variant="h6">City Explorer</Typography> */}
+              <FilledButton
+                sx={{ textTransform: "capitalize", gap: 1 }}
+                onClick={() => navigate(`/me`)}
+              >
+                <Person /> {user?.username}
+              </FilledButton>
+            </CenteredBox>
+          </Box>
         </Toolbar>
       </AppBar>
       <Box
@@ -197,7 +211,7 @@ function Layout() {
             "& .MuiDrawer-paper": {
               boxSizing: "border-box",
               width: drawerWidth,
-              backgroundColor: "#ececec",
+              backgroundColor: "#fff",
             },
           }}
         >
@@ -210,7 +224,7 @@ function Layout() {
             "& .MuiDrawer-paper": {
               boxSizing: "border-box",
               width: drawerWidth,
-              backgroundColor: "#ececec",
+              backgroundColor: "#fff",
             },
           }}
           open
@@ -222,7 +236,7 @@ function Layout() {
         sx={{
           // width: { md: `calc(100% - ${drawerWidth}px)` },
           width: "100%",
-          backgroundColor: "#ececec",
+          backgroundColor: "#fff",
         }}
       >
         {/* <Toolbar /> */}
@@ -246,7 +260,7 @@ const pageLinks = [
   {
     id: 1,
     name: "Home",
-    link: "/",
+    link: "/home",
     icon: <DashboardIcon />,
   },
   {
@@ -261,12 +275,12 @@ const pageLinks = [
     link: "/wallet",
     icon: <AccountBalanceWalletIcon />,
   },
-  {
-    id: 4,
-    name: "Chat",
-    link: "#",
-    icon: <Chat />,
-  },
+  // {
+  //   id: 4,
+  //   name: "Chat",
+  //   link: "#",
+  //   icon: <Chat />,
+  // },
   {
     id: 5,
     name: "Explore AI",
@@ -274,22 +288,10 @@ const pageLinks = [
     icon: <SmartToy />,
   },
   // {
-  //   id: 5,
-  //   name: "NFTs",
-  //   link: "/points",
-  //   icon: <MonetizationOnOutlined />,
-  // },
-  {
-    id: 6,
-    name: "Notification",
-    link: "/search",
-    icon: <Notifications />,
-  },
-  // {
-  //   id: 7,
-  //   name: "Me",
-  //   link: "/me",
-  //   icon: <PersonOutlineIcon />,
+  //   id: 6,
+  //   name: "Notification",
+  //   link: "/search",
+  //   icon: <Notifications />,
   // },
 ];
 

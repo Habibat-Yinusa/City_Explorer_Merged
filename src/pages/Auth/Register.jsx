@@ -55,6 +55,7 @@ const Register = () => {
       navigate("/login");
     } catch (error) {
       console.error(error);
+      alert("Something went wrong! Please try again");
     }
   };
 

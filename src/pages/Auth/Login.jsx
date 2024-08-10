@@ -47,13 +47,13 @@ const Login = () => {
       const userData = await login(values).unwrap();
       // console.log(userData);
       dispatch(UserActions.login(userData));
-      navigate("/");
+      navigate("/home");
     } catch (error) {
       if (error.status === 401 || error.status === 404) {
         alert("Incorrect username or passsord");
       } else {
         console.log(error);
-        alert(error.data.message);
+        // alert(error.data.message);
       }
     }
   };

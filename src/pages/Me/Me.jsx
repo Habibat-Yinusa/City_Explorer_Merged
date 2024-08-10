@@ -110,13 +110,15 @@ const Me = () => {
               width: "100%",
               marginTop: ".5em",
               justifyContent: "space-between",
+              flexDirection: { xs: "column", lg: "row" },
+              gap: 1,
             }}
           >
             <FilledButton
               sx={{
-                width: "48%",
+                width: "100%",
                 fontSize: { xs: ".8rem", md: "1rem" },
-                padding: ".5rem 1rem",
+                padding: ".5rem 0",
               }}
               onClick={() => navigate(`/business`)}
             >
@@ -124,9 +126,9 @@ const Me = () => {
             </FilledButton>
             <FilledButton
               sx={{
-                width: "48%",
+                width: "100%",
                 fontSize: { xs: ".8rem", md: "1rem" },
-                padding: ".5rem 1rem",
+                padding: ".5rem 0",
               }}
             >
               Plan My Day

@@ -63,34 +63,52 @@ const Home = () => {
 
   return (
     <Box sx={{ backgroundColor: "#ececec" }}>
-      <CenteredBox sx={{ backgroundColor: "#758BFD", borderRadius: "30px" }}>
+      <Box
+        sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}
+      >
         <CenteredBox
           sx={{
-            width: "80%",
-            justifyContent: "space-between",
-            padding: { xs: ".5em 0", md: "1em 0" },
-            flexDirection: { xs: "column", md: "row" },
+            backgroundColor: "#758BFD",
+            borderRadius: "30px",
+            maxWidth: { xs: "700px", md: "1000px" },
+            cursor: "pointer",
           }}
+          onClick={() => navigate("/home/promos")}
         >
-          <Typography
-            variant="h3"
+          <CenteredBox
             sx={{
-              fontWeight: 700,
-              fontSize: { xs: "1em", md: "1.5em", lg: "2em" },
-              color: "#fff",
-              lineHeight: "1.5em",
-              width: { xs: "100%", md: "50%" },
-              marginBottom: { xs: "1em", md: "0" },
+              width: "80%",
+              justifyContent: "space-between",
+              padding: { xs: "1em 0", md: "1em 0" },
+              alignItems: "center",
             }}
           >
-            Hurry!!! Jennie's burger is offering 30% discounts on all orders for
-            this week.
-          </Typography>
-          <Box sx={{ width: "50%" }}>
-            <img src={burgerBanner} alt="" style={{ width: "100%" }} />
-          </Box>
+            <Typography
+              variant="h3"
+              sx={{
+                fontWeight: 700,
+                fontSize: {
+                  xs: "1rem",
+                  sm: "1.3rem",
+                  md: "1.5rem",
+                  lg: "2rem",
+                },
+                color: "#fff",
+                lineHeight: "1.5em",
+                width: "60%",
+              }}
+            >
+              Hurry!!! Jennie's burger is offering 30% discounts on all orders
+              for this week.
+            </Typography>
+            <Box
+              sx={{ width: { xs: "10em", sm: "12em", md: "15em", lg: "20em" } }}
+            >
+              <img src={burgerBanner} alt="" style={{ width: "100%" }} />
+            </Box>
+          </CenteredBox>
         </CenteredBox>
-      </CenteredBox>
+      </Box>
 
       <CenteredBox sx={{ marginTop: "1.2em", flexDirection: "column" }}>
         <Typography

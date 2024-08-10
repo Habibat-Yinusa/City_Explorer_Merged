@@ -1,16 +1,12 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-const baseUrl = import.meta.env.VITE_APP_API_URL;
 
 const baseQuery = fetchBaseQuery({
-  baseUrl,
+  baseUrl: import.meta.env.VITE_APP_API_URL,
   prepareHeaders: (headers, { getState }) => {
-    const token = getState().user?.user?.token;
-    const url = headers.get("x-request-url"); // Get the current request URL
-
-    if (token && !url.endsWith("/login") && !url.endsWith("/signup")) {
-      headers.set("Authorization", `Bearer ${token}`);
+    const access_token = getState().user?.user?.token;
+    if (access_token) {
+      headers.set("authorization", `Bearer ${access_token}`);
     }
-
     return headers;
   },
 });

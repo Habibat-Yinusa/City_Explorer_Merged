@@ -1,14 +1,12 @@
 /* eslint-disable react/prop-types */
-import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
 
-const Auth = ({ children }) => {
-  const user = useSelector((state) => state.user.user);
-  // console.log(user);
+const Auth = ({ user, children }) => {
   if (!user) {
-    return <Navigate to="/login" />;
+    return <Navigate to="/" replace />;
   }
-  return <>{children}</>;
+
+  return children;
 };
 
 export default Auth;
