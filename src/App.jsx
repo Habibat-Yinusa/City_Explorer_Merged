@@ -13,6 +13,7 @@ import BusinessOpen from "./pages/Explore/BusinessOpen";
 import RegisterBusiness from "./pages/Auth/RegisterBusiness";
 import { useSelector } from "react-redux";
 import Promos from "./pages/Home/Promos";
+import "@splidejs/react-splide/css";
 
 function App() {
   const user = useSelector((state) => state.user.user);
