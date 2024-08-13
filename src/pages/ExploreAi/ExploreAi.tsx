@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, FormControl, TextField, CircularProgress } from "@mui/material";
+import { Box, FormControl, TextField } from "@mui/material";
 import { CenteredBox } from "../../styles/styled-components/styledBox";
 import { FilledButton } from "../../styles/styled-components/styledButtons";
 import { useSelector } from "react-redux";
