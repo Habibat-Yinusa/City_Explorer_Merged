@@ -4,41 +4,47 @@ import { CenteredBox } from "../../styles/styled-components/styledBox";
 import { FilledButton } from "../../styles/styled-components/styledButtons";
 import { useSelector } from "react-redux";
 import { SendRounded } from "@mui/icons-material";
+import { selectCurrentUserId } from "../../store/user-slice";
+import { useFormik } from "formik";
+import * as yup from "yup";
+import { useChatWithBotMutation } from "./chatApiSlice";
 
 const ExploreAi = () => {
-  const [messages, setMessages] = React.useState([]);
-  const [newMessage, setNewMessage] = React.useState("");
-  const [loading, setLoading] = React.useState(false);
-  const user = useSelector((state) => state.user.user);
+  interface messageType {
+    text: string;
+    type: string;
+  }
 
-  const sendMessage = async () => {
-    try {
-      setLoading(true);
-      const response = await fetch(
-        `${import.meta.env.VITE_APP_API_URL}/chatbot`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ message: newMessage, _id: user.id }),
-        }
-      );
-      const data = await response.json();
-      // console.log(data);
-      setMessages([
-        ...messages,
-        { text: newMessage, type: "sent" },
-        { text: data, type: "received" },
-      ]);
-      setNewMessage("");
-      // console.log(data);
-    } catch (error) {
-      console.error("Error sending message:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
+  interface messageInput {
+    message: string;
+    _id: string;
+  }
+
+  const [messages, setMessages] = React.useState<messageType[]>([]);
+  const userId = useSelector(selectCurrentUserId);
+  const [chatWithBot, { isLoading }] = useChatWithBotMutation();
+  const formik = useFormik<messageInput>({
+    initialValues: {
+      message: "",
+      _id: userId,
+    },
+    validationSchema: yup.object({
+      message: yup.string().required("Message is required"),
+    }),
+    onSubmit: async (values: messageInput) => {
+      try {
+        const response = await chatWithBot(values).unwrap();
+        setMessages([
+          ...messages,
+          { text: values.message, type: "sent" },
+          { text: response, type: "received" },
+        ]);
+        formik.values.message = "";
+      } catch (error: any) {
+        console.error(error);
+      }
+    },
+  });
 
   return (
     <Box>
@@ -86,30 +92,39 @@ const ExploreAi = () => {
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
+            gap: 1,
             // border: "1px solid red",
           }}
+          component="form"
+          onSubmit={formik.handleSubmit}
         >
-          <FormControl error fullWidth sx={{ width: "92%" }}>
+          <FormControl error fullWidth>
             <TextField
               label="Type in your message"
-              id="text"
-              type="text"
-              value={newMessage}
-              onChange={(e) => setNewMessage(e.target.value)}
+              id="message"
+              type="message"
+              value={formik.values.message}
+              onChange={formik.handleChange}
               fullWidth
             />
           </FormControl>
           <FilledButton
-            onClick={sendMessage}
+            type="submit"
             sx={{
-              width: "5%",
+              // width: "7%",
               // marginTop: ".5em",
               // backgroundColor: "transparent",
               padding: ".8em 2em",
+              fontSize: "1rem",
             }}
-            disabled={loading}
+            disabled={isLoading}
           >
-            {loading ? <CircularProgress size={26} /> : <SendRounded />}
+            {isLoading ? (
+              // <CircularProgress size={26} color="success" />
+              "Sending"
+            ) : (
+              <SendRounded />
+            )}
           </FilledButton>
         </Box>
       </CenteredBox>

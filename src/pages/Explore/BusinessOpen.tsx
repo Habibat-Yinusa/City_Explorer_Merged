@@ -1,15 +1,16 @@
 import { Box, Typography } from "@mui/material";
 import { CenteredBox } from "../../styles/styled-components/styledBox";
 import { Add, ManageAccounts } from "@mui/icons-material";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import meBanner from "../../assets/meBanner.svg";
 import profileImg from "../../assets/profileImg.svg";
 import { FilledButton } from "../../styles/styled-components/styledButtons";
 import { useSelector } from "react-redux";
+import { selectCurrentUsername } from "../../store/user-slice";
 
 const BusinessOpen = () => {
   // const navigate = useNavigate();
-  const user = useSelector((state) => state.user.user);
+  const username = useSelector(selectCurrentUsername);
 
   return (
     <Box>
@@ -43,7 +44,7 @@ const BusinessOpen = () => {
               textTransform: "capitalize",
             }}
           >
-            {user.username}
+            {username}
           </Typography>
           <Typography
             variant="body2"

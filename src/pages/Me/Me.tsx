@@ -14,10 +14,11 @@ import meBanner from "../../assets/meBanner.svg";
 import profileImg from "../../assets/profileImg.svg";
 import { FilledButton } from "../../styles/styled-components/styledButtons";
 import { useSelector } from "react-redux";
+import { selectCurrentUsername } from "../../store/user-slice";
 
 const Me = () => {
   const navigate = useNavigate();
-  const user = useSelector((state) => state.user.user);
+  const username = useSelector(selectCurrentUsername);
 
   return (
     <Box>
@@ -51,7 +52,7 @@ const Me = () => {
               textTransform: "capitalize",
             }}
           >
-            {user.username}
+            {username}
           </Typography>
           <Typography
             variant="body2"
@@ -120,7 +121,7 @@ const Me = () => {
                 fontSize: { xs: ".8rem", md: "1rem" },
                 padding: ".5rem 0",
               }}
-              onClick={() => navigate(`/business`)}
+              onClick={() => navigate(`/explore/business`)}
             >
               My Business Page
             </FilledButton>
@@ -221,7 +222,7 @@ const meLinks = [
     id: 1,
     icon: <Favorite />,
     text: "Favorites",
-    link: "#",
+    link: "/me/favorites",
   },
   {
     id: 2,

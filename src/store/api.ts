@@ -1,14 +1,15 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { RootState } from "./store";
 
 const baseUrl = import.meta.env.VITE_APP_API_URL;
 
 const baseQuery = fetchBaseQuery({
   baseUrl,
   prepareHeaders: (headers, { getState }) => {
-    const token = getState().user.token;
+    const access_token = (getState() as RootState)?.user.access_token;
 
-    if (token) {
-      headers.set("Authorization", `Bearer ${token}`);
+    if (access_token) {
+      headers.set("Authorization", `Bearer ${access_token}`);
     }
 
     return headers;

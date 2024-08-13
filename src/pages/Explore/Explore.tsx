@@ -7,7 +7,9 @@ import React from "react";
 const Explore = () => {
   const [searchQuery, setSearchQuery] = React.useState("");
 
-  const handleSearchChange = (event) => {
+  const handleSearchChange = (event: {
+    target: { value: React.SetStateAction<string> };
+  }) => {
     setSearchQuery(event.target.value);
   };
 

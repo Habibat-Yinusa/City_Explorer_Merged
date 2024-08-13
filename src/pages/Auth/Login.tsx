@@ -13,57 +13,59 @@ import { CenteredBox } from "../../styles/styled-components/styledBox";
 import React from "react";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { BgButton } from "../../styles/styled-components/styledButtons";
+import { Link, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import { Link, useNavigate } from "react-router-dom";
-import { useRegisterMutation } from "./authApi";
+import { useDispatch } from "react-redux";
+import { login } from "../../store/user-slice";
+import { useLoginMutation } from "./authApiSlice";
 
-const Register = () => {
+const Login = () => {
+  interface loginInput {
+    email: string;
+    password: string;
+  }
+
   const formik = useFormik({
     initialValues: {
       email: "",
-      username: "",
       password: "",
-      confirmPassword: "",
     },
     validationSchema: yup.object({
       email: yup.string().required("Email is required"),
-      username: yup.string().required("Username is required"),
       password: yup.string().required("Password is required"),
-      confirmPassword: yup
-        .string()
-        .oneOf([yup.ref("password"), null], "Passwords much match")
-        .required("Please confirm your password"),
     }),
-    onSubmit: (values) => {
-      handleRegister(values);
+    onSubmit: (values: loginInput) => {
+      handleLogin(values);
     },
   });
 
   const [showPassword, setShowPassword] = React.useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = React.useState(false);
-  const [register, { isLoading }] = useRegisterMutation();
+  const [loginRequest, { isLoading }] = useLoginMutation();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
-  const handleClickedShowConfirmPassword = () =>
-    setShowConfirmPassword((show) => !show);
 
-  const handleRegister = async (values) => {
+  const handleLogin = async (values: loginInput) => {
     try {
-      await register(values).unwrap();
-      navigate("/login");
-    } catch (error) {
-      console.error(error);
-      alert("Something went wrong! Please try again");
+      const userData = await loginRequest(values).unwrap();
+      dispatch(login(userData));
+      navigate("/home");
+    } catch (error: any) {
+      if (error.status === 401 || error.status === 404) {
+        alert("Incorrect username or passsord");
+      } else {
+        alert("Something went wrong");
+      }
     }
   };
 
   return (
-    <Box sx={{ backgroundColor: "#ececec", height: "100vh" }}>
+    <Box>
       <CenteredBox
         sx={{
-          height: "100%",
+          height: "100vh",
         }}
       >
         <CenteredBox
@@ -108,10 +110,13 @@ const Register = () => {
             variant="body2"
             sx={{ color: "#758BFD", fontSize: "1.9em", fontWeight: 900 }}
           >
-            Create an account
+            Welcome back!
           </Typography>
-          <CenteredBox
+          <Box
             sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
               flexDirection: "column",
               width: { xs: "100%", sm: "70%", md: "100%" },
               maxWidth: "350px",
@@ -130,21 +135,6 @@ const Register = () => {
                 error={formik.touched.email && Boolean(formik.errors.email)}
                 helperText={formik.touched.email && formik.errors.email}
                 sx={{ width: "100%", marginTop: "2em" }}
-              />
-            </FormControl>
-            <FormControl error fullWidth>
-              <TextField
-                type="text"
-                id="username"
-                label="Username"
-                value={formik.values.username}
-                name="username"
-                onChange={formik.handleChange}
-                error={
-                  formik.touched.username && Boolean(formik.errors.username)
-                }
-                helperText={formik.touched.username && formik.errors.username}
-                sx={{ width: "100%", marginTop: "1em" }}
               />
             </FormControl>
             <FormControl error fullWidth>
@@ -174,41 +164,6 @@ const Register = () => {
                 sx={{ width: "100%", marginTop: "1em" }}
               />
             </FormControl>
-            <FormControl error fullWidth>
-              <TextField
-                type={showConfirmPassword ? "text" : "password"}
-                id="confirmPassword"
-                label="Confirm Password"
-                value={formik.values.confirmPassword}
-                name="confirmPassword"
-                onChange={formik.handleChange}
-                error={
-                  formik.touched.confirmPassword &&
-                  Boolean(formik.errors.confirmPassword)
-                }
-                helperText={
-                  formik.touched.confirmPassword &&
-                  formik.errors.confirmPassword
-                }
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment
-                      position="start"
-                      sx={{ display: "flex", alignItems: "center" }}
-                    >
-                      <IconButton onClick={handleClickedShowConfirmPassword}>
-                        {showConfirmPassword ? (
-                          <VisibilityOff />
-                        ) : (
-                          <Visibility />
-                        )}
-                      </IconButton>
-                    </InputAdornment>
-                  ),
-                }}
-                sx={{ width: "100%", marginTop: "1em" }}
-              />
-            </FormControl>
             <BgButton
               sx={{
                 margin: "1em 0",
@@ -224,11 +179,11 @@ const Register = () => {
               {isLoading ? (
                 <CircularProgress size={24} color="inherit" />
               ) : (
-                "Sign up"
+                "Login"
               )}
             </BgButton>
             <Link
-              to="/login"
+              to="/register"
               style={{
                 fontSize: "1rem",
                 color: "#758BFD",
@@ -236,24 +191,13 @@ const Register = () => {
                 marginTop: "1em",
               }}
             >
-              Login?
+              Don't have an account?
             </Link>
-            <Link
-              to="/register-business"
-              style={{
-                fontSize: "1rem",
-                color: "#758BFD",
-                textDecoration: "none",
-                marginTop: "1em",
-              }}
-            >
-              Register a business?
-            </Link>
-          </CenteredBox>
+          </Box>
         </CenteredBox>
       </CenteredBox>
     </Box>
   );
 };
 
-export default Register;
+export default Login;

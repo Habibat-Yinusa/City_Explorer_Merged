@@ -1,13 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
-import userReducer from "./user-slice";
-import { authApi } from "../pages/Auth/authApi";
 import { cityApi } from "./api";
+import { authApi } from "../pages/Auth/authApiSlice";
+import { userReducer } from "./user-slice";
 
 export const store = configureStore({
   reducer: {
-    user: userReducer,
     [authApi.reducerPath]: authApi.reducer,
     [cityApi.reducerPath]: cityApi.reducer,
+    user: userReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware()
@@ -15,3 +15,6 @@ export const store = configureStore({
       .concat(cityApi.middleware), // caching middleware
   devTools: true, // developer tools middleware
 });
+
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;

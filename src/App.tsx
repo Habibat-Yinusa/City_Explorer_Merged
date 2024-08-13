@@ -7,23 +7,25 @@ import Home from "./pages/Home/Home";
 import Wallet from "./pages/Wallet/Wallet";
 import Me from "./pages/Me/Me";
 import Auth from "./pages/Auth/Auth";
-import ExploreAi from "./pages/ExploreAi/ExploreAi";
 import Business from "./pages/Explore/Business";
 import BusinessOpen from "./pages/Explore/BusinessOpen";
-import RegisterBusiness from "./pages/Auth/RegisterBusiness";
+// import RegisterBusiness from "./pages/Auth/RegisterBusiness";
 import { useSelector } from "react-redux";
 import Promos from "./pages/Home/Promos";
+import Favorites from "./pages/Me/Favorites";
 import "@splidejs/react-splide/css";
+import { selectCurrentUser } from "./store/user-slice";
+import ExploreAi from "./pages/ExploreAi/ExploreAi";
 
 function App() {
-  const user = useSelector((state) => state.user.user);
+  const user = useSelector(selectCurrentUser);
 
   return (
     <Box sx={{ backgroundColor: "#ececec" }}>
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/register-business" element={<RegisterBusiness />} />
+        {/* <Route path="/register-business" element={<RegisterBusiness />} /> */}
         <Route path="*" element={<h1>URL does not exist</h1>} />
         <Route
           path="/"
@@ -43,7 +45,7 @@ function App() {
             <Route path="business" element={<BusinessOpen />} />
           </Route>
 
-          <Route path="/explore-ai">
+          <Route path="/ai">
             <Route index element={<ExploreAi />} />
           </Route>
 
@@ -53,10 +55,11 @@ function App() {
 
           {/* <Route path="/search">
             <Route index element={<Wallet />} />
-          </Route> */}
+            </Route> */}
 
           <Route path="/me">
             <Route index element={<Me />} />
+            <Route path="favorites" element={<Favorites />} />
           </Route>
         </Route>
       </Routes>

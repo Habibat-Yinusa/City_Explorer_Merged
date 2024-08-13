@@ -9,7 +9,6 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import { CenteredBox } from "../styles/styled-components/styledBox";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import {
   // Chat,
@@ -23,16 +22,17 @@ import TravelExploreIcon from "@mui/icons-material/TravelExplore";
 import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
 import logo from "../assets/logo.svg";
 import { useDispatch, useSelector } from "react-redux";
-import { UserActions } from "../store/user-slice";
-import { FilledButton } from "../styles/styled-components/styledButtons";
 import menuIconLogo from "../assets/menu-icon.svg";
+import { logout, selectCurrentUsername } from "../store/user-slice";
+import { CenteredBox } from "../styles/styled-components/styledBox";
+import { FilledButton } from "../styles/styled-components/styledButtons";
 
 const drawerWidth = 200;
 
 function Layout() {
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [isClosing, setIsClosing] = React.useState(false);
-  const user = useSelector((state) => state.user.user);
+  const username = useSelector(selectCurrentUsername);
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
@@ -53,7 +53,7 @@ function Layout() {
   };
 
   const handleLogout = () => {
-    dispatch(UserActions.logout());
+    dispatch(logout());
     navigate("/login");
   };
 
@@ -187,7 +187,7 @@ function Layout() {
                 sx={{ textTransform: "capitalize", gap: 1 }}
                 onClick={() => navigate(`/me`)}
               >
-                <Person /> {user?.username}
+                <Person /> {username}
               </FilledButton>
             </CenteredBox>
           </Box>
@@ -288,7 +288,7 @@ const pageLinks = [
   {
     id: 5,
     name: "Explore AI",
-    link: "/explore-ai",
+    link: "/ai",
     icon: <SmartToy />,
   },
   // {
