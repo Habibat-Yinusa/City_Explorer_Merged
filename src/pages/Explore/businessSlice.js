@@ -1,9 +1,20 @@
-import { api } from "../../store/api";
+import { cityApi } from "../../store/api";
 
-const apiSliceWithTags = api.enhanceEndpoints({
-  addTagTypes: ["Business"],
+const apiSliceWithTags = cityApi.enhanceEndpoints({
+  addTagTypes: ["Business", "Events"],
 });
 
 const businessApiSlice = apiSliceWithTags.injectEndpoints({
-  endpoints: (builder) => ({}),
+  endpoints: (builder) => ({
+    getBusinesses: builder.query({
+      query: () => "/business",
+      providesTags: ["Business"],
+    }),
+    getEvents: builder.query({
+      query: () => "/business/events",
+      provideTags: ["Business", "Events"],
+    }),
+  }),
 });
+
+export const { useGetBusinessesQuery, useGetEventsQuery } = businessApiSlice;

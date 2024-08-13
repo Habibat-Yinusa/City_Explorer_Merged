@@ -15,10 +15,10 @@ const baseQuery = fetchBaseQuery({
   },
 });
 
-export const api = createApi({
+export const cityApi = createApi({
   baseQuery,
   refetchOnReconnect: true,
   reducerPath: "cityApi",
-  tagTypes: ["Users", "Businesses", "Chatbot"],
+  tagTypes: ["Users", "Business", "Events", "Chatbot"],
   endpoints: () => ({}),
 });

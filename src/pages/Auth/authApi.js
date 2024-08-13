@@ -15,7 +15,7 @@ export const authApi = createApi({
   baseQuery,
   refetchOnReconnect: true,
   reducerPath: "cityAuthApi",
-  tagTypes: ["Users", "Businesses", "Chatbot"],
+  tagTypes: ["Users", "Business", "Events", "Chatbot"],
   endpoints: (builder) => ({
     login: builder.mutation({
       query: (values) => ({

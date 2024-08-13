@@ -80,9 +80,12 @@ function Layout() {
                   alignItems: "center",
                   gap: 2,
                   width: "100%",
-                  backgroundColor:
-                    location.pathname === page.link ? "#758BFD" : "inherit",
-                  color: location.pathname === page.link ? "#fff" : "#6c6c6c",
+                  backgroundColor: location.pathname.includes(page.link)
+                    ? "#758BFD"
+                    : "inherit",
+                  color: location.pathname.includes(page.link)
+                    ? "#fff"
+                    : "#6c6c6c",
                   borderRadius: "10px",
                   "&:hover": {
                     backgroundColor: "#6E83F3",
@@ -245,6 +248,7 @@ function Layout() {
             backgroundColor: "#ececec",
             padding: { xs: "1em", md: "1em 2em" },
             width: "100%",
+            minHeight: "100vh",
           }}
         >
           <Toolbar />

@@ -20,50 +20,13 @@ import { Splide, SplideSlide } from "@splidejs/react-splide";
 import "@splidejs/react-splide/css";
 import { AutoScroll } from "@splidejs/splide-extension-auto-scroll";
 import { FilledButton } from "../../styles/styled-components/styledButtons";
-
-// import React from "react";
+// import { useGetEventsQuery } from "../Explore/businessSlice";
 
 const Home = () => {
   const navigate = useNavigate();
-  // const [loading, setLoading] = React.useState(false);
-  // const [business, setBusiness] = React.useState([]);
+  // const { data: events, isLoading: isFetchingEvents } = useGetEventsQuery();
 
-  // const getBusinesses = async () => {
-  //   // setLoading(true);
-  //   // console.log(import.meta.env.VITE_APP_API_URL);
-  //   // e.preventDefault();
-  //   try {
-  //     const response = await fetch(
-  //       `${import.meta.env.VITE_APP_API_URL}/business`,
-  //       {
-  //         method: "GET",
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //         },
-  //         // body: JSON.stringify(formik.values),
-  //       }
-  //     );
-
-  //     if (!response.ok) {
-  //       // console.log(JSON.stringify(formik.values));
-  //       alert("Failed to Register User");
-  //       setLoading(false);
-  //       throw new Error("Failed to submit form");
-  //     }
-  //     // const user = await response.json();
-  //     // delete user.password;
-  //     // console.log(user);
-  //     // console.log("Form submitted successfully");
-  //     // setLoading(false);
-  //     // navigate("/login");
-  //     console.log(response);
-  //     // setBusinesses(response.data)
-  //   } catch (error) {
-  //     setLoading(false);
-  //     console.error("Error fetching businesses: ", error.message);
-  //   }
-  // };
-  // getBusinesses();
+  // console.log(events);
 
   return (
     <Box sx={{ backgroundColor: "#ececec" }}>
@@ -378,8 +341,8 @@ const Home = () => {
             }}
             extensions={{ AutoScroll }}
           >
-            {interests.map((item) => (
-              <SplideSlide key={item.id}>
+            {interests?.map((event) => (
+              <SplideSlide key={event.id}>
                 <CenteredBox
                   sx={{
                     borderRadius: "20px",
@@ -399,13 +362,13 @@ const Home = () => {
                     }}
                   >
                     <Box sx={{ width: "100%", borderRadius: "30px" }}>
-                      <img src={item.image} alt="" style={{ width: "100%" }} />
+                      <img src={event.image} alt="" style={{ width: "100%" }} />
                     </Box>
                     <Typography
                       variant="body2"
                       sx={{ fontSize: { xs: ".7em", md: ".9rem" } }}
                     >
-                      {item.text}
+                      {event.text}
                     </Typography>
                     <FilledButton sx={{ width: "100%" }}>
                       Check it out
