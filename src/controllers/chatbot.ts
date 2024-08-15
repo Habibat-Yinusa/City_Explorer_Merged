@@ -4,10 +4,6 @@ import { messages } from "./userControllers";
 import User from "../models/user";
 import type { Content } from "@google/generative-ai";
 
-
-
-//SEND AND GET REPLY FROM BOT
-
 const chatbot = async (req: Request, res: Response) => {
   const { _id, message } = req.body;
   const user = await User.findById(_id);

@@ -19,6 +19,7 @@ interface Event {
     description: string;
     date: string;
     venue: string;
+    image?: string;
 }
  
 export interface BusinessEvent {
@@ -80,7 +81,8 @@ const eventSchema = new Schema<Event>({
     title: { type: String, required: true },
     description: { type: String, required: true },
     date: { type: String, required: true },
-    venue: { type: String, required: true }
+    venue: { type: String, required: true },
+    image: { type: String }
 });
 // schema for promos
 const promoSchema = new Schema<Promo>({

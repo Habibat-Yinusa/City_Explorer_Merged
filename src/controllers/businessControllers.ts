@@ -73,15 +73,23 @@ import cloudinary from '../config/cloudinary';
     try {
         const businessId = req.params.id;
         const { title, description, venue, date } = req.body;
+        const file = req.file?.path;
 
-        
+        if (!file) {
+        return res.status(400).json({ message: 'No image uploaded' });
+        }
+
+        const result = await cloudinary.uploader.upload(file, {
+        folder: 'events'
+        });
+ 
         const business = await BusinessModel.findById(businessId);
 
         if (!business) {
             return res.status(404).send({ message: 'Business not found' });
         }
 
-        const newEvent = { title, description, venue, date };
+        const newEvent = { title, description, venue, date, image: result.secure_url };
 
         business.events.push(newEvent);
 
