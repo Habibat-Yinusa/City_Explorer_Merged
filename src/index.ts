@@ -11,6 +11,7 @@ import businessRoute from "./routes/bussinesRoute"
 import { protect } from "./middlewares/authMiddleware";
 import {botware} from "./middlewares/botMiddleware"
 import uploadRoute from './routes/uploadRoute';
+import { getAllEvents, getAllPromos } from './controllers/businessControllers';
 
 dotenv.config();
 connectDB();
@@ -54,6 +55,9 @@ app.use("/user", userRoutes)
 app.use("/", chatbotRoute)
 app.use("/business", businessRoute)
 app.use("/business", uploadRoute)
+app.use("/events", getAllEvents)
+app.use("/promos", getAllPromos)
+
 app.options('/*', cors());
 app.options('/chatbot', cors());
 app.options('/user', cors());

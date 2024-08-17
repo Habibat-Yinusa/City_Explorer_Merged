@@ -1,5 +1,6 @@
 import mongoose, { Schema, Document } from 'mongoose';
 import crypto from "crypto";
+
 interface UserAttributes {
   username: string;
   email: string;

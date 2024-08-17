@@ -3,13 +3,11 @@ import Business from "../models/businessPage";
 import { hash, compare } from "bcrypt"
 import jwt from "jsonwebtoken"
 import bcrypt from 'bcrypt';
+import { Request, Response, NextFunction } from 'express';
+import BusinessModel from "../models/businessPage";
 
 // import CustomError from '../utils/customError';
 // import { cloudinary } from "../config/cloudinary.js"
-
-
-import { Request, Response, NextFunction } from 'express';
-import BusinessModel from "../models/businessPage";
 
 let messages: string[] = [];
 
@@ -50,9 +48,12 @@ const loginUser = async (req: Request, res: Response): Promise<void> => {
         const { email, password } = req.body;
 
         let user = await User.findOne({ email });
+        let businessName
 
         if (!user) {
             user = await BusinessModel.findOne({ email });
+            const business = await BusinessModel.findOne({ email })
+            businessName = business?.name
           }
 
         if (!user) {
@@ -66,11 +67,11 @@ const loginUser = async (req: Request, res: Response): Promise<void> => {
         }
 
         const token = jwt.sign({
-            userId: user._id, email: user.email, username: user.username, role: user.role
+            userId: user._id, email: user.email, username: user.username, role: user.role, businessName
         }, process.env.JWT_SECRET!, { expiresIn: "90d" });
 
         res.status(200).send({
-            token, id: user.id, username: user.username, role: user.role
+            token, id: user.id, username: user.username, businessName, role: user.role
         });
     } catch (error: any) {
         res.status(400).send({ message: error.message });

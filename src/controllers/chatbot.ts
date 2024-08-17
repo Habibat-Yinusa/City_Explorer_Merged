@@ -14,9 +14,10 @@ const chatbot = async (req: Request, res: Response) => {
 
   for (let i = 0; i < userMessages!.length; i++) {
     if (userMessages && botReplies) {
-      const newHistory = <Content[]>[
+      const newHistory = <Content[]><unknown>[
         {
           role: "user",
+          type: "sent",
           parts: [
             {
               text: userMessages[i] || "",
@@ -25,6 +26,7 @@ const chatbot = async (req: Request, res: Response) => {
         },
         {
           role: "model",
+          type: "received",
           parts: [
             {
               text: botReplies[i] || "",
@@ -49,7 +51,10 @@ const chatbot = async (req: Request, res: Response) => {
     user?.userMessages.push(message);
     user?.botReplies.push(reply);
     await user?.save();
-    res.json(reply.split("*").join(""));
+    res.json({
+      type: "received",
+      message: reply.split("*").join(""),
+    });
   }
 };
 
