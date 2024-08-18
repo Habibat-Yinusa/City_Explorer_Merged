@@ -36,7 +36,8 @@ const eventSchema = new mongoose_1.Schema({
     title: { type: String, required: true },
     description: { type: String, required: true },
     date: { type: String, required: true },
-    venue: { type: String, required: true }
+    venue: { type: String, required: true },
+    image: { type: String }
 });
 // schema for promos
 const promoSchema = new mongoose_1.Schema({

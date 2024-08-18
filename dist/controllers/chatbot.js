@@ -16,7 +16,6 @@ exports.databaseReply = exports.messagesArray = exports.chatbot = void 0;
 const chatbotService2_1 = __importDefault(require("../services/chatbotService2"));
 const userControllers_1 = require("./userControllers");
 const user_1 = __importDefault(require("../models/user"));
-//SEND AND GET REPLY FROM BOT
 const chatbot = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { _id, message } = req.body;
     const user = yield user_1.default.findById(_id);
@@ -28,6 +27,7 @@ const chatbot = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             const newHistory = [
                 {
                     role: "user",
+                    type: "sent",
                     parts: [
                         {
                             text: userMessages[i] || "",
@@ -36,6 +36,7 @@ const chatbot = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
                 },
                 {
                     role: "model",
+                    type: "received",
                     parts: [
                         {
                             text: botReplies[i] || "",
@@ -59,7 +60,10 @@ const chatbot = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         user === null || user === void 0 ? void 0 : user.userMessages.push(message);
         user === null || user === void 0 ? void 0 : user.botReplies.push(reply);
         yield (user === null || user === void 0 ? void 0 : user.save());
-        res.json(reply.split("*").join(""));
+        res.json({
+            type: "received",
+            message: reply.split("*").join(""),
+        });
     }
 });
 exports.chatbot = chatbot;

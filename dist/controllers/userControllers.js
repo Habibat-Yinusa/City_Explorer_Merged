@@ -18,6 +18,8 @@ const bcrypt_1 = require("bcrypt");
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const bcrypt_2 = __importDefault(require("bcrypt"));
 const businessPage_1 = __importDefault(require("../models/businessPage"));
+// import CustomError from '../utils/customError';
+// import { cloudinary } from "../config/cloudinary.js"
 let messages = [];
 exports.messages = messages;
 //Signup
@@ -48,8 +50,11 @@ const loginUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { email, password } = req.body;
         let user = yield user_1.default.findOne({ email });
+        let businessName;
         if (!user) {
             user = yield businessPage_1.default.findOne({ email });
+            const business = yield businessPage_1.default.findOne({ email });
+            businessName = business === null || business === void 0 ? void 0 : business.name;
         }
         if (!user) {
             throw new Error("User not found");
@@ -59,10 +64,10 @@ const loginUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             throw new Error("Incorrect password!");
         }
         const token = jsonwebtoken_1.default.sign({
-            userId: user._id, email: user.email, username: user.username, role: user.role
+            userId: user._id, email: user.email, username: user.username, role: user.role, businessName
         }, process.env.JWT_SECRET, { expiresIn: "90d" });
         res.status(200).send({
-            token, id: user.id, username: user.username, role: user.role
+            token, id: user.id, username: user.username, businessName, role: user.role
         });
     }
     catch (error) {

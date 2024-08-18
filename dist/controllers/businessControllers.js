@@ -72,14 +72,22 @@ const getAllBusinesses = (req, res) => __awaiter(void 0, void 0, void 0, functio
 exports.getAllBusinesses = getAllBusinesses;
 // Add an event to a business
 const addEventToBusiness = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a;
     try {
         const businessId = req.params.id;
         const { title, description, venue, date } = req.body;
+        const file = (_a = req.file) === null || _a === void 0 ? void 0 : _a.path;
+        if (!file) {
+            return res.status(400).json({ message: 'No image uploaded' });
+        }
+        const result = yield cloudinary_1.default.uploader.upload(file, {
+            folder: 'events'
+        });
         const business = yield businessPage_1.default.findById(businessId);
         if (!business) {
             return res.status(404).send({ message: 'Business not found' });
         }
-        const newEvent = { title, description, venue, date };
+        const newEvent = { title, description, venue, date, image: result.secure_url };
         business.events.push(newEvent);
         yield business.save();
         res.status(201).send({ message: 'Event added successfully', event: newEvent });
@@ -188,10 +196,10 @@ const deletePromo = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
 });
 exports.deletePromo = deletePromo;
 const addProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    var _a;
+    var _b;
     try {
         const { businessId, name, description, price } = req.body;
-        const file = (_a = req.file) === null || _a === void 0 ? void 0 : _a.path;
+        const file = (_b = req.file) === null || _b === void 0 ? void 0 : _b.path;
         if (!file) {
             return res.status(400).json({ message: 'No image uploaded' });
         }
