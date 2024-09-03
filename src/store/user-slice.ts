@@ -2,13 +2,11 @@ import { createSlice } from "@reduxjs/toolkit";
 import { RootState } from "./store";
 
 interface userState {
-  isAuth: boolean;
   user: any;
   access_token: string;
 }
 
 const initialState: userState = {
-  isAuth: false,
   user: null,
   access_token: "",
 };
@@ -19,16 +17,14 @@ const userSlice = createSlice({
   reducers: {
     login: (state, action) => {
       const { token } = action.payload;
-      state.isAuth = true;
       state.user = action.payload;
       state.access_token = token;
-      sessionStorage.setItem("userState", JSON.stringify(state));
+      localStorage.setItem("userState", JSON.stringify(state));
     },
     logout: (state) => {
-      state.isAuth = false;
       state.user = null;
       state.access_token = "";
-      sessionStorage.clear();
+      localStorage.clear();
     },
   },
 });

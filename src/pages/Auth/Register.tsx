@@ -58,7 +58,7 @@ const Register = () => {
   const handleRegister = async (values: registerInput) => {
     try {
       await register(values).unwrap();
-      navigate("/login");
+      navigate("/");
     } catch (error) {
       console.error(error);
       alert("Something went wrong! Please try again");
@@ -72,33 +72,6 @@ const Register = () => {
           height: "100%",
         }}
       >
-        <CenteredBox
-          sx={{
-            backgroundColor: "#fff",
-            flexDirection: "column",
-            padding: "0em 5em",
-            width: "50%",
-            minHeight: "100vh",
-            // borderRadius: "10px",
-            display: { xs: "none", md: "flex" },
-          }}
-        >
-          <Box sx={{ width: "10em" }}>
-            <img src={logo} alt="" style={{ width: "100%" }} />
-          </Box>
-          <Typography
-            variant="body2"
-            sx={{
-              color: "#758BFD",
-              fontSize: "2.2em",
-              fontWeight: 900,
-              textTransform: "uppercase",
-              marginTop: ".2em",
-            }}
-          >
-            City Explorer
-          </Typography>
-        </CenteredBox>
         <CenteredBox
           sx={{
             backgroundColor: "#ececec",
@@ -247,18 +220,34 @@ const Register = () => {
             >
               Login?
             </Link>
-            {/* <Link
-              to="/register-business"
-              style={{
-                fontSize: "1rem",
-                color: "#758BFD",
-                textDecoration: "none",
-                marginTop: "1em",
-              }}
-            >
-              Register a business?
-            </Link> */}
           </Box>
+        </CenteredBox>
+        <CenteredBox
+          sx={{
+            backgroundColor: "#fff",
+            flexDirection: "column",
+            padding: "0em 5em",
+            width: "50%",
+            minHeight: "100vh",
+            // borderRadius: "10px",
+            display: { xs: "none", md: "flex" },
+          }}
+        >
+          <Box sx={{ width: "10em" }}>
+            <img src={logo} alt="" style={{ width: "100%" }} />
+          </Box>
+          <Typography
+            variant="body2"
+            sx={{
+              color: "#758BFD",
+              fontSize: "2.2em",
+              fontWeight: 900,
+              textTransform: "uppercase",
+              marginTop: ".2em",
+            }}
+          >
+            City Explorer
+          </Typography>
         </CenteredBox>
       </CenteredBox>
     </Box>

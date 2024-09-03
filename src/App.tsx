@@ -1,6 +1,7 @@
 import { Box } from "@mui/material";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import Login from "./pages/Auth/Login";
+import RegisterPage from "./pages/Auth/RegisterPage";
 import Register from "./pages/Auth/Register";
 import Layout from "./components/Layout";
 import Home from "./pages/Home/Home";
@@ -10,25 +11,46 @@ import Auth from "./pages/Auth/Auth";
 import Business from "./pages/Explore/Business";
 import BusinessOpen from "./pages/Explore/BusinessOpen";
 // import RegisterBusiness from "./pages/Auth/RegisterBusiness";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Promos from "./pages/Home/Promos";
 import Favorites from "./pages/Me/Favorites";
 import "@splidejs/react-splide/css";
-import { selectCurrentUser } from "./store/user-slice";
+import { login, selectCurrentUser } from "./store/user-slice";
 import ExploreAi from "./pages/ExploreAi/ExploreAi";
+import { useEffect } from "react";
 
 function App() {
   const user = useSelector(selectCurrentUser);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    //log the user back in with local storage data
+    const userString = localStorage.getItem("userState");
+    if (userString) {
+      const user = JSON.parse(userString) as any;
+      const userData = user.user;
+
+      dispatch(login(userData));
+    }
+  }, []);
+
+  useEffect(() => {
+    //route the user to dashboard, if a logged in user tries to access signin page
+    if (user && location.pathname === "/") {
+      navigate("/home");
+    }
+  }, [navigate, user]);
 
   return (
     <Box sx={{ backgroundColor: "#ececec" }}>
       <Routes>
         <Route path="/" element={<Login />} />
-        <Route path="/register" element={<Register />} />
+        <Route path="/register" element={<RegisterPage />} />
+        <Route path="/register/individual" element={<Register />} />
         {/* <Route path="/register-business" element={<RegisterBusiness />} /> */}
         <Route path="*" element={<h1>URL does not exist</h1>} />
         <Route
-          path="/"
           element={
             <Auth user={user}>
               <Layout />

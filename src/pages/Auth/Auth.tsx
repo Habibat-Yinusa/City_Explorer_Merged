@@ -7,7 +7,9 @@ type auth = {
 };
 
 const Auth = ({ user, children }: auth) => {
-  if (!user) {
+  const isAuth = !!user;
+
+  if (!isAuth) {
     return <Navigate to="/" replace />;
   }
 

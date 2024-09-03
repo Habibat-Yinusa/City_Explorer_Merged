@@ -1,4 +1,5 @@
 import { cityApi } from "../../store/api";
+import { ChatBot } from "../../types/chatbot.types";
 
 const apiSliceWithTags = cityApi.enhanceEndpoints({
   addTagTypes: ["ChatBot"],
@@ -6,7 +7,7 @@ const apiSliceWithTags = cityApi.enhanceEndpoints({
 
 const chatApiSlice = apiSliceWithTags.injectEndpoints({
   endpoints: (builder) => ({
-    chatWithBot: builder.mutation<string, { message: string; _id: string }>({
+    chatWithBot: builder.mutation<ChatBot, { message: string; _id: string }>({
       query: (values) => ({
         url: "/chatbot",
         method: "POST",

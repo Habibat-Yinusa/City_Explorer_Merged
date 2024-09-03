@@ -11,7 +11,7 @@ import { useChatWithBotMutation } from "./chatApiSlice";
 
 const ExploreAi = () => {
   interface messageType {
-    text: string;
+    message: string;
     type: string;
   }
 
@@ -34,10 +34,11 @@ const ExploreAi = () => {
     onSubmit: async (values: messageInput) => {
       try {
         const response = await chatWithBot(values).unwrap();
+        console.log(response);
         setMessages([
           ...messages,
-          { text: values.message, type: "sent" },
-          { text: response, type: "received" },
+          { message: values.message, type: "sent" },
+          { message: response?.message, type: response?.type },
         ]);
         formik.values.message = "";
       } catch (error: any) {
@@ -81,7 +82,7 @@ const ExploreAi = () => {
               }}
               key={index}
             >
-              {message.text}
+              {message.message}
             </Box>
           ))}
         </CenteredBox>

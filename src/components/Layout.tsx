@@ -54,7 +54,7 @@ function Layout() {
 
   const handleLogout = () => {
     dispatch(logout());
-    navigate("/login");
+    navigate("/");
   };
 
   const drawer = (
