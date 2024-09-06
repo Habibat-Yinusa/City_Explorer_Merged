@@ -1,6 +1,6 @@
-import { cityApi } from "../../store/api";
-import { Business } from "../../types/business.types";
-import { Events } from "../../types/events.types";
+import { cityApi } from "../../../store/api";
+import { Business } from "../../../types/business.types";
+import { Events } from "../../../types/events.types";
 
 const apiSliceWithTags = cityApi.enhanceEndpoints({
   addTagTypes: ["Business", "Events"],

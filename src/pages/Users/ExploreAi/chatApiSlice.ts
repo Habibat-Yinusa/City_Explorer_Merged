@@ -1,5 +1,5 @@
-import { cityApi } from "../../store/api";
-import { ChatBot } from "../../types/chatbot.types";
+import { cityApi } from "../../../store/api";
+import { ChatBot } from "../../../types/chatbot.types";
 
 const apiSliceWithTags = cityApi.enhanceEndpoints({
   addTagTypes: ["ChatBot"],

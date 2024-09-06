@@ -1,5 +1,5 @@
 import { Box, Typography } from "@mui/material";
-import { CenteredBox } from "../../styles/styled-components/styledBox";
+import { CenteredBox } from "../../../styles/styled-components/styledBox";
 
 const Search = () => {
   return (

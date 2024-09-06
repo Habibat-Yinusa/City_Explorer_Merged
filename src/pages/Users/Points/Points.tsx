@@ -1,8 +1,8 @@
-import { CenteredBox } from "../../styles/styled-components/styledBox";
+import { CenteredBox } from "../../../styles/styled-components/styledBox";
 import { Box, Typography } from "@mui/material";
-import { FilledButton } from "../../styles/styled-components/styledButtons";
-import voucher1 from "../../assets/voucher1.jpg";
-import voucher2 from "../../assets/voucher2.jpg";
+import { FilledButton } from "../../../styles/styled-components/styledButtons";
+import voucher1 from "../../../assets/voucher1.jpg";
+import voucher2 from "../../../assets/voucher2.jpg";
 
 const Points = () => {
   return (

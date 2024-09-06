@@ -1,12 +1,12 @@
 import { Box, Typography } from "@mui/material";
-import { CenteredBox } from "../../styles/styled-components/styledBox";
+import { CenteredBox } from "../../../styles/styled-components/styledBox";
 import { Add, ManageAccounts } from "@mui/icons-material";
 // import { useNavigate } from "react-router-dom";
-import meBanner from "../../assets/meBanner.svg";
-import profileImg from "../../assets/profileImg.svg";
-import { FilledButton } from "../../styles/styled-components/styledButtons";
+import meBanner from "../../../assets/meBanner.svg";
+import profileImg from "../../../assets/profileImg.svg";
+import { FilledButton } from "../../../styles/styled-components/styledButtons";
 import { useSelector } from "react-redux";
-import { selectCurrentUsername } from "../../store/user-slice";
+import { selectCurrentUsername } from "../../../store/user-slice";
 
 const BusinessOpen = () => {
   // const navigate = useNavigate();

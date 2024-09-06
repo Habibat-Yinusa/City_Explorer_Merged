@@ -1,6 +1,6 @@
 import { Box, Rating, Typography } from "@mui/material";
-import promoBurger from "../../assets/promo-burger.svg";
-import { FilledButton } from "../../styles/styled-components/styledButtons";
+import promoBurger from "../../../assets/promo-burger.svg";
+import { FilledButton } from "../../../styles/styled-components/styledButtons";
 
 const Promos = () => {
   return (

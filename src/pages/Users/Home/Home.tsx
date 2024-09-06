@@ -1,9 +1,9 @@
 /* eslint-disable react/no-unescaped-entities */
 import { Box, Typography, Grid } from "@mui/material";
-import { CenteredBox } from "../../styles/styled-components/styledBox";
-import burgerBanner from "../../assets/burgerbanner.svg";
-// import img1 from "../../assets/img1.svg";
-import img2 from "../../assets/img2.svg";
+import { CenteredBox } from "../../../styles/styled-components/styledBox";
+import burgerBanner from "../../../assets/burgerbanner.svg";
+// import img1 from "../../../assets/img1.svg";
+import img2 from "../../../assets/img2.svg";
 import {
   BuildOutlined,
   DryCleaningOutlined,
@@ -19,7 +19,7 @@ import { useNavigate } from "react-router-dom";
 import { Splide, SplideSlide } from "@splidejs/react-splide";
 import "@splidejs/react-splide/css";
 import { AutoScroll } from "@splidejs/splide-extension-auto-scroll";
-import { FilledButton } from "../../styles/styled-components/styledButtons";
+import { FilledButton } from "../../../styles/styled-components/styledButtons";
 // import { useGetEventsQuery } from "../Explore/businessSlice";
 
 const Home = () => {

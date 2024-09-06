@@ -1,10 +1,10 @@
 import React from "react";
 import { Box, FormControl, TextField } from "@mui/material";
-import { CenteredBox } from "../../styles/styled-components/styledBox";
-import { FilledButton } from "../../styles/styled-components/styledButtons";
+import { CenteredBox } from "../../../styles/styled-components/styledBox";
+import { FilledButton } from "../../../styles/styled-components/styledButtons";
 import { useSelector } from "react-redux";
 import { SendRounded } from "@mui/icons-material";
-import { selectCurrentUserId } from "../../store/user-slice";
+import { selectCurrentUserId } from "../../../store/user-slice";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { useChatWithBotMutation } from "./chatApiSlice";

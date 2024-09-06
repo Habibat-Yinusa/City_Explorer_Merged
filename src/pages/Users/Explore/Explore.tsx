@@ -1,7 +1,7 @@
 import { Box, Typography, Grid, TextField, Autocomplete } from "@mui/material";
-import { CenteredBox } from "../../styles/styled-components/styledBox";
-import img2 from "../../assets/img2.svg";
-import { FilledButton } from "../../styles/styled-components/styledButtons";
+import { CenteredBox } from "../../../styles/styled-components/styledBox";
+import img2 from "../../../assets/img2.svg";
+import { FilledButton } from "../../../styles/styled-components/styledButtons";
 import React from "react";
 
 const Explore = () => {

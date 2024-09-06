@@ -1,7 +1,7 @@
-import { Box, Typography, Button, Grid } from "@mui/material";
-import { CenteredBox } from "../../styles/styled-components/styledBox";
-import walletBg from "../../assets/walletBg.svg";
-import { FilledButton } from "../../styles/styled-components/styledButtons";
+import { Box, Typography, Grid } from "@mui/material";
+import { CenteredBox } from "../../../styles/styled-components/styledBox";
+import walletBg from "../../../assets/walletBg.svg";
+import { FilledButton } from "../../../styles/styled-components/styledButtons";
 import {
   AddCircleOutline,
   CallMade,
@@ -12,9 +12,8 @@ import {
   Undo,
   WorkspacesOutlined,
 } from "@mui/icons-material";
-import medal from "../../assets/medal.svg";
+import medal from "../../../assets/medal.svg";
 import { Link } from "react-router-dom";
-import cityDebit from "../../assets/citydebit.png";
 
 const Wallet = () => {
   return (
