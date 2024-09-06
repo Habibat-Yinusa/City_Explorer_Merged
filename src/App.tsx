@@ -4,19 +4,19 @@ import Login from "./pages/Auth/Login";
 import RegisterPage from "./pages/Auth/RegisterPage";
 import Register from "./pages/Auth/Register";
 import Layout from "./components/Layout";
-import Home from "./pages/Home/Home";
-import Wallet from "./pages/Wallet/Wallet";
-import Me from "./pages/Me/Me";
+import Home from "./pages/Users/Home/Home";
+import Wallet from "./pages/Users/Wallet/Wallet";
+import Me from "./pages/Users/Me/Me";
 import Auth from "./pages/Auth/Auth";
-import Business from "./pages/Explore/Business";
-import BusinessOpen from "./pages/Explore/BusinessOpen";
-// import RegisterBusiness from "./pages/Auth/RegisterBusiness";
+import Business from "./pages/Users/Explore/Business";
+import BusinessOpen from "./pages/Users/Explore/BusinessOpen";
+// import RegisterBusiness from "./pages/Users/Auth/RegisterBusiness";
 import { useDispatch, useSelector } from "react-redux";
-import Promos from "./pages/Home/Promos";
-import Favorites from "./pages/Me/Favorites";
+import Promos from "./pages/Users/Home/Promos";
+import Favorites from "./pages/Users/Me/Favorites";
 import "@splidejs/react-splide/css";
 import { login, selectCurrentUser } from "./store/user-slice";
-import ExploreAi from "./pages/ExploreAi/ExploreAi";
+import ExploreAi from "./pages/Users/ExploreAi/ExploreAi";
 import { useEffect } from "react";
 
 function App() {
