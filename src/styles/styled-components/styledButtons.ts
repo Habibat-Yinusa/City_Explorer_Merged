@@ -39,6 +39,44 @@ const FilledButton = styled(Button)(({ theme }) => ({
   },
 }));
 
+const FilledInvertedButton = styled(Button)(({ theme }) => ({
+  color: "#000",
+  backgroundColor: "#E0E0E0",
+  border: "1px solid transparent",
+  padding: " .5em 2em",
+  fontSize: "18px",
+  fontWeight: "700",
+  lineHeight: "24px",
+  textAlign: "center",
+  //   whiteSpace: "nowrap",
+  borderRadius: "10px",
+  minWidth: "10px",
+  //   height: "48px",
+  textTransform: "none",
+
+  "&:hover": {
+    borderColor: "#758BFD",
+    color: "#758BFD",
+  },
+
+  "&.outlined": {
+    backgroundColor: "#F9F9F9",
+    borderColor: theme.palette.primary.main,
+    color: theme.palette.primary.main,
+    "&:hover": {
+      backgroundColor: theme.palette.primary.main,
+      borderColor: theme.palette.primary.main,
+      color: "#F9F9F9",
+    },
+  },
+
+  "&.white": {
+    backgroundColor: "white",
+    borderColor: "#CDD0D5",
+    color: "#454644",
+  },
+}));
+
 const BgButton = styled(Button)(({ theme }) => ({
   color: "white",
   // backgroundColor: "#758BFD",
@@ -129,4 +167,10 @@ const StyledLoadingButton = styled("button")(({ theme }) => ({
   },
 }));
 
-export { FilledButton, BgButton, StyledOvalButton, StyledLoadingButton };
+export {
+  FilledButton,
+  FilledInvertedButton,
+  BgButton,
+  StyledOvalButton,
+  StyledLoadingButton,
+};

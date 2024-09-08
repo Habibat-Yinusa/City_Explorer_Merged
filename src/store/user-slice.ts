@@ -36,5 +36,7 @@ export const userReducer = userSlice.reducer;
 export const selectCurrentUser = (state: RootState) => state.user.user;
 export const selectCurrentUsername = (state: RootState) =>
   state.user.user.username;
+export const selectCurrentBusinessName = (state: RootState) =>
+  state.user.user.businessName;
 export const selectCurrentUserRole = (state: RootState) => state.user.user.role;
 export const selectCurrentUserId = (state: RootState) => state.user.user.id;

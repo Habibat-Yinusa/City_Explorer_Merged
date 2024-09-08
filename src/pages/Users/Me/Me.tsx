@@ -14,11 +14,17 @@ import meBanner from "../../../assets/meBanner.svg";
 import profileImg from "../../../assets/profileImg.svg";
 import { FilledButton } from "../../../styles/styled-components/styledButtons";
 import { useSelector } from "react-redux";
-import { selectCurrentUsername } from "../../../store/user-slice";
+import {
+  selectCurrentBusinessName,
+  selectCurrentUsername,
+  selectCurrentUserRole,
+} from "../../../store/user-slice";
 
 const Me = () => {
   const navigate = useNavigate();
   const username = useSelector(selectCurrentUsername);
+  const businessName = useSelector(selectCurrentBusinessName);
+  const role = useSelector(selectCurrentUserRole);
 
   return (
     <Box>
@@ -52,7 +58,7 @@ const Me = () => {
               textTransform: "capitalize",
             }}
           >
-            {username}
+            {role != "business" ? username : businessName}{" "}
           </Typography>
           <Typography
             variant="body2"
@@ -123,7 +129,7 @@ const Me = () => {
               }}
               onClick={() => navigate(`/explore/business`)}
             >
-              My Business Page
+              Business Page
             </FilledButton>
             <FilledButton
               sx={{
@@ -166,7 +172,7 @@ const Me = () => {
                 variant="h3"
                 sx={{ color: "#fff", fontWeight: 700, padding: "1em 0" }}
               >
-                Business name
+                {role != "business" ? username : businessName}
               </Typography>
             </CenteredBox>
           </CenteredBox>

@@ -23,7 +23,12 @@ import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
 import logo from "../assets/logo.svg";
 import { useDispatch, useSelector } from "react-redux";
 import menuIconLogo from "../assets/menu-icon.svg";
-import { logout, selectCurrentUsername } from "../store/user-slice";
+import {
+  logout,
+  selectCurrentBusinessName,
+  selectCurrentUsername,
+  selectCurrentUserRole,
+} from "../store/user-slice";
 import { CenteredBox } from "../styles/styled-components/styledBox";
 import { FilledButton } from "../styles/styled-components/styledButtons";
 
@@ -33,6 +38,8 @@ function Layout() {
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [isClosing, setIsClosing] = React.useState(false);
   const username = useSelector(selectCurrentUsername);
+  const businessName = useSelector(selectCurrentBusinessName);
+  const role = useSelector(selectCurrentUserRole);
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
@@ -187,7 +194,7 @@ function Layout() {
                 sx={{ textTransform: "capitalize", gap: 1 }}
                 onClick={() => navigate(`/me`)}
               >
-                <Person /> {username}
+                <Person /> {role != "business" ? username : businessName}
               </FilledButton>
             </CenteredBox>
           </Box>

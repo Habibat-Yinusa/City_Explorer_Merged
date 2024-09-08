@@ -1,5 +1,5 @@
 /* eslint-disable react/no-unescaped-entities */
-import { Box, Typography, Grid } from "@mui/material";
+import { Box, Typography, Grid, LinearProgress } from "@mui/material";
 import { CenteredBox } from "../../../styles/styled-components/styledBox";
 import burgerBanner from "../../../assets/burgerbanner.svg";
 // import img1 from "../../../assets/img1.svg";
@@ -20,13 +20,15 @@ import { Splide, SplideSlide } from "@splidejs/react-splide";
 import "@splidejs/react-splide/css";
 import { AutoScroll } from "@splidejs/splide-extension-auto-scroll";
 import { FilledButton } from "../../../styles/styled-components/styledButtons";
-// import { useGetEventsQuery } from "../Explore/businessSlice";
+import {
+  useGetAllEventsQuery,
+  useGetAllPromosQuery,
+} from "../Explore/businessApiSlice";
 
 const Home = () => {
   const navigate = useNavigate();
-  // const { data: events, isLoading: isFetchingEvents } = useGetEventsQuery();
-
-  // console.log(events);
+  const { data: events, isLoading: isFetchingEvents } = useGetAllEventsQuery();
+  const { data: promos, isLoading: isFetchingPromos } = useGetAllPromosQuery();
 
   return (
     <Box sx={{ backgroundColor: "#ececec" }}>
@@ -40,6 +42,7 @@ const Home = () => {
             overflow: "hidden",
           }}
         >
+          {isFetchingPromos && <LinearProgress />}
           <Splide
             options={{
               width: "100%",
@@ -55,144 +58,65 @@ const Home = () => {
             }}
             extensions={{ AutoScroll }}
           >
-            <SplideSlide>
-              <CenteredBox
-                sx={{
-                  backgroundColor: "#758BFD",
-                  borderRadius: "30px",
-                  maxWidth: { xs: "700px", md: "1000px" },
-                  cursor: "pointer",
-                }}
-                onClick={() => navigate("/home/promos")}
-              >
+            {promos?.map((promo) => (
+              <SplideSlide key={promo._id}>
                 <CenteredBox
                   sx={{
-                    width: "80%",
-                    justifyContent: "space-between",
-                    padding: { xs: "1em 0", md: "1em 0" },
-                    alignItems: "center",
+                    backgroundColor: "#758BFD",
+                    borderRadius: "30px",
+                    maxWidth: { xs: "700px", md: "1000px" },
+                    cursor: "pointer",
                   }}
+                  onClick={() =>
+                    navigate(`/home/promos/${promo._id}`, { state: { promo } })
+                  }
                 >
-                  <Typography
-                    variant="h3"
+                  <CenteredBox
                     sx={{
-                      fontWeight: 700,
-                      fontSize: {
-                        xs: "1rem",
-                        sm: "1.3rem",
-                        md: "1.5rem",
-                        lg: "2rem",
-                      },
-                      color: "#fff",
-                      lineHeight: "1.5em",
-                      width: "60%",
+                      width: "80%",
+                      justifyContent: "space-between",
+                      padding: { xs: "1em 0", md: "1em 0" },
+                      alignItems: "center",
+                      gap: 1,
                     }}
                   >
-                    Hurry!!! Jennie's burger is offering 30% discounts on all
-                    orders for this week.
-                  </Typography>
-                  <Box
-                    sx={{
-                      width: { xs: "10em", sm: "12em", md: "15em", lg: "20em" },
-                    }}
-                  >
-                    <img src={burgerBanner} alt="" style={{ width: "100%" }} />
-                  </Box>
+                    <Typography
+                      variant="h3"
+                      sx={{
+                        fontWeight: 700,
+                        fontSize: {
+                          xs: "1rem",
+                          sm: "1.2rem",
+                          md: "1.4rem",
+                          lg: "1.8rem",
+                        },
+                        color: "#fff",
+                        lineHeight: "1.5em",
+                        width: "60%",
+                      }}
+                    >
+                      {promo.description}
+                    </Typography>
+                    <Box
+                      sx={{
+                        width: {
+                          xs: "10em",
+                          sm: "12em",
+                          md: "15em",
+                          lg: "20em",
+                        },
+                      }}
+                    >
+                      <img
+                        src={burgerBanner}
+                        alt=""
+                        style={{ width: "100%" }}
+                      />
+                    </Box>
+                  </CenteredBox>
                 </CenteredBox>
-              </CenteredBox>
-            </SplideSlide>
-            <SplideSlide>
-              <CenteredBox
-                sx={{
-                  backgroundColor: "#758BFD",
-                  borderRadius: "30px",
-                  maxWidth: { xs: "700px", md: "1000px" },
-                  cursor: "pointer",
-                }}
-                onClick={() => navigate("/home/promos")}
-              >
-                <CenteredBox
-                  sx={{
-                    width: "80%",
-                    justifyContent: "space-between",
-                    padding: { xs: "1em 0", md: "1em 0" },
-                    alignItems: "center",
-                  }}
-                >
-                  <Typography
-                    variant="h3"
-                    sx={{
-                      fontWeight: 700,
-                      fontSize: {
-                        xs: "1rem",
-                        sm: "1.3rem",
-                        md: "1.5rem",
-                        lg: "2rem",
-                      },
-                      color: "#fff",
-                      lineHeight: "1.5em",
-                      width: "60%",
-                    }}
-                  >
-                    Hurry!!! Jennie's burger is offering 30% discounts on all
-                    orders for this week.
-                  </Typography>
-                  <Box
-                    sx={{
-                      width: { xs: "10em", sm: "12em", md: "15em", lg: "20em" },
-                    }}
-                  >
-                    <img src={burgerBanner} alt="" style={{ width: "100%" }} />
-                  </Box>
-                </CenteredBox>
-              </CenteredBox>
-            </SplideSlide>
-            <SplideSlide>
-              <CenteredBox
-                sx={{
-                  backgroundColor: "#758BFD",
-                  borderRadius: "30px",
-                  maxWidth: { xs: "700px", md: "1000px" },
-                  cursor: "pointer",
-                }}
-                onClick={() => navigate("/home/promos")}
-              >
-                <CenteredBox
-                  sx={{
-                    width: "80%",
-                    justifyContent: "space-between",
-                    padding: { xs: "1em 0", md: "1em 0" },
-                    alignItems: "center",
-                  }}
-                >
-                  <Typography
-                    variant="h3"
-                    sx={{
-                      fontWeight: 700,
-                      fontSize: {
-                        xs: "1rem",
-                        sm: "1.3rem",
-                        md: "1.5rem",
-                        lg: "2rem",
-                      },
-                      color: "#fff",
-                      lineHeight: "1.5em",
-                      width: "60%",
-                    }}
-                  >
-                    Hurry!!! Jennie's burger is offering 30% discounts on all
-                    orders for this week.
-                  </Typography>
-                  <Box
-                    sx={{
-                      width: { xs: "10em", sm: "12em", md: "15em", lg: "20em" },
-                    }}
-                  >
-                    <img src={burgerBanner} alt="" style={{ width: "100%" }} />
-                  </Box>
-                </CenteredBox>
-              </CenteredBox>
-            </SplideSlide>
+              </SplideSlide>
+            ))}
           </Splide>
         </Box>
       </Box>
@@ -325,6 +249,7 @@ const Home = () => {
             overflow: "hidden",
           }}
         >
+          {isFetchingEvents && <LinearProgress />}
           <Splide
             options={{
               width: "100%",
@@ -341,8 +266,8 @@ const Home = () => {
             }}
             extensions={{ AutoScroll }}
           >
-            {interests?.map((event) => (
-              <SplideSlide key={event.id}>
+            {events?.map((event) => (
+              <SplideSlide key={event._id}>
                 <CenteredBox
                   sx={{
                     borderRadius: "20px",
@@ -362,13 +287,13 @@ const Home = () => {
                     }}
                   >
                     <Box sx={{ width: "100%", borderRadius: "30px" }}>
-                      <img src={event.image} alt="" style={{ width: "100%" }} />
+                      <img src={img2} alt="" style={{ width: "100%" }} />
                     </Box>
                     <Typography
                       variant="body2"
                       sx={{ fontSize: { xs: ".7em", md: ".9rem" } }}
                     >
-                      {event.text}
+                      {event.description}
                     </Typography>
                     <FilledButton sx={{ width: "100%" }}>
                       Check it out
@@ -385,62 +310,6 @@ const Home = () => {
     </Box>
   );
 };
-
-// const businesses = [
-//   {
-//     id: 1,
-//     name: "jame's cafe",
-//     image: img1,
-//   },
-//   {
-//     id: 2,
-//     name: "jame's cafe",
-//     image: img1,
-//   },
-//   {
-//     id: 3,
-//     name: "jame's cafe",
-//     image: img1,
-//   },
-//   {
-//     id: 4,
-//     name: "jame's cafe",
-//     image: img1,
-//   },
-//   {
-//     id: 5,
-//     name: "jame's cafe",
-//     image: img1,
-//   },
-// ];
-
-const interests = [
-  {
-    id: 1,
-    text: "Capital Block is having an event this weekend that might interest you.",
-    image: img2,
-  },
-  {
-    id: 2,
-    text: "Capital Block is having an event this weekend that might interest you.",
-    image: img2,
-  },
-  {
-    id: 3,
-    text: "Capital Block is having an event this weekend that might interest you.",
-    image: img2,
-  },
-  {
-    id: 4,
-    text: "Capital Block is having an event this weekend that might interest you.",
-    image: img2,
-  },
-  {
-    id: 5,
-    text: "Capital Block is having an event this weekend that might interest you.",
-    image: img2,
-  },
-];
 
 const categoryCard = [
   {

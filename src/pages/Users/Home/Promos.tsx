@@ -1,8 +1,16 @@
 import { Box, Rating, Typography } from "@mui/material";
 import promoBurger from "../../../assets/promo-burger.svg";
 import { FilledButton } from "../../../styles/styled-components/styledButtons";
+import { PromosData } from "../../../types/promo.types";
+import { useLocation } from "react-router-dom";
 
+type Props = {
+  promo: PromosData;
+};
 const Promos = () => {
+  const location = useLocation();
+  const { promo } = location.state as Props;
+
   return (
     <Box
       sx={{
@@ -26,6 +34,7 @@ const Promos = () => {
             border: ".5px solid #00000040",
             borderRadius: "30px",
             margin: "1.5em 0",
+            gap: 1,
           }}
         >
           <Box sx={{ width: "60%" }}>
@@ -39,7 +48,7 @@ const Promos = () => {
               variant="h4"
               sx={{ fontSize: "1.6rem", fontWeight: 400, margin: ".3em 0" }}
             >
-              30% discounts on all orders for this week.
+              {promo.description}
             </Typography>
             <FilledButton>Order</FilledButton>
           </Box>

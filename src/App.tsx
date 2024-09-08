@@ -18,6 +18,7 @@ import "@splidejs/react-splide/css";
 import { login, selectCurrentUser } from "./store/user-slice";
 import ExploreAi from "./pages/Users/ExploreAi/ExploreAi";
 import { useEffect } from "react";
+import NewBusiness from "./pages/Business/Home/NewBusiness";
 
 function App() {
   const user = useSelector(selectCurrentUser);
@@ -48,7 +49,7 @@ function App() {
         <Route path="/" element={<Login />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/register/individual" element={<Register />} />
-        {/* <Route path="/register-business" element={<RegisterBusiness />} /> */}
+        <Route path="/register/business" element={<NewBusiness />} />
         <Route path="*" element={<h1>URL does not exist</h1>} />
         <Route
           element={
@@ -59,7 +60,7 @@ function App() {
         >
           <Route path="/home">
             <Route index element={<Home />} />
-            <Route path="promos" element={<Promos />} />
+            <Route path="promos/:id" element={<Promos />} />
           </Route>
 
           <Route path="/explore">
