@@ -1,7 +1,31 @@
-import { Select } from "@mui/material";
+import { Select, TextField } from "@mui/material";
 import { alpha, styled } from "@mui/material/styles";
 
-const StyledTextField = styled("input")(({ theme }) => ({
+const StyledTextField = styled(TextField)(({ theme }) => ({
+  border: "0.5px solid #CCCCCC",
+  borderRadius: "12px",
+  backgroundColor: "#fff",
+  fontSize: "14px",
+  fontWeight: "normal",
+  color: "#ABABAB",
+  width: "100%",
+  outline: "none",
+  transition: theme.transitions.create([
+    "border-color",
+    "background-color",
+    "box-shadow",
+  ]),
+  "&:disabled": {
+    backgroundColor: "#eee",
+    color: "#888888",
+  },
+  "&:focus": {
+    boxShadow: `${alpha(theme.palette.primary.main, 0.25)} 0 0 0 0.2rem`,
+    borderColor: theme.palette.primary.main,
+  },
+}));
+
+const StyledNormalInput = styled("input")(({ theme }) => ({
   border: "0.5px solid #CCCCCC",
   borderRadius: "12px",
   backgroundColor: "#fff",
@@ -156,6 +180,7 @@ const StyledVerificationInput = styled("input")(({ theme }) => ({
 
 export {
   StyledTextField,
+  StyledNormalInput,
   StyledFilledInput,
   StyledSelect,
   StyledFileInput,

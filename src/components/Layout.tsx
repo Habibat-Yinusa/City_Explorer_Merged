@@ -64,6 +64,10 @@ function Layout() {
     navigate("/");
   };
 
+  const headerLinkToUse = location.pathname.includes("/explore/business")
+    ? "business"
+    : "explore";
+
   const drawer = (
     <div>
       <List
@@ -190,6 +194,35 @@ function Layout() {
                 <img src={logo} alt="" style={{ width: "100%" }} />
               </Box>
               {/* <Typography variant="h6">City Explorer</Typography> */}
+              <Box
+                sx={{
+                  width: "20%",
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
+              >
+                {location.pathname.includes("explore") &&
+                  headerLinks[headerLinkToUse].map((link) => (
+                    <Typography
+                      key={link.id}
+                      variant="body2"
+                      sx={{
+                        fontSize: "1rem",
+                        color:
+                          location.pathname === link.link ? "#758BFD" : "#000",
+                        textDecoration: "none",
+                        cursor: "pointer",
+                        "&:hover": {
+                          color: "#758BFD",
+                        },
+                      }}
+                      onClick={() => navigate(link.link)} // navigate to the correct link
+                    >
+                      {link.name}
+                    </Typography>
+                  ))}
+              </Box>
               <FilledButton
                 sx={{ textTransform: "capitalize", gap: 1 }}
                 onClick={() => navigate(`/me`)}
@@ -305,5 +338,18 @@ const pageLinks = [
   //   icon: <Notifications />,
   // },
 ];
+
+const headerLinks = {
+  explore: [
+    { id: 1, name: "Explore", link: "/explore" },
+    { id: 2, name: "Event", link: "/explore/event" },
+    { id: 3, name: "Collections", link: "/explore/collections" },
+  ],
+  business: [
+    { id: 1, name: "Services", link: "/explore/services" },
+    { id: 2, name: "Info", link: "/explore/info" },
+    { id: 3, name: "Reviews", link: "/explore/reviews" },
+  ],
+};
 
 export default Layout;

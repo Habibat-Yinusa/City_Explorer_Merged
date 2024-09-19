@@ -8,7 +8,6 @@ import Home from "./pages/Users/Home/Home";
 import Wallet from "./pages/Users/Wallet/Wallet";
 import Me from "./pages/Users/Me/Me";
 import Auth from "./pages/Auth/Auth";
-import Business from "./pages/Users/Explore/Business";
 import BusinessOpen from "./pages/Users/Explore/BusinessOpen";
 // import RegisterBusiness from "./pages/Users/Auth/RegisterBusiness";
 import { useDispatch, useSelector } from "react-redux";
@@ -19,6 +18,9 @@ import { login, selectCurrentUser } from "./store/user-slice";
 import ExploreAi from "./pages/Users/ExploreAi/ExploreAi";
 import { useEffect } from "react";
 import NewBusiness from "./pages/Business/Home/NewBusiness";
+import Explore from "./pages/Users/Explore/Explore";
+import Events from "./pages/Users/Explore/Events";
+import Collections from "./pages/Users/Explore/Collections";
 
 function App() {
   const user = useSelector(selectCurrentUser);
@@ -64,8 +66,10 @@ function App() {
           </Route>
 
           <Route path="/explore">
-            <Route index element={<Business />} />
+            <Route index element={<Explore />} />
             <Route path="business" element={<BusinessOpen />} />
+            <Route path="event" element={<Events />} />
+            <Route path="collections" element={<Collections />} />
           </Route>
 
           <Route path="/ai">
