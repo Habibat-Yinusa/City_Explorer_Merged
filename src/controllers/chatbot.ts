@@ -68,16 +68,16 @@ const messagesArray = async (req: Request, res: Response) => {
 };
 
 //GET ALL BOT REPLIES FOR A REGISTERED USER
-const databaseReply = async (req: Request, res: Response) => {
-  try {
-    const _id = req.params.id;
-    const user = await User.findOne({ _id });
-    if (user) {
-      res.json(user.botReplies);
-    }
-  } catch (error: any) {
-    res.status(400).send({ message: error.message });
-  }
-};
+// const databaseReply = async (req: Request, res: Response) => {
+//   try {
+//     const _id = req.params.id;
+//     const user = await User.findOne({ _id });
+//     if (user) {
+//       res.json(user.botReplies);
+//     }
+//   } catch (error: any) {
+//     res.status(400).send({ message: error.message });
+  // }
+// };
 
-export { chatbot, messagesArray, databaseReply };
+export { chatbot, messagesArray };

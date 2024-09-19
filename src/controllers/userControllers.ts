@@ -48,13 +48,23 @@ const loginUser = async (req: Request, res: Response): Promise<void> => {
         const { email, password } = req.body;
 
         let user = await User.findOne({ email });
-        let businessName
+
+        let businessDetails 
+        
+        const userDetails = { 
+            id: user?.id,
+            role: user?.role, 
+            username: user?.username, 
+            email: user?.email
+        }
 
         if (!user) {
             user = await BusinessModel.findOne({ email });
-            const business = await BusinessModel.findOne({ email })
-            businessName = business?.name
+            businessDetails = user?.toObject();
+            delete businessDetails.password;
           }
+
+        const details = businessDetails ? businessDetails : userDetails;
 
         if (!user) {
             throw new Error("User not found");
@@ -67,11 +77,12 @@ const loginUser = async (req: Request, res: Response): Promise<void> => {
         }
 
         const token = jwt.sign({
-            userId: user._id, email: user.email, username: user.username, role: user.role, businessName
+            userId: user._id
         }, process.env.JWT_SECRET!, { expiresIn: "90d" });
 
-        res.status(200).send({
-            token, id: user.id, username: user.username, businessName, role: user.role
+        res.status(200).json({
+            token, 
+            details
         });
     } catch (error: any) {
         res.status(400).send({ message: error.message });
@@ -81,25 +92,21 @@ const loginUser = async (req: Request, res: Response): Promise<void> => {
 // forgotPassword
 const forgotPassword = async (req: Request, res: Response): Promise<void> => {
     try {
-        // GET USER BASED ON POSTED EMAIL
-    const user = await User.findOne({ email: req.body.email });
-  
-    if (!user) {
-      throw new Error("User doesn't exist, check email again");
-    }
-  
-    // GENERATE A RANDOM RESET TOKEN
-    const resetToken: string = user.createResetPasswordToken();
-    await user.save();
-  console.log(resetToken);
-  
-    // SEND TOKEN TO USER EMAIL
-  
-    // Respond to the request
-    res.status(200).json({
-      success: true,
-      message: "Token sent to email"
-    });
+        const user = await User.findOne({ email: req.body.email });
+    
+        if (!user) {
+            throw new Error("User doesn't exist, check email again");
+        }
+    
+        // GENERATE A RANDOM RESET TOKEN
+        const resetToken: string = user.createResetPasswordToken();
+        await user.save();
+        console.log(resetToken);
+    
+        res.status(200).json({
+            success: true,
+            message: "Token sent to email"
+        });
     } catch (error: any) {
         res.status(400).send({ message: error.message });
     }

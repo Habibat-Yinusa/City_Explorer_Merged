@@ -5,12 +5,11 @@ interface UserAttributes {
   username: string;
   email: string;
   password: string;
+  role: string;
   passwordResetToken: string;
   passwordResetTokenExpires: Date;
   userMessages: string[];
   botReplies: string[];
-  role: string;
-  
 }
 
 interface UserDocument extends UserAttributes, Document {
@@ -21,13 +20,12 @@ const userSchema = new Schema<UserDocument>({
   username: { type: String, required: true },
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
+  role: { type: String, enum: ['user', 'business'], default: 'user' },
   passwordResetToken: {type: String},
   passwordResetTokenExpires: { type: Date },
   userMessages: { type: [String], default: [] },
   botReplies: { type: [String], default: [] },
-  role: { type: String, enum: ['user', 'business'], default: 'user' } 
   // createResetPasswordToken(): { type: string },
-  
 });
 
 

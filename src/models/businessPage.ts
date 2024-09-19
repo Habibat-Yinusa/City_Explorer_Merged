@@ -113,7 +113,8 @@ const businessSchema = new Schema<Business>({
     role: { type: String, enum: ['user', 'business'], default: 'business' },
     location: { type: String},
     openHours: { type: [hoursSchema], default: []},
-    website: { type: String }
+    website: { type: String }, 
+    description: { type: String}
 });
 
 const BusinessModel = mongoose.model<Business>('Business', businessSchema);
