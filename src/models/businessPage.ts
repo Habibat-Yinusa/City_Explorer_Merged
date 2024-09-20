@@ -1,6 +1,5 @@
 import mongoose, { Document, Schema, Types } from 'mongoose';
 
-// defining the interfaces
 interface Item {
     name: string;
     description: string;
@@ -49,7 +48,6 @@ interface Hours {
     time: string;
 }
 
-// Define the interface for the business
 interface Business extends Document {
     name: string;
     description: string;
@@ -68,7 +66,6 @@ interface Business extends Document {
 
 }
 
-// schema for the item
 const itemSchema = new Schema<Item>({
     name: { type: String, required: true },
     description: { type: String, required: true },
@@ -76,7 +73,6 @@ const itemSchema = new Schema<Item>({
     image: { type: String, required: true }
 });
 
-// schema for the event
 const eventSchema = new Schema<Event>({
     title: { type: String, required: true },
     description: { type: String, required: true },
@@ -84,12 +80,11 @@ const eventSchema = new Schema<Event>({
     venue: { type: String, required: true },
     image: { type: String }
 });
-// schema for promos
+
 const promoSchema = new Schema<Promo>({
     name: { type: String, required: true },
     description: { type: String, required: true },
     timeValid: { type: String, required: true },
-// schema for promos
 })
 
 const hoursSchema = new Schema<Hours>({
@@ -98,8 +93,6 @@ const hoursSchema = new Schema<Hours>({
    
 });
 
-
-//  schema for the business
 const businessSchema = new Schema<Business>({
     name: { type: String},
     category: { type: String},

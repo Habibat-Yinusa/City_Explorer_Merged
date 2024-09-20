@@ -58,7 +58,6 @@ const chatbot = async (req: Request, res: Response) => {
   }
 };
 
-//GET ALL BOT REPLIES FOR AN UNREGISTERED USER
 const messagesArray = async (req: Request, res: Response) => {
   try {
     res.status(200).send(messages);

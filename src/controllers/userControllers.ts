@@ -11,8 +11,6 @@ import BusinessModel from "../models/businessPage";
 
 let messages: string[] = [];
 
-
-//Signup
 const createUser = async (req: Request, res: Response): Promise<void> => {
     try {
         const { username, email, password } = req.body;
@@ -42,7 +40,6 @@ const createUser = async (req: Request, res: Response): Promise<void> => {
     }
 };
 
-// Login
 const loginUser = async (req: Request, res: Response): Promise<void> => {
     try {
         const { email, password } = req.body;
@@ -89,7 +86,6 @@ const loginUser = async (req: Request, res: Response): Promise<void> => {
     }
 };
 
-// forgotPassword
 const forgotPassword = async (req: Request, res: Response): Promise<void> => {
     try {
         const user = await User.findOne({ email: req.body.email });

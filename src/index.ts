@@ -19,8 +19,6 @@ connectDB();
 const app = express();
 app.use(cors());
 
-
-// // CORS configuration
 const corsOptions = {
   origin: true, // Allow requests from any origin
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
@@ -30,7 +28,6 @@ const corsOptions = {
 
 app.options('*', cors(corsOptions));
 
-// Handle preflight requests manually
 app.options('*', (req, res) => {
   res.header('Access-Control-Allow-Origin', '*'); // Allow any origin
   res.header('Access-Control-Allow-Methods', 'GET,HEAD,PUT,PATCH,POST,DELETE');
@@ -43,14 +40,11 @@ app.options('*', (req, res) => {
 
 const port = 3000;
 
-
-//middlewares
 app.use(compression());
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(express.json())
 
-//end-points
 app.use("/user", userRoutes)
 app.use("/", chatbotRoute)
 app.use("/business", businessRoute)

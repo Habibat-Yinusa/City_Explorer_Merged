@@ -2,7 +2,6 @@ import { Request, Response } from 'express';
 import BusinessModel, { BusinessEvent, PromoDeal, Items } from '../models/businessPage';
 import { Types } from 'mongoose';
 import { hash, compare } from "bcrypt"
-
 import cloudinary from '../config/cloudinary';
 import upload from '../config/multer';
 
@@ -65,8 +64,6 @@ import upload from '../config/multer';
         res.status(500).send({ message: error.message });
     }
 };
-
-//
  const getAllBusinesses = async (req: Request, res: Response) => {
     try {
         const businesses = await BusinessModel.find();
@@ -76,8 +73,6 @@ import upload from '../config/multer';
         res.status(500).send({ message: error.message });
     }
 };
-
-// Add an event to a business
 
  const addEventToBusiness = async (req: Request, res: Response) => {
     try {
@@ -111,7 +106,6 @@ import upload from '../config/multer';
     }
 };
 
-//get an event
 const getEvents = async (req: Request, res: Response) => {
     try {
         const businessId = req.params.id;
@@ -127,7 +121,6 @@ const getEvents = async (req: Request, res: Response) => {
     }
 };
 
-//get all events
 const getAllEvents = async (req: Request, res: Response) => {
     try {
         const businesses = await BusinessModel.find();
@@ -143,7 +136,6 @@ const getAllEvents = async (req: Request, res: Response) => {
     }
 };
 
-//add business promo
 const addPromo = async (req: Request, res: Response) => {
     try {
         const businessId = req.params.id;
@@ -168,7 +160,6 @@ const addPromo = async (req: Request, res: Response) => {
     }
 };
 
-//get business promos
 const getPromo = async (req: Request, res: Response) => {
     try {
         const businessId = req.params.id;
@@ -275,9 +266,8 @@ const deletePromo = async (req: Request, res: Response) => {
 // import cloudinary from './cloudinary'; // Your Cloudinary configuration file
 // import BusinessModel from './models/BusinessModel'; // Adjust import based on your project structure
 
-// Route handler
 const addProduct = async (req: Request, res: Response) => {
-  // Use multer middleware to handle file upload
+  
   upload.single('file')(req, res, async (err) => {
     if (err) {
       return res.status(400).json({ message: 'Error uploading file', error: err.message });
@@ -285,13 +275,12 @@ const addProduct = async (req: Request, res: Response) => {
 
     try {
       const { businessId, name, description, price } = req.body;
-      const filePath = req.file?.path; // Ensure this is a string path to the file
+      const filePath = req.file?.path;
 
       if (!filePath) {
         return res.status(400).json({ message: 'No image uploaded' });
       }
 
-      // Upload image to Cloudinary
       const result = await cloudinary.uploader.upload(filePath, {
         folder: 'products'
       });
@@ -300,10 +289,9 @@ const addProduct = async (req: Request, res: Response) => {
         name,
         description,
         price,
-        image: result.secure_url // URL of the uploaded image
+        image: result.secure_ur
       };
 
-      // Update the business page with the new product
       const updatedBusinessPage = await BusinessModel.findByIdAndUpdate(
         businessId,
         { $push: { items: newProduct } },
