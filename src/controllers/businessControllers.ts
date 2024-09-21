@@ -4,6 +4,7 @@ import { Types } from 'mongoose';
 import { hash, compare } from "bcrypt"
 import cloudinary from '../config/cloudinary';
 import upload from '../config/multer';
+import { ValidationError, ServerError } from '../middlewares/errorHandler';
 
 // import BusinessModel  from '../models/businessPage';
 
@@ -14,15 +15,15 @@ import upload from '../config/multer';
         const existingBusiness = await BusinessModel.findOne({ email });
 
         if (!email) {
-            throw new Error("Please enter a valid email address");
+            throw new ValidationError("Please enter a valid email address");
         }
 
         if (existingBusiness) {
-            throw new Error("This email already exists");
+            throw new ValidationError("This email already exists");
         }
 
         if (!password) {
-            throw new Error("Please enter a password");
+            throw new ValidationError("Please enter a password");
         }
 
         const hashedPassword = await hash(password, 10);
@@ -42,8 +43,9 @@ import upload from '../config/multer';
         });
 
         await newBusiness.save();
+        const { password: _, ...businessDetails } = newBusiness.toObject()
 
-        res.status(201).send({ message: 'Business registered successfully', business: newBusiness });
+        res.status(201).send({ message: 'Business registered successfully', business: businessDetails });
     } catch (error: any) {
         res.status(500).send({ message: error.message });
     }
@@ -61,7 +63,14 @@ import upload from '../config/multer';
 
         res.status(200).send(business);
     } catch (error: any) {
-        res.status(500).send({ message: error.message });
+        if (error instanceof ValidationError) {
+            return res.status(400).send({ message: error.message });
+        }
+        if (error instanceof ServerError) {
+            return res.status(500).send({ message: error.message });
+        }
+
+        res.send({ message: 'Internal Server Error' });
     }
 };
  const getAllBusinesses = async (req: Request, res: Response) => {
