@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.databaseReply = exports.messagesArray = exports.chatbot = void 0;
+exports.messagesArray = exports.chatbot = void 0;
 const chatbotService2_1 = __importDefault(require("../services/chatbotService2"));
 const userControllers_1 = require("./userControllers");
 const user_1 = __importDefault(require("../models/user"));
@@ -67,7 +67,6 @@ const chatbot = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 exports.chatbot = chatbot;
-//GET ALL BOT REPLIES FOR AN UNREGISTERED USER
 const messagesArray = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         res.status(200).send(userControllers_1.messages);
@@ -77,17 +76,3 @@ const messagesArray = (req, res) => __awaiter(void 0, void 0, void 0, function* 
     }
 });
 exports.messagesArray = messagesArray;
-//GET ALL BOT REPLIES FOR A REGISTERED USER
-const databaseReply = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const _id = req.params.id;
-        const user = yield user_1.default.findOne({ _id });
-        if (user) {
-            res.json(user.botReplies);
-        }
-    }
-    catch (error) {
-        res.status(400).send({ message: error.message });
-    }
-});
-exports.databaseReply = databaseReply;

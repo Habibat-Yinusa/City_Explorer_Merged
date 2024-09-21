@@ -24,14 +24,12 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importStar(require("mongoose"));
-// schema for the item
 const itemSchema = new mongoose_1.Schema({
     name: { type: String, required: true },
     description: { type: String, required: true },
     price: { type: String, required: true },
     image: { type: String, required: true }
 });
-// schema for the event
 const eventSchema = new mongoose_1.Schema({
     title: { type: String, required: true },
     description: { type: String, required: true },
@@ -39,18 +37,15 @@ const eventSchema = new mongoose_1.Schema({
     venue: { type: String, required: true },
     image: { type: String }
 });
-// schema for promos
 const promoSchema = new mongoose_1.Schema({
     name: { type: String, required: true },
     description: { type: String, required: true },
     timeValid: { type: String, required: true },
-    // schema for promos
 });
 const hoursSchema = new mongoose_1.Schema({
     day: { type: String, required: true },
     time: { type: String, required: true },
 });
-//  schema for the business
 const businessSchema = new mongoose_1.Schema({
     name: { type: String },
     category: { type: String },
@@ -64,7 +59,8 @@ const businessSchema = new mongoose_1.Schema({
     role: { type: String, enum: ['user', 'business'], default: 'business' },
     location: { type: String },
     openHours: { type: [hoursSchema], default: [] },
-    website: { type: String }
+    website: { type: String },
+    description: { type: String }
 });
 const BusinessModel = mongoose_1.default.model('Business', businessSchema);
 exports.default = BusinessModel;

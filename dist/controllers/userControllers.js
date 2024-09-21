@@ -22,7 +22,6 @@ const businessPage_1 = __importDefault(require("../models/businessPage"));
 // import { cloudinary } from "../config/cloudinary.js"
 let messages = [];
 exports.messages = messages;
-//Signup
 const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { username, email, password } = req.body;
@@ -45,17 +44,23 @@ const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     }
 });
 exports.createUser = createUser;
-// Login
 const loginUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { email, password } = req.body;
         let user = yield user_1.default.findOne({ email });
-        let businessName;
+        let businessDetails;
+        const userDetails = {
+            id: user === null || user === void 0 ? void 0 : user.id,
+            role: user === null || user === void 0 ? void 0 : user.role,
+            username: user === null || user === void 0 ? void 0 : user.username,
+            email: user === null || user === void 0 ? void 0 : user.email
+        };
         if (!user) {
             user = yield businessPage_1.default.findOne({ email });
-            const business = yield businessPage_1.default.findOne({ email });
-            businessName = business === null || business === void 0 ? void 0 : business.name;
+            businessDetails = user === null || user === void 0 ? void 0 : user.toObject();
+            delete businessDetails.password;
         }
+        const details = businessDetails ? businessDetails : userDetails;
         if (!user) {
             throw new Error("User not found");
         }
@@ -64,10 +69,11 @@ const loginUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             throw new Error("Incorrect password!");
         }
         const token = jsonwebtoken_1.default.sign({
-            userId: user._id, email: user.email, username: user.username, role: user.role, businessName
+            userId: user._id
         }, process.env.JWT_SECRET, { expiresIn: "90d" });
-        res.status(200).send({
-            token, id: user.id, username: user.username, businessName, role: user.role
+        res.status(200).json({
+            token,
+            details
         });
     }
     catch (error) {
@@ -75,10 +81,8 @@ const loginUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 exports.loginUser = loginUser;
-// forgotPassword
 const forgotPassword = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        // GET USER BASED ON POSTED EMAIL
         const user = yield user_1.default.findOne({ email: req.body.email });
         if (!user) {
             throw new Error("User doesn't exist, check email again");
@@ -87,8 +91,6 @@ const forgotPassword = (req, res) => __awaiter(void 0, void 0, void 0, function*
         const resetToken = user.createResetPasswordToken();
         yield user.save();
         console.log(resetToken);
-        // SEND TOKEN TO USER EMAIL
-        // Respond to the request
         res.status(200).json({
             success: true,
             message: "Token sent to email"

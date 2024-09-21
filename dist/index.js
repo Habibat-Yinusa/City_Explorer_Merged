@@ -42,7 +42,6 @@ dotenv.config();
 (0, db_1.connectDB)();
 const app = (0, express_1.default)();
 app.use((0, cors_1.default)());
-// // CORS configuration
 const corsOptions = {
     origin: true, // Allow requests from any origin
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
@@ -50,7 +49,6 @@ const corsOptions = {
     optionsSuccessStatus: 204
 };
 app.options('*', (0, cors_1.default)(corsOptions));
-// Handle preflight requests manually
 app.options('*', (req, res) => {
     res.header('Access-Control-Allow-Origin', '*'); // Allow any origin
     res.header('Access-Control-Allow-Methods', 'GET,HEAD,PUT,PATCH,POST,DELETE');
@@ -58,12 +56,10 @@ app.options('*', (req, res) => {
     res.sendStatus(204);
 });
 const port = 3000;
-//middlewares
 app.use((0, compression_1.default)());
 app.use((0, cookie_parser_1.default)());
 app.use(body_parser_1.default.json());
 app.use(express_1.default.json());
-//end-points
 app.use("/user", userRoutes_1.default);
 app.use("/", chatbotRoute_1.default);
 app.use("/business", bussinesRoute_1.default);

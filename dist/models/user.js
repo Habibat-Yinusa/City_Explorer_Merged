@@ -32,11 +32,11 @@ const userSchema = new mongoose_1.Schema({
     username: { type: String, required: true },
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
+    role: { type: String, enum: ['user', 'business'], default: 'user' },
     passwordResetToken: { type: String },
     passwordResetTokenExpires: { type: Date },
     userMessages: { type: [String], default: [] },
     botReplies: { type: [String], default: [] },
-    role: { type: String, enum: ['user', 'business'], default: 'user' }
     // createResetPasswordToken(): { type: string },
 });
 userSchema.methods.createResetPasswordToken = function () {
