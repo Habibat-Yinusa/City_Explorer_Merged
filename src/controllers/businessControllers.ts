@@ -43,9 +43,9 @@ import { ValidationError, ServerError } from '../middlewares/errorHandler';
         });
 
         await newBusiness.save();
-        const { password: _, ...businessDetails } = newBusiness.toObject()
+        const { password: _, ...newBusinessDetails } = newBusiness.toObject()
 
-        res.status(201).send({ message: 'Business registered successfully', business: businessDetails });
+        res.status(201).send({ message: 'Business registered successfully', business: newBusinessDetails });
     } catch (error: any) {
         res.status(500).send({ message: error.message });
     }
