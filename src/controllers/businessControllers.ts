@@ -270,10 +270,6 @@ const deletePromo = async (req: Request, res: Response) => {
 // })
 // };
 
-// import { Request, Response } from 'express';
-// import multer from './multer'; // Your multer configuration file
-// import cloudinary from './cloudinary'; // Your Cloudinary configuration file
-// import BusinessModel from './models/BusinessModel'; // Adjust import based on your project structure
 
 const addProduct = async (req: Request, res: Response) => {
   
