@@ -28,20 +28,19 @@ const businessPage_1 = __importDefault(require("../models/businessPage"));
 const bcrypt_1 = require("bcrypt");
 const cloudinary_1 = __importDefault(require("../config/cloudinary"));
 const multer_1 = __importDefault(require("../config/multer"));
-const errorHandler_1 = require("../middlewares/errorHandler");
 // import BusinessModel  from '../models/businessPage';
 const registerBusiness = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { name, category, logo, items, location, openHours, phone, email, password, website, description } = req.body;
         const existingBusiness = yield businessPage_1.default.findOne({ email });
         if (!email) {
-            throw new errorHandler_1.ValidationError("Please enter a valid email address");
+            throw new Error("Please enter a valid email address");
         }
         if (existingBusiness) {
-            throw new errorHandler_1.ValidationError("This email already exists");
+            throw new Error("This email already exists");
         }
         if (!password) {
-            throw new errorHandler_1.ValidationError("Please enter a password");
+            throw new Error("Please enter a password");
         }
         const hashedPassword = yield (0, bcrypt_1.hash)(password, 10);
         const newBusiness = new businessPage_1.default({
@@ -62,13 +61,7 @@ const registerBusiness = (req, res) => __awaiter(void 0, void 0, void 0, functio
         res.status(201).send({ message: 'Business registered successfully', business: newBusinessDetails });
     }
     catch (error) {
-        if (error instanceof errorHandler_1.ValidationError) {
-            return res.status(400).send({ message: error.message });
-        }
-        if (error instanceof errorHandler_1.ServerError) {
-            return res.status(500).send({ message: error.message });
-        }
-        res.send({ message: 'Internal Server Error' });
+        return res.status(500).send({ message: error.message });
     }
 });
 exports.registerBusiness = registerBusiness;
@@ -82,13 +75,7 @@ const getBusinessDetails = (req, res) => __awaiter(void 0, void 0, void 0, funct
         res.status(200).send(business);
     }
     catch (error) {
-        if (error instanceof errorHandler_1.ValidationError) {
-            return res.status(400).send({ message: error.message });
-        }
-        if (error instanceof errorHandler_1.ServerError) {
-            return res.status(500).send({ message: error.message });
-        }
-        res.send({ message: 'Internal Server Error' });
+        return res.status(500).send({ message: error.message });
     }
 });
 exports.getBusinessDetails = getBusinessDetails;

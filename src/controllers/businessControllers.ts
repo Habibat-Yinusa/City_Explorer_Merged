@@ -15,15 +15,15 @@ import { ValidationError, ServerError } from '../middlewares/errorHandler';
         const existingBusiness = await BusinessModel.findOne({ email });
 
         if (!email) {
-            throw new ValidationError("Please enter a valid email address");
+            throw new Error("Please enter a valid email address");
         }
 
         if (existingBusiness) {
-            throw new ValidationError("This email already exists");
+            throw new Error("This email already exists");
         }
 
         if (!password) {
-            throw new ValidationError("Please enter a password");
+            throw new Error("Please enter a password");
         }
 
         const hashedPassword = await hash(password, 10);
@@ -47,14 +47,7 @@ import { ValidationError, ServerError } from '../middlewares/errorHandler';
 
         res.status(201).send({ message: 'Business registered successfully', business: newBusinessDetails });
     } catch (error: any) {
-        if (error instanceof ValidationError) {
-            return res.status(400).send({ message: error.message });
-        }
-        if (error instanceof ServerError) {
             return res.status(500).send({ message: error.message });
-        }
-
-        res.send({ message: 'Internal Server Error' });
     }
 };
 
@@ -70,14 +63,7 @@ import { ValidationError, ServerError } from '../middlewares/errorHandler';
 
         res.status(200).send(business);
     } catch (error: any) {
-        if (error instanceof ValidationError) {
-            return res.status(400).send({ message: error.message });
-        }
-        if (error instanceof ServerError) {
             return res.status(500).send({ message: error.message });
-        }
-
-        res.send({ message: 'Internal Server Error' });
     }
 };
  const getAllBusinesses = async (req: Request, res: Response) => {
