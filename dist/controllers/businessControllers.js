@@ -62,7 +62,13 @@ const registerBusiness = (req, res) => __awaiter(void 0, void 0, void 0, functio
         res.status(201).send({ message: 'Business registered successfully', business: newBusinessDetails });
     }
     catch (error) {
-        res.status(500).send({ message: error.message });
+        if (error instanceof errorHandler_1.ValidationError) {
+            return res.status(400).send({ message: error.message });
+        }
+        if (error instanceof errorHandler_1.ServerError) {
+            return res.status(500).send({ message: error.message });
+        }
+        res.send({ message: 'Internal Server Error' });
     }
 });
 exports.registerBusiness = registerBusiness;

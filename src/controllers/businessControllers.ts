@@ -47,7 +47,14 @@ import { ValidationError, ServerError } from '../middlewares/errorHandler';
 
         res.status(201).send({ message: 'Business registered successfully', business: newBusinessDetails });
     } catch (error: any) {
-        res.status(500).send({ message: error.message });
+        if (error instanceof ValidationError) {
+            return res.status(400).send({ message: error.message });
+        }
+        if (error instanceof ServerError) {
+            return res.status(500).send({ message: error.message });
+        }
+
+        res.send({ message: 'Internal Server Error' });
     }
 };
 
