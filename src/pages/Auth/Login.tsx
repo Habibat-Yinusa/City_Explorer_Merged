@@ -193,6 +193,17 @@ const Login = () => {
             >
               Don't have an account?
             </Link>
+            <Link
+              to="/explore-maps"
+              style={{
+                fontSize: "1rem",
+                color: "#758BFD",
+                textDecoration: "none",
+                marginTop: "1em",
+              }}
+            >
+              Explore our maps?
+            </Link>
           </Box>
         </CenteredBox>
       </CenteredBox>
