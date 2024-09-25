@@ -21,6 +21,7 @@ import NewBusiness from "./pages/Business/Home/NewBusiness";
 import Explore from "./pages/Users/Explore/Explore";
 import Events from "./pages/Users/Explore/Events";
 import Collections from "./pages/Users/Explore/Collections";
+import MapExplore from "./pages/maps/Map";
 
 function App() {
   const user = useSelector(selectCurrentUser);
@@ -52,6 +53,7 @@ function App() {
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/register/individual" element={<Register />} />
         <Route path="/register/business" element={<NewBusiness />} />
+        <Route path="/explore-maps" element={<MapExplore />} />
         <Route path="*" element={<h1>URL does not exist</h1>} />
         <Route
           element={

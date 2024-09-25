@@ -254,12 +254,12 @@ const meLinks = [
     text: "Payments and Billing",
     link: "#",
   },
-  {
-    id: 6,
-    icon: <Settings />,
-    text: "Business Page Settings",
-    link: "#",
-  },
+  // {
+  //   id: 6,
+  //   icon: <Settings />,
+  //   text: "Business Page Settings",
+  //   link: "#",
+  // },
   {
     id: 7,
     icon: <Settings />,
