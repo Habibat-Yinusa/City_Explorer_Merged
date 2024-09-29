@@ -1,6 +1,15 @@
 import React, { useState, useMemo } from "react";
 import { APIProvider, Map, Marker } from "@vis.gl/react-google-maps";
-import { Autocomplete, Box, CircularProgress, TextField } from "@mui/material";
+import {
+  Autocomplete,
+  Box,
+  CircularProgress,
+  List,
+  ListItem,
+  ListItemText,
+  TextField,
+  Typography,
+} from "@mui/material";
 import usePlacesAutocomplete, {
   getGeocode,
   getLatLng,
@@ -31,9 +40,39 @@ const MapExplore = () => {
   return (
     <APIProvider apiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY as string}>
       <Box sx={{ height: "100vh", width: "100%" }}>
-        <Box sx={{ display: "flex", padding: "2em", gap: 2 }}>
-          <PlacesAutoComplete setSelected={setOrigin} label="From..." />
-          <PlacesAutoComplete setSelected={setDestination} label="To..." />
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          <Box sx={{ padding: "1em" }}>
+            <Typography variant="h4" sx={{ fontSize: "1.5rem" }}>
+              Area markers and their colors
+            </Typography>
+            <Box sx={{ margin: ".7em .5em" }}>
+              <Typography variant="h4" sx={{ fontSize: ".8rem" }}>
+                Police stations - Blue
+              </Typography>
+              <Typography variant="h4" sx={{ fontSize: ".8rem" }}>
+                Fire stations - Red
+              </Typography>
+              <Typography variant="h4" sx={{ fontSize: ".8rem" }}>
+                Post offices - Purple
+              </Typography>
+              <Typography variant="h4" sx={{ fontSize: ".8rem" }}>
+                Government offices - Green
+              </Typography>
+              <Typography variant="h4" sx={{ fontSize: ".8rem" }}>
+                Restaurants - Yellow
+              </Typography>
+            </Box>
+          </Box>
+          <Box sx={{ display: "flex", padding: "2em", gap: 2 }}>
+            <PlacesAutoComplete setSelected={setOrigin} label="From..." />
+            <PlacesAutoComplete setSelected={setDestination} label="To..." />
+          </Box>
         </Box>
         <Map
           defaultZoom={13}

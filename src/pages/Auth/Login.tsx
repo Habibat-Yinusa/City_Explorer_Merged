@@ -200,6 +200,7 @@ const Login = () => {
                 color: "#758BFD",
                 textDecoration: "none",
                 marginTop: "1em",
+                fontWeight: 800,
               }}
             >
               Explore our maps?
