@@ -24,7 +24,7 @@ const Points = () => {
           <CenteredBox
             sx={{
               width: { md: "95%", lg: "90%" },
-              backgroundColor: "#758BFD",
+              backgroundColor: "#3884FD",
               color: "#fff",
               padding: "1.5em",
               justifyContent: "space-between",
@@ -54,7 +54,7 @@ const Points = () => {
                   marginTop: "1em",
                   marginBottom: { xs: "1em", md: "0" },
                   "&:hover": {
-                    color: "#758BFD",
+                    color: "#3884FD",
                     backgroundColor: "#fff",
                   },
                 }}
@@ -94,7 +94,7 @@ const Points = () => {
                   flexDirection: "column",
                   alignItems: "end",
                   width: "48%",
-                  backgroundColor: "#F2D16A",
+                  backgroundColor: "#3884FD",
                   padding: "1em",
                 }}
               >
@@ -132,7 +132,7 @@ const Points = () => {
           <CenteredBox
             sx={{
               width: { md: "95%", lg: "90%" },
-              backgroundColor: "#758BFD",
+              backgroundColor: "#3884FD",
               justifyContent: "space-between",
               padding: "1.5em",
               borderRadius: "7px",

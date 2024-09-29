@@ -3,7 +3,7 @@ import bgButtom from "../../assets/buttonBg.svg";
 
 const FilledButton = styled(Button)(({ theme }) => ({
   color: "white",
-  backgroundColor: "#758BFD",
+  backgroundColor: "#3884FD",
   border: "1px solid transparent",
   padding: " .5em 2em",
   fontSize: "18px",
@@ -17,8 +17,8 @@ const FilledButton = styled(Button)(({ theme }) => ({
   textTransform: "none",
 
   "&:hover": {
-    borderColor: "#758BFD",
-    color: "#758BFD",
+    borderColor: "#3884FD",
+    color: "#3884FD",
   },
 
   "&.outlined": {
@@ -55,8 +55,8 @@ const FilledInvertedButton = styled(Button)(({ theme }) => ({
   textTransform: "none",
 
   "&:hover": {
-    borderColor: "#758BFD",
-    color: "#758BFD",
+    borderColor: "#3884FD",
+    color: "#3884FD",
   },
 
   "&.outlined": {
@@ -79,7 +79,7 @@ const FilledInvertedButton = styled(Button)(({ theme }) => ({
 
 const BgButton = styled(Button)(({ theme }) => ({
   color: "white",
-  // backgroundColor: "#758BFD",
+  // backgroundColor: "#3884FD",
   backgroundImage: `url(${bgButtom})`,
   backgroundSize: "cover",
   // border: "1px solid transparent",
@@ -95,8 +95,8 @@ const BgButton = styled(Button)(({ theme }) => ({
   textTransform: "none",
 
   "&:hover": {
-    borderColor: "#758BFD",
-    color: "#758BFD",
+    borderColor: "#3884FD",
+    color: "#3884FD",
   },
 
   "&.outlined": {

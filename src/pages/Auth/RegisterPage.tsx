@@ -36,7 +36,7 @@ const RegisterPage = () => {
         >
           <Typography
             variant="body2"
-            sx={{ color: "#758BFD", fontSize: "1.9em", fontWeight: 900 }}
+            sx={{ color: "#3884FD", fontSize: "1.9em", fontWeight: 900 }}
           >
             Welcome
           </Typography>
@@ -88,7 +88,7 @@ const RegisterPage = () => {
           <Typography
             variant="body2"
             sx={{
-              color: "#758BFD",
+              color: "#3884FD",
               fontSize: "2.2em",
               fontWeight: 900,
               textTransform: "uppercase",

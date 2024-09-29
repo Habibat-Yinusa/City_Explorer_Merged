@@ -92,7 +92,7 @@ function Layout() {
                   gap: 2,
                   width: "100%",
                   backgroundColor: location.pathname.includes(page.link)
-                    ? "#758BFD"
+                    ? "#3884FD"
                     : "inherit",
                   color: location.pathname.includes(page.link)
                     ? "#fff"
@@ -210,11 +210,11 @@ function Layout() {
                       sx={{
                         fontSize: "1rem",
                         color:
-                          location.pathname === link.link ? "#758BFD" : "#000",
+                          location.pathname === link.link ? "#3884FD" : "#000",
                         textDecoration: "none",
                         cursor: "pointer",
                         "&:hover": {
-                          color: "#758BFD",
+                          color: "#3884FD",
                         },
                       }}
                       onClick={() => navigate(link.link)} // navigate to the correct link

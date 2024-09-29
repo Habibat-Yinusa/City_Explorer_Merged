@@ -34,7 +34,7 @@ const UserTypeSelect = ({ onChange }: any) => {
             display: "flex",
             flexDirection: "column",
             "&:hover": {
-              border: "1px solid #758BFD",
+              border: "1px solid #3884FD",
             },
           }}
         >
@@ -56,7 +56,7 @@ const UserTypeSelect = ({ onChange }: any) => {
         </Box>
         <Typography
           variant="body2"
-          sx={{ fontWeight: 700, color: "#758BFD", marginTop: "1em" }}
+          sx={{ fontWeight: 700, color: "#3884FD", marginTop: "1em" }}
         >
           Register your physical shop to enhance visibility and attract more
           customers.
@@ -72,7 +72,7 @@ const UserTypeSelect = ({ onChange }: any) => {
             display: "flex",
             flexDirection: "column",
             "&:hover": {
-              border: "1px solid #758BFD",
+              border: "1px solid #3884FD",
             },
           }}
         >
@@ -94,7 +94,7 @@ const UserTypeSelect = ({ onChange }: any) => {
         </Box>
         <Typography
           variant="body2"
-          sx={{ fontWeight: 700, color: "#758BFD", marginTop: "1em" }}
+          sx={{ fontWeight: 700, color: "#3884FD", marginTop: "1em" }}
         >
           Sign up to explore and easily locate local businesses, discover
           services, and connect.

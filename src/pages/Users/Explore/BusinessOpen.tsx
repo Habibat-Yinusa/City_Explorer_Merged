@@ -127,8 +127,8 @@ const BusinessOpen = () => {
             </Typography>
             <Add
               sx={{
-                border: "1px solid #758BFD",
-                color: "#758BFD",
+                border: "1px solid #3884FD",
+                color: "#3884FD",
                 borderRadius: "50px",
               }}
             />

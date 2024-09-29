@@ -21,12 +21,12 @@ const theme = createTheme({
     MuiTextField: {
       styleOverrides: {
         root: {
-          "--TextField-brandBorderColor": "#758BFD",
-          "--TextField-brandBorderHoverColor": "#758BFD",
-          "--TextField-brandBorderFocusedColor": "#758BFD",
+          "--TextField-brandBorderColor": "#3884FD",
+          "--TextField-brandBorderHoverColor": "#3884FD",
+          "--TextField-brandBorderFocusedColor": "#3884FD",
           outline: "none",
           "& label.Mui-focused": {
-            color: "#758BFD",
+            color: "#3884FD",
           },
         },
       },
@@ -34,15 +34,15 @@ const theme = createTheme({
     MuiOutlinedInput: {
       styleOverrides: {
         notchedOutline: {
-          border: "1px solid #758BFD",
+          border: "1px solid #3884FD",
           borderRadius: "10px",
         },
         root: {
           [`&:hover .${outlinedInputClasses.notchedOutline}`]: {
-            borderColor: "#758BFD",
+            borderColor: "#3884FD",
           },
           [`&.Mui-focused .${outlinedInputClasses.notchedOutline}`]: {
-            borderColor: "#758BFD",
+            borderColor: "#3884FD",
           },
         },
       },
@@ -77,13 +77,13 @@ const theme = createTheme({
     MuiSelect: {
       styleOverrides: {
         root: {
-          "--TextField-brandBorderColor": "#758BFD",
-          "--TextField-brandBorderHoverColor": "#758BFD",
-          "--TextField-brandBorderFocusedColor": "#758BFD",
-          borderColor: "#758BFD",
+          "--TextField-brandBorderColor": "#3884FD",
+          "--TextField-brandBorderHoverColor": "#3884FD",
+          "--TextField-brandBorderFocusedColor": "#3884FD",
+          borderColor: "#3884FD",
           "& label.Mui-focused": {
-            color: "#758BFD",
-            borderColor: "#758BFD",
+            color: "#3884FD",
+            borderColor: "#3884FD",
           },
         },
       },

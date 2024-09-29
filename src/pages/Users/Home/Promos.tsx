@@ -139,7 +139,7 @@ const Promos = () => {
           </Box>
           <Box
             sx={{
-              border: "1px solid #758BFD",
+              border: "1px solid #3884FD",
               borderRadius: "10px",
               marginBottom: "1.5em",
               height: "15em",

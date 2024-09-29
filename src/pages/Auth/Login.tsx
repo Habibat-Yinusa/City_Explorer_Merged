@@ -9,6 +9,7 @@ import {
   Typography,
 } from "@mui/material";
 import logo from "../../assets/logo.svg";
+import cityLogo from "../../assets/city-logo.png";
 import { CenteredBox } from "../../styles/styled-components/styledBox";
 import React from "react";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
@@ -85,7 +86,7 @@ const Login = () => {
           <Typography
             variant="body2"
             sx={{
-              color: "#758BFD",
+              color: "#3884FD",
               fontSize: "2.2em",
               fontWeight: 900,
               textTransform: "uppercase",
@@ -106,11 +107,14 @@ const Login = () => {
             borderRadius: "10px",
           }}
         >
+          <Box sx={{ width: "20em" }}>
+            <img src={cityLogo} style={{ width: "100%" }} />
+          </Box>
           <Typography
             variant="body2"
-            sx={{ color: "#758BFD", fontSize: "1.9em", fontWeight: 900 }}
+            sx={{ color: "#3884FD", fontSize: "1.9em", fontWeight: 900 }}
           >
-            Welcome back!
+            Welcome
           </Typography>
           <Box
             sx={{
@@ -186,7 +190,7 @@ const Login = () => {
               to="/register"
               style={{
                 fontSize: "1rem",
-                color: "#758BFD",
+                color: "#3884FD",
                 textDecoration: "none",
                 marginTop: "1em",
               }}
@@ -197,10 +201,10 @@ const Login = () => {
               to="/explore-maps"
               style={{
                 fontSize: "1rem",
-                color: "#758BFD",
+                color: "#3884FD",
                 textDecoration: "none",
                 marginTop: "1em",
-                fontWeight: 800,
+                fontWeight: 1000,
               }}
             >
               Explore our maps?

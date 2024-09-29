@@ -108,7 +108,7 @@ const Explore = () => {
             <Grid item key={item.id}>
               <Box
                 sx={{
-                  border: "1px solid #758BFD",
+                  border: "1px solid #3884FD",
                   display: "flex",
                   // justifyContent: "space-between",
                   alignItems: "center",

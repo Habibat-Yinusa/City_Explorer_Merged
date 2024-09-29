@@ -62,7 +62,7 @@ const Home = () => {
               <SplideSlide key={promo._id}>
                 <CenteredBox
                   sx={{
-                    backgroundColor: "#758BFD",
+                    backgroundColor: "#3884FD",
                     borderRadius: "30px",
                     maxWidth: { xs: "700px", md: "1000px" },
                     cursor: "pointer",
@@ -163,10 +163,10 @@ const Home = () => {
                     padding: "1em",
                     borderRadius: "15px",
                     // fontSize: "2rem",
-                    color: "#758BFD",
+                    color: "#3884FD",
                   }}
                 >
-                  {/* <BuildOutlined sx={{ fontSize: "2rem", color: "#758BFD" }} /> */}
+                  {/* <BuildOutlined sx={{ fontSize: "2rem", color: "#3884FD" }} /> */}
                   {item.icon}
                 </Box>
                 <Typography

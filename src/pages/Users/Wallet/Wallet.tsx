@@ -79,7 +79,7 @@ const Wallet = () => {
                   sx={{
                     // backgroundColor: "#fff",
                     border: "1px solid #fff",
-                    // color: "#758BFD",
+                    // color: "#3884FD",
                     padding: { xs: "1em" },
                     "&:hover": {
                       border: "1px solid #fff",
@@ -98,7 +98,7 @@ const Wallet = () => {
                   variant="body2"
                   sx={{
                     fontSize: { xs: ".8em", md: "1rem" },
-                    color: "#758BFD",
+                    color: "#3884FD",
                     marginTop: ".5em",
                   }}
                 >
@@ -110,7 +110,7 @@ const Wallet = () => {
                   sx={{
                     // backgroundColor: "#fff",
                     border: "1px solid #fff",
-                    // color: "#758BFD",
+                    // color: "#3884FD",
                     padding: { xs: "1em" },
                     "&:hover": {
                       border: "1px solid #fff",
@@ -129,7 +129,7 @@ const Wallet = () => {
                   variant="body2"
                   sx={{
                     fontSize: { xs: ".8em", md: "1rem" },
-                    color: "#758BFD",
+                    color: "#3884FD",
                     marginTop: ".5em",
                   }}
                 >
@@ -141,7 +141,7 @@ const Wallet = () => {
                   sx={{
                     // backgroundColor: "#fff",
                     border: "1px solid #fff",
-                    // color: "#758BFD",
+                    // color: "#3884FD",
                     padding: { xs: "1em" },
                     "&:hover": {
                       border: "1px solid #fff",
@@ -160,7 +160,7 @@ const Wallet = () => {
                   variant="body2"
                   sx={{
                     fontSize: { xs: ".8em", md: "1rem" },
-                    color: "#758BFD",
+                    color: "#3884FD",
                     marginTop: ".5em",
                   }}
                 >
@@ -172,7 +172,7 @@ const Wallet = () => {
                   sx={{
                     // backgroundColor: "#fff",
                     border: "1px solid #fff",
-                    // color: "#758BFD",
+                    // color: "#3884FD",
                     padding: { xs: "1em" },
                     "&:hover": {
                       border: "1px solid #fff",
@@ -191,7 +191,7 @@ const Wallet = () => {
                   variant="body2"
                   sx={{
                     fontSize: { xs: ".8em", md: "1rem" },
-                    color: "#758BFD",
+                    color: "#3884FD",
                     marginTop: ".5em",
                   }}
                 >
@@ -203,7 +203,7 @@ const Wallet = () => {
                   sx={{
                     // backgroundColor: "#fff",
                     border: "1px solid #fff",
-                    // color: "#758BFD",
+                    // color: "#3884FD",
                     padding: { xs: "1em" },
                     "&:hover": {
                       border: "1px solid #fff",
@@ -222,7 +222,7 @@ const Wallet = () => {
                   variant="body2"
                   sx={{
                     fontSize: { xs: ".8em", md: "1rem" },
-                    color: "#758BFD",
+                    color: "#3884FD",
                     marginTop: ".5em",
                   }}
                 >
@@ -237,7 +237,7 @@ const Wallet = () => {
         <CenteredBox
           sx={{
             flexDirection: "column",
-            backgroundColor: "#758BFD",
+            backgroundColor: "#3884FD",
             width: { xs: "100%", md: "80%" },
             padding: "1em",
             borderRadius: "30px",
@@ -275,10 +275,10 @@ const Wallet = () => {
             <FilledButton
               sx={{
                 backgroundColor: "#fff",
-                color: "#758BFD",
+                color: "#3884FD",
                 fontSize: { xs: ".9rem", md: "1rem" },
                 "&:hover": {
-                  backgroundColor: "#758BFD",
+                  backgroundColor: "#3884FD",
                   color: "#fff",
                   borderColor: "#fff",
                 },
@@ -305,7 +305,7 @@ const Wallet = () => {
               sx={{
                 fontSize: { xs: "1rem", md: "1.2rem" },
                 fontWeight: 700,
-                color: "#758BFD",
+                color: "#3884FD",
               }}
             >
               <Link to="#" style={{ textDecoration: "none", color: "inherit" }}>
