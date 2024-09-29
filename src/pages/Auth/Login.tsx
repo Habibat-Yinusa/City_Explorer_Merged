@@ -200,10 +200,10 @@ const Login = () => {
             <Link
               to="/explore-maps"
               style={{
-                fontSize: "1rem",
+                fontSize: "1.3rem",
                 color: "#3884FD",
                 textDecoration: "none",
-                marginTop: "1em",
+                marginTop: ".7em",
                 fontWeight: 1000,
               }}
             >
