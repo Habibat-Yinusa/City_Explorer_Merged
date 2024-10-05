@@ -8,7 +8,6 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import logo from "../../assets/logo.svg";
 import cityLogo from "../../assets/city-logo.png";
 import { CenteredBox } from "../../styles/styled-components/styledBox";
 import React from "react";
@@ -85,10 +84,10 @@ const Login = () => {
             display: { xs: "none", md: "flex" },
           }}
         >
-          <Box sx={{ width: "10em" }}>
-            <img src={logo} alt="" style={{ width: "100%" }} />
+          <Box sx={{ width: "25em" }}>
+            <img src={cityLogo} alt="" style={{ width: "100%" }} />
           </Box>
-          <Typography
+          {/* <Typography
             variant="body2"
             sx={{
               color: "#3884FD",
@@ -99,7 +98,7 @@ const Login = () => {
             }}
           >
             City Explorer
-          </Typography>
+          </Typography> */}
         </CenteredBox>
         <CenteredBox
           sx={{
