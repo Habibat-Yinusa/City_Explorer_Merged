@@ -99,7 +99,7 @@ function Layout() {
                     : "#6c6c6c",
                   borderRadius: "10px",
                   "&:hover": {
-                    backgroundColor: "#6E83F3",
+                    backgroundColor: "#3884FD",
                     color: "#fff",
                   },
                 }}
