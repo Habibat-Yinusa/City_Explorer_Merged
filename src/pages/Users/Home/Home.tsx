@@ -122,7 +122,7 @@ const Home = () => {
       </Box>
 
       <CenteredBox sx={{ marginTop: "2em", flexDirection: "column" }}>
-        <Typography
+        {/* <Typography
           variant="h3"
           sx={{
             fontWeight: 700,
@@ -131,8 +131,8 @@ const Home = () => {
           }}
         >
           Categories
-        </Typography>
-        <Grid container sx={{ margin: "2em 0" }}>
+        </Typography> */}
+        <Grid container sx={{ margin: { xs: "1.8em 0", md: "2em 0" } }}>
           {categoryCard.map((item) => (
             <Grid
               item
@@ -147,10 +147,10 @@ const Home = () => {
             >
               <Box
                 sx={{
-                  maxWidth: "6em",
-                  width: "6em",
+                  maxWidth: { xs: "4em", md: "6em" },
+                  width: { xs: "4em", md: "6em" },
                   cursor: "pointer",
-                  margin: ".4em 1em",
+                  margin: { xs: ".3em .7em", lg: ".4em 1em" },
                 }}
                 onClick={() => navigate(item.link)}
               >
@@ -160,7 +160,7 @@ const Home = () => {
                     display: "flex",
                     justifyContent: "center",
                     alignItems: "center",
-                    padding: "1em",
+                    padding: { xs: ".7em", md: "1em" },
                     borderRadius: "15px",
                     // fontSize: "2rem",
                     color: "#3884FD",
@@ -172,7 +172,7 @@ const Home = () => {
                 <Typography
                   variant="body2"
                   sx={{
-                    fontSize: "1rem",
+                    fontSize: { xs: ".6em", md: "1rem" },
                     textTransform: "capitalize",
                     textAlign: "center",
                     marginTop: ".3em",
@@ -277,6 +277,8 @@ const Home = () => {
                     cursor: "pointer",
                     width: "100%",
                     gap: 3,
+                    minHeight: "3em",
+                    maxHeight: "18em",
                   }}
                 >
                   <CenteredBox
@@ -291,11 +293,24 @@ const Home = () => {
                     </Box>
                     <Typography
                       variant="body2"
-                      sx={{ fontSize: { xs: ".7em", md: ".9rem" } }}
+                      sx={{
+                        fontSize: { xs: ".8rem", md: "1rem" },
+                        display: "-webkit-box",
+                        WebkitLineClamp: { xs: 3, md: 3 },
+                        WebkitBoxOrient: "vertical",
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                        width: "100%",
+                      }}
                     >
                       {event.description}
                     </Typography>
-                    <FilledButton sx={{ width: "100%" }}>
+                    <FilledButton
+                      sx={{
+                        width: "100%",
+                        fontSize: { xs: ".6rem", md: ".9rem" },
+                      }}
+                    >
                       Check it out
                     </FilledButton>
                   </CenteredBox>

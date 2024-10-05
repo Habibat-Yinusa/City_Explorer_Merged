@@ -51,7 +51,12 @@ const Login = () => {
   const handleLogin = async (values: loginInput) => {
     try {
       const userData = await loginRequest(values).unwrap();
-      dispatch(login(userData));
+      dispatch(
+        login({
+          token: userData.token,
+          details: userData.details,
+        })
+      );
       navigate("/home");
     } catch (error: any) {
       if (error.status === 401 || error.status === 404) {

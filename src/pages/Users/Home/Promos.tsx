@@ -19,8 +19,11 @@ const Promos = () => {
         width: "100%",
       }}
     >
-      <Box sx={{ width: "75%" }}>
-        <Typography variant="h4" sx={{ fontSize: "2rem", fontWeight: 700 }}>
+      <Box sx={{ width: { xs: "100%", sm: "75%" } }}>
+        <Typography
+          variant="h4"
+          sx={{ fontSize: { xs: "1.5rem", lg: "2rem" }, fontWeight: 700 }}
+        >
           Jennies Burger
         </Typography>
         <Box
@@ -30,17 +33,17 @@ const Promos = () => {
             justifyContent: "space-between",
             backgroundColor: "#fff",
             padding: "1.5em",
-            width: "70%",
+            width: { xs: "100%", sm: "85%", md: "70%" },
             border: ".5px solid #00000040",
             borderRadius: "30px",
             margin: "1.5em 0",
             gap: 1,
           }}
         >
-          <Box sx={{ width: "60%" }}>
+          <Box sx={{ width: { xs: "100%", sm: "80%", md: "60%" } }}>
             <Typography
               variant="h4"
-              sx={{ fontSize: "1.6rem", fontWeight: 900 }}
+              sx={{ fontSize: { xs: "1.2rem", md: "1.6rem" }, fontWeight: 900 }}
             >
               TOP DEAL
             </Typography>
@@ -50,14 +53,19 @@ const Promos = () => {
             >
               {promo.description}
             </Typography>
-            <FilledButton>Order</FilledButton>
+            <FilledButton sx={{ fontSize: { xs: "1rem", md: "1.5rem" } }}>
+              Order
+            </FilledButton>
           </Box>
           <Box sx={{ width: "13em" }}>
             <img src={promoBurger} style={{ width: "100%" }} />
           </Box>
         </Box>
         <Box>
-          <Typography variant="h5" sx={{ fontSize: "1.6rem", fontWeight: 700 }}>
+          <Typography
+            variant="h5"
+            sx={{ fontSize: { xs: "1.2rem", md: "1.6rem" }, fontWeight: 700 }}
+          >
             Others from Jennies burger
           </Typography>
           <Box
@@ -65,7 +73,7 @@ const Promos = () => {
               backgroundColor: "#fff",
               borderRadius: "30px",
               padding: "1.2em",
-              width: "55%",
+              width: { xs: "100%", sm: "80%", md: "55%" },
               margin: "1em 0",
               display: "flex",
               justifyContent: "space-between",
@@ -76,13 +84,17 @@ const Promos = () => {
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "space-between",
+                gap: 2,
               }}
             >
               <Box sx={{ width: "7em" }}>
                 <img src={promoBurger} style={{ width: "100%" }} />
               </Box>
-              <Box sx={{ width: "60%" }}>
-                <Typography variant="body2" sx={{ fontSize: "1rem" }}>
+              <Box sx={{ width: { xs: "100%", sm: "80%", md: "60%" } }}>
+                <Typography
+                  variant="body2"
+                  sx={{ fontSize: { xs: ".8rem", md: "1rem" } }}
+                >
                   Salad and Chicken Burger with extra toppings
                 </Typography>
                 <Typography variant="body2" sx={{ fontSize: "1.6rem" }}>
@@ -100,7 +112,7 @@ const Promos = () => {
         sx={{
           borderLeft: "1px solid #0000004D",
           width: "25%",
-          display: "flex",
+          display: { xs: "none", sm: "flex" },
           // justifyContent: "center",
           alignItems: "center",
           flexDirection: "column",

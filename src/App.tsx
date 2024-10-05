@@ -29,18 +29,16 @@ function App() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    //log the user back in with local storage data
-    const userString = localStorage.getItem("userState");
-    if (userString) {
-      const user = JSON.parse(userString) as any;
-      const userData = user.user;
-
-      dispatch(login(userData));
+    // Log the user back in with local storage data
+    const userStateString = localStorage.getItem("userState");
+    if (userStateString) {
+      const userState = JSON.parse(userStateString) as any;
+      dispatch(login(userState));
     }
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
-    //route the user to dashboard, if a logged in user tries to access signin page
+    // Route the user to dashboard if a logged-in user tries to access signin page
     if (user && location.pathname === "/") {
       navigate("/home");
     }

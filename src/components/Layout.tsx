@@ -20,7 +20,7 @@ import {
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import TravelExploreIcon from "@mui/icons-material/TravelExplore";
 import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
-import logo from "../assets/logo.svg";
+import citylogo from "../assets/city-logo.png";
 import { useDispatch, useSelector } from "react-redux";
 import menuIconLogo from "../assets/menu-icon.svg";
 import {
@@ -169,7 +169,7 @@ function Layout() {
             sx={{
               display: "flex",
               alignItems: "center",
-              justifyContent: "space-between",
+              justifyContent: { xs: "space-evenly", md: "space-between" },
               width: "100%",
               padding: "1em 0",
             }}
@@ -185,18 +185,18 @@ function Layout() {
             </IconButton>
             <CenteredBox
               sx={{
-                justifyContent: "space-between",
+                justifyContent: { xs: "space-evenly", md: "space-between" },
                 alignItems: "center",
-                width: { md: "100%" },
+                width: "100%",
               }}
             >
-              <Box sx={{ width: "3em", display: { xs: "none", md: "block" } }}>
-                <img src={logo} alt="" style={{ width: "100%" }} />
+              <Box sx={{ width: "7em", display: { xs: "none", md: "block" } }}>
+                <img src={citylogo} alt="" style={{ width: "100%" }} />
               </Box>
               {/* <Typography variant="h6">City Explorer</Typography> */}
               <Box
                 sx={{
-                  width: "20%",
+                  width: { xs: "70%", md: "20%" },
                   display: "flex",
                   justifyContent: "space-between",
                   alignItems: "center",
@@ -213,6 +213,7 @@ function Layout() {
                           location.pathname === link.link ? "#3884FD" : "#000",
                         textDecoration: "none",
                         cursor: "pointer",
+                        gap: 2,
                         "&:hover": {
                           color: "#3884FD",
                         },
@@ -224,10 +225,25 @@ function Layout() {
                   ))}
               </Box>
               <FilledButton
-                sx={{ textTransform: "capitalize", gap: 1 }}
+                sx={{
+                  textTransform: "capitalize",
+                  gap: 1,
+                  display: { xs: "none", md: "flex" },
+                }}
                 onClick={() => navigate(`/me`)}
               >
                 <Person /> {role != "business" ? username : businessName}
+              </FilledButton>
+              <FilledButton
+                sx={{
+                  textTransform: "capitalize",
+                  gap: 1,
+                  display: { xs: "flex", md: "none" },
+                  width: "1em",
+                }}
+                onClick={() => navigate(`/me`)}
+              >
+                <Person />
               </FilledButton>
             </CenteredBox>
           </Box>

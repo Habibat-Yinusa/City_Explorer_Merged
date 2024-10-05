@@ -1,12 +1,12 @@
-/* eslint-disable react/prop-types */
 import { Navigate } from "react-router-dom";
+import { UserDetails } from "../../store/user-slice";
 
-type auth = {
-  user?: any;
-  children?: any;
+type AuthProps = {
+  user: UserDetails | null;
+  children: React.ReactNode;
 };
 
-const Auth = ({ user, children }: auth) => {
+const Auth = ({ user, children }: AuthProps) => {
   const isAuth = !!user;
 
   if (!isAuth) {
