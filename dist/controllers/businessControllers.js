@@ -26,13 +26,20 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.addProduct = exports.deletePromo = exports.getAllPromos = exports.getPromo = exports.addPromo = exports.getAllEvents = exports.getEvents = exports.addEventToBusiness = exports.getAllBusinesses = exports.getBusinessDetails = exports.registerBusiness = void 0;
 const businessPage_1 = __importDefault(require("../models/businessPage"));
 const bcrypt_1 = require("bcrypt");
-const cloudinary_1 = __importDefault(require("../config/cloudinary"));
+// import cloudinary from '../config/cloudinary';
 const multer_1 = __importDefault(require("../config/multer"));
+const images_1 = __importDefault(require("./images"));
+const cloudinary = require("cloudinary").v2;
 // import BusinessModel  from '../models/businessPage';
 const registerBusiness = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a;
     try {
-        const { name, category, logo, items, location, openHours, phone, email, password, website, description } = req.body;
+        const { name, category, items, location, openHours, phone, email, password, website, description, } = req.body;
         const existingBusiness = yield businessPage_1.default.findOne({ email });
+        console.log("email", req.body.email);
+        console.log("file", req.file);
+        console.log("Request Body:", req.body);
+        console.log("Uploaded Files:", (_a = req.file) === null || _a === void 0 ? void 0 : _a.path);
         if (!email) {
             throw new Error("Please enter a valid email address");
         }
@@ -43,10 +50,17 @@ const registerBusiness = (req, res) => __awaiter(void 0, void 0, void 0, functio
             throw new Error("Please enter a password");
         }
         const hashedPassword = yield (0, bcrypt_1.hash)(password, 10);
+        let uploadResults;
+        const logoFile = req.files;
+        let logoUrl;
+        if ((logoFile === null || logoFile === void 0 ? void 0 : logoFile.length) !== 0) {
+            uploadResults = yield (0, images_1.default)(req, res);
+            logoUrl = uploadResults.length > 0 ? uploadResults[0].url : "";
+        }
         const newBusiness = new businessPage_1.default({
             name,
             category,
-            logo,
+            logo: logoUrl,
             items,
             location,
             openHours,
@@ -54,11 +68,16 @@ const registerBusiness = (req, res) => __awaiter(void 0, void 0, void 0, functio
             email,
             password: hashedPassword,
             website,
-            description
+            description,
         });
         yield newBusiness.save();
-        const _a = newBusiness.toObject(), { password: _ } = _a, newBusinessDetails = __rest(_a, ["password"]);
-        res.status(201).send({ message: 'Business registered successfully', business: newBusinessDetails });
+        const _b = newBusiness.toObject(), { password: _ } = _b, newBusinessDetails = __rest(_b, ["password"]);
+        res
+            .status(201)
+            .send({
+            message: "Business registered successfully",
+            business: newBusinessDetails,
+        });
     }
     catch (error) {
         return res.status(500).send({ message: error.message });
@@ -70,7 +89,7 @@ const getBusinessDetails = (req, res) => __awaiter(void 0, void 0, void 0, funct
         const businessId = req.params.id;
         const business = yield businessPage_1.default.findById(businessId);
         if (!business) {
-            return res.status(404).send({ message: 'Business not found' });
+            return res.status(404).send({ message: "Business not found" });
         }
         res.status(200).send(business);
     }
@@ -90,25 +109,33 @@ const getAllBusinesses = (req, res) => __awaiter(void 0, void 0, void 0, functio
 });
 exports.getAllBusinesses = getAllBusinesses;
 const addEventToBusiness = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    var _b;
+    var _c;
     try {
         const businessId = req.params.id;
         const { title, description, venue, date } = req.body;
-        const file = (_b = req.file) === null || _b === void 0 ? void 0 : _b.path;
+        const file = (_c = req.file) === null || _c === void 0 ? void 0 : _c.path;
         if (!file) {
-            return res.status(400).json({ message: 'No image uploaded' });
+            return res.status(400).json({ message: "No image uploaded" });
         }
-        const result = yield cloudinary_1.default.uploader.upload(file, {
-            folder: 'events'
+        const result = yield cloudinary.uploader.upload(file, {
+            folder: "events",
         });
         const business = yield businessPage_1.default.findById(businessId);
         if (!business) {
-            return res.status(404).send({ message: 'Business not found' });
+            return res.status(404).send({ message: "Business not found" });
         }
-        const newEvent = { title, description, venue, date, image: result.secure_url };
+        const newEvent = {
+            title,
+            description,
+            venue,
+            date,
+            image: result.secure_url,
+        };
         business.events.push(newEvent);
         yield business.save();
-        res.status(201).send({ message: 'Event added successfully', event: newEvent });
+        res
+            .status(201)
+            .send({ message: "Event added successfully", event: newEvent });
     }
     catch (error) {
         res.status(500).send({ message: error.message });
@@ -120,7 +147,7 @@ const getEvents = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         const businessId = req.params.id;
         const business = yield businessPage_1.default.findById(businessId);
         if (!business) {
-            return res.status(404).send({ message: 'Business not found' });
+            return res.status(404).send({ message: "Business not found" });
         }
         res.status(200).send(business.events);
     }
@@ -133,7 +160,7 @@ const getAllEvents = (req, res) => __awaiter(void 0, void 0, void 0, function* (
     try {
         const businesses = yield businessPage_1.default.find();
         const allEvents = [];
-        businesses.forEach(business => {
+        businesses.forEach((business) => {
             allEvents.push(...business.events);
         });
         res.status(200).send(allEvents);
@@ -149,12 +176,14 @@ const addPromo = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         const { _id, name, description, timeValid } = req.body;
         const business = yield businessPage_1.default.findById(businessId);
         if (!business) {
-            return res.status(404).send({ message: 'Business not found' });
+            return res.status(404).send({ message: "Business not found" });
         }
         const newPromo = { _id, name, description, timeValid };
         business.promo.push(newPromo);
         yield business.save();
-        res.status(201).send({ message: 'Event added successfully', event: newPromo });
+        res
+            .status(201)
+            .send({ message: "Event added successfully", event: newPromo });
     }
     catch (error) {
         res.status(500).send({ message: error.message });
@@ -166,7 +195,7 @@ const getPromo = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         const businessId = req.params.id;
         const business = yield businessPage_1.default.findById(businessId);
         if (!business) {
-            return res.status(404).send({ message: 'Business not found' });
+            return res.status(404).send({ message: "Business not found" });
         }
         res.status(200).send(business.promo);
     }
@@ -179,7 +208,7 @@ const getAllPromos = (req, res) => __awaiter(void 0, void 0, void 0, function* (
     try {
         const businesses = yield businessPage_1.default.find();
         const allPromos = [];
-        businesses.forEach(business => {
+        businesses.forEach((business) => {
             allPromos.push(...business.promo);
         });
         res.status(200).send(allPromos);
@@ -194,15 +223,15 @@ const deletePromo = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
         const { businessId, promoId } = req.params;
         const business = yield businessPage_1.default.findById(businessId);
         if (!business) {
-            return res.status(404).send({ message: 'Business not found' });
+            return res.status(404).send({ message: "Business not found" });
         }
-        const promoIndex = business.promo.findIndex(promo => promo._id.toString() === promoId);
+        const promoIndex = business.promo.findIndex((promo) => promo._id.toString() === promoId);
         if (promoIndex === -1) {
-            return res.status(404).send({ message: 'Promo deal not found' });
+            return res.status(404).send({ message: "Promo deal not found" });
         }
         business.promo.splice(promoIndex, 1);
         yield business.save();
-        res.status(200).send({ message: 'Promo deal deleted successfully' });
+        res.status(200).send({ message: "Promo deal deleted successfully" });
     }
     catch (error) {
         res.status(500).send({ message: error.message });
@@ -244,31 +273,35 @@ exports.deletePromo = deletePromo;
 // })
 // };
 const addProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    multer_1.default.single('file')(req, res, (err) => __awaiter(void 0, void 0, void 0, function* () {
-        var _c;
+    multer_1.default.single("file")(req, res, (err) => __awaiter(void 0, void 0, void 0, function* () {
+        var _d;
         if (err) {
-            return res.status(400).json({ message: 'Error uploading file', error: err.message });
+            return res
+                .status(400)
+                .json({ message: "Error uploading file", error: err.message });
         }
         try {
             const { businessId, name, description, price } = req.body;
-            const filePath = (_c = req.file) === null || _c === void 0 ? void 0 : _c.path;
+            const filePath = (_d = req.file) === null || _d === void 0 ? void 0 : _d.path;
             if (!filePath) {
-                return res.status(400).json({ message: 'No image uploaded' });
+                return res.status(400).json({ message: "No image uploaded" });
             }
-            const result = yield cloudinary_1.default.uploader.upload(filePath, {
-                folder: 'products'
+            const result = yield cloudinary.uploader.upload(filePath, {
+                folder: "products",
             });
             const newProduct = {
                 name,
                 description,
                 price,
-                image: result.secure_ur
+                image: result.secure_ur,
             };
             const updatedBusinessPage = yield businessPage_1.default.findByIdAndUpdate(businessId, { $push: { items: newProduct } }, { new: true });
             if (!updatedBusinessPage) {
-                return res.status(404).json({ message: 'Business not found' });
+                return res.status(404).json({ message: "Business not found" });
             }
-            res.status(200).json({ message: 'Product added successfully', product: newProduct });
+            res
+                .status(200)
+                .json({ message: "Product added successfully", product: newProduct });
         }
         catch (error) {
             res.status(500).json({ message: error.message });

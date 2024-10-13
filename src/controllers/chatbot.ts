@@ -17,7 +17,6 @@ const chatbot = async (req: Request, res: Response) => {
       const newHistory = <Content[]><unknown>[
         {
           role: "user",
-          type: "sent",
           parts: [
             {
               text: userMessages[i] || "",
@@ -26,7 +25,6 @@ const chatbot = async (req: Request, res: Response) => {
         },
         {
           role: "model",
-          type: "received",
           parts: [
             {
               text: botReplies[i] || "",
@@ -52,7 +50,6 @@ const chatbot = async (req: Request, res: Response) => {
     user?.botReplies.push(reply);
     await user?.save();
     res.json({
-      type: "received",
       message: reply.split("*").join(""),
     });
   }

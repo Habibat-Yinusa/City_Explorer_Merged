@@ -27,7 +27,6 @@ const chatbot = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             const newHistory = [
                 {
                     role: "user",
-                    type: "sent",
                     parts: [
                         {
                             text: userMessages[i] || "",
@@ -36,7 +35,6 @@ const chatbot = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
                 },
                 {
                     role: "model",
-                    type: "received",
                     parts: [
                         {
                             text: botReplies[i] || "",
@@ -61,7 +59,6 @@ const chatbot = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         user === null || user === void 0 ? void 0 : user.botReplies.push(reply);
         yield (user === null || user === void 0 ? void 0 : user.save());
         res.json({
-            type: "received",
             message: reply.split("*").join(""),
         });
     }
