@@ -2,7 +2,7 @@ import { Box, Typography } from "@mui/material";
 import { CenteredBox } from "../../../styles/styled-components/styledBox";
 import { useState } from "react";
 import { BgButton } from "../../../styles/styled-components/styledButtons";
-import RegistrationModal from "./modals/RegistrationModal";
+import RegistrationModal from "../../Auth/modals/RegistrationModal";
 
 const NewBusiness = () => {
   const [open, setOpen] = useState(false);

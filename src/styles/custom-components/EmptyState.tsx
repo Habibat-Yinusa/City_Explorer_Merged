@@ -38,7 +38,18 @@ const EmptyState = ({ onMessageClick }: EmptyStateProps) => {
             </Box>
             <Typography
               variant="body2"
-              sx={{ fontSize: "2rem", fontWeight: 800 }}
+              sx={{
+                fontSize: {
+                  xs: "1.2rem",
+                  sm: {
+                    xs: { xs: ".7rem", md: "1rem" },
+                    sm: "1.2rem",
+                    md: "1.5rem",
+                  },
+                  md: "2rem",
+                },
+                fontWeight: 800,
+              }}
             >
               Good day{" "}
               <span style={{ color: "#3884FD" }}>
@@ -56,7 +67,14 @@ const EmptyState = ({ onMessageClick }: EmptyStateProps) => {
           >
             <Typography
               variant="body2"
-              sx={{ fontSize: "1.5rem", fontWeight: 800 }}
+              sx={{
+                fontSize: {
+                  xs: { xs: ".7rem", md: "1rem" },
+                  sm: "1.2rem",
+                  md: "1.5rem",
+                },
+                fontWeight: 800,
+              }}
             >
               Recent chats
             </Typography>
@@ -85,7 +103,10 @@ const EmptyState = ({ onMessageClick }: EmptyStateProps) => {
             >
               <Typography
                 variant="body2"
-                sx={{ fontSize: "1rem", cursor: "pointer" }}
+                sx={{
+                  fontSize: { xs: ".7rem", md: "1rem" },
+                  cursor: "pointer",
+                }}
                 onClick={() => console.log("Clicked")}
               >
                 List of cinemas
@@ -101,7 +122,10 @@ const EmptyState = ({ onMessageClick }: EmptyStateProps) => {
             >
               <Typography
                 variant="body2"
-                sx={{ fontSize: "1rem", cursor: "pointer" }}
+                sx={{
+                  fontSize: { xs: ".7rem", md: "1rem" },
+                  cursor: "pointer",
+                }}
                 onClick={() => console.log("Clicked")}
               >
                 Businesses that offer home services to
@@ -118,7 +142,14 @@ const EmptyState = ({ onMessageClick }: EmptyStateProps) => {
           >
             <Typography
               variant="body2"
-              sx={{ fontSize: "1.5rem", fontWeight: 800 }}
+              sx={{
+                fontSize: {
+                  xs: { xs: ".7rem", md: "1rem" },
+                  sm: "1.2rem",
+                  md: "1.5rem",
+                },
+                fontWeight: 800,
+              }}
             >
               Explore more
             </Typography>
@@ -146,7 +177,10 @@ const EmptyState = ({ onMessageClick }: EmptyStateProps) => {
             >
               <Typography
                 variant="body2"
-                sx={{ fontSize: "1rem", cursor: "pointer" }}
+                sx={{
+                  fontSize: { xs: ".7rem", md: "1rem" },
+                  cursor: "pointer",
+                }}
                 onClick={() => handleMessageClick("Date ideas in Abuja")}
               >
                 Date ideas in Abuja
@@ -162,7 +196,10 @@ const EmptyState = ({ onMessageClick }: EmptyStateProps) => {
             >
               <Typography
                 variant="body2"
-                sx={{ fontSize: "1rem", cursor: "pointer" }}
+                sx={{
+                  fontSize: { xs: ".7rem", md: "1rem" },
+                  cursor: "pointer",
+                }}
                 onClick={() =>
                   handleMessageClick("Nice places to visit in Abuja")
                 }

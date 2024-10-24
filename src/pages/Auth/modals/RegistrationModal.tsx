@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useFormik } from "formik";
+import { FieldArray, FormikProvider, useFormik } from "formik";
 import {
   TextField,
   Box,
@@ -10,17 +10,19 @@ import {
   Select,
   MenuItem,
   InputLabel,
+  Grid,
 } from "@mui/material";
 import * as yup from "yup";
-import { Close } from "@mui/icons-material";
-import { RegisterBusiness } from "../../../../types/register.types";
+import { AddCircle, Close, RemoveCircle } from "@mui/icons-material";
+import { RegisterBusiness } from "../../../types/register.types";
 import {
   BgButton,
   FilledButton,
   FilledInvertedButton,
-} from "../../../../styles/styled-components/styledButtons";
-import successIcon from "../../../../assets/success-icon.svg";
-import { useRegisterBusinessMutation } from "../../../Auth/authApiSlice";
+} from "../../../styles/styled-components/styledButtons";
+import successIcon from "../../../assets/success-icon.svg";
+import { useRegisterBusinessMutation } from "../authApiSlice";
+import { StyledTextArea } from "../../../styles/styled-components/styledInputs";
 
 interface ModalProps {
   open: boolean;
@@ -34,24 +36,26 @@ const RegistrationModal = ({ open, handleClose }: ModalProps) => {
   const formik = useFormik<RegisterBusiness & { description: string }>({
     initialValues: {
       name: "",
-      description: "",
       category: "",
+      description: "",
+      password: "",
       items: [],
       logo: "",
       location: "",
-      openHours: [],
+      openHours: [{ day: "", time: "" }],
       phone: "",
       email: "",
       website: "",
     },
     validationSchema: yup.object({
       name: yup.string().required("Required"),
-      description: yup.string().required("Required"),
       category: yup.string().required("Required"),
+      description: yup.string().required("Required"),
+      password: yup.string().required("Required"),
       items: yup.array(),
       logo: yup.string(),
       location: yup.string().required("Required"),
-      openHours: yup.string(),
+      openHours: yup.string().required("Required"),
       phone: yup.string().required("Required"),
       email: yup.string().required("Required"),
       website: yup.string(),
@@ -127,7 +131,11 @@ const RegistrationModal = ({ open, handleClose }: ModalProps) => {
                 id="category"
                 name="category"
               >
-                <MenuItem value="food">Food</MenuItem>
+                {categories.map((item) => (
+                  <MenuItem key={item.id} value={item.value}>
+                    {item.name}
+                  </MenuItem>
+                ))}
               </Select>
             </FormControl>
           </>
@@ -146,14 +154,90 @@ const RegistrationModal = ({ open, handleClose }: ModalProps) => {
               />
             </FormControl>
             <FormControl fullWidth>
-              <TextField
-                name="openHours"
-                label="Set your Business Hours"
-                fullWidth
-                value={formik.values.openHours}
-                onChange={formik.handleChange}
-                sx={{ margin: ".7em 0" }}
-              />
+              <Box alignItems="flex-end">
+                <FormikProvider value={formik}>
+                  <FieldArray
+                    name="openHours"
+                    render={(arrayHelpers) => {
+                      const hours = formik.values.openHours;
+                      return (
+                        <>
+                          {hours.map((body, index) => (
+                            <Box key={index}>
+                              <Box
+                                sx={{
+                                  width: "100%",
+                                  display: "flex",
+                                  flexDirection: "column",
+                                  alignItems: "flex-start",
+                                }}
+                              >
+                                {index === 0 ? (
+                                  <IconButton
+                                    onClick={() =>
+                                      arrayHelpers.push({
+                                        day: "",
+                                        time: false,
+                                      })
+                                    }
+                                    disabled={hours.length >= 7}
+                                  >
+                                    <AddCircle sx={{ color: "primary.main" }} />
+                                  </IconButton>
+                                ) : (
+                                  <IconButton
+                                    onClick={() => arrayHelpers.remove(index)}
+                                    disabled={hours.length <= 1}
+                                  >
+                                    <RemoveCircle
+                                      sx={{ color: "primary.main" }}
+                                    />
+                                  </IconButton>
+                                )}
+                                <Box sx={{ display: "flex", gap: 2 }}>
+                                  <TextField
+                                    // sx={{ bgcolor: "#fff", height: "7em" }}
+                                    name={`openHours.${index}.day`}
+                                    value={body.day}
+                                    onChange={formik.handleChange}
+                                    placeholder="Input a day of the week here"
+                                    label="Day"
+                                    fullWidth
+                                  />
+                                  <TextField
+                                    // sx={{ bgcolor: "#fff", height: "7em" }}
+                                    name={`openHours.${index}.time`}
+                                    value={body.time}
+                                    onChange={formik.handleChange}
+                                    placeholder="10am - 2pm"
+                                    fullWidth
+                                    label="Time"
+                                    // type="time"
+                                  />
+                                </Box>
+                                {/* <Box
+                            sx={{
+                              marginBottom: { xs: ".8em", md: "2em" },
+                            }}
+                          >
+                            <CustomMarkdownEditor
+                              placeholder="Write your answer here..."
+                              name={`options.${index}.option`}
+                              value={option.option}
+                              onChange={(markdown) =>
+                                formik.setFieldValue("body", markdown)
+                              }
+                            />
+                          </Box> */}
+                              </Box>
+                            </Box>
+                          ))}
+                        </>
+                      );
+                    }}
+                  />
+                </FormikProvider>
+              </Box>
             </FormControl>
           </>
         );
@@ -320,5 +404,18 @@ const RegistrationModal = ({ open, handleClose }: ModalProps) => {
     </Box>
   );
 };
+
+const categories = [
+  { id: 1, name: "Dinning", value: "dinning" },
+  { id: 2, name: "Entertainment", value: "entertainment" },
+  { id: 3, name: "Educational Services", value: "education" },
+  { id: 4, name: "Lifestyle", value: "lifestyle" },
+  { id: 5, name: "Wellness", value: "wellness" },
+  { id: 6, name: "Art & Culture", value: "art" },
+  { id: 7, name: "Shopping & Retail", value: "shopping" },
+  { id: 8, name: "Social Networking", value: "social" },
+  { id: 9, name: "Travels & Tourism", value: "travels" },
+  { id: 10, name: "Outdoor", value: "outdoor" },
+];
 
 export default RegistrationModal;

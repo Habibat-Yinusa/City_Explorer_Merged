@@ -116,6 +116,7 @@ const Explore = () => {
                   borderRadius: "20px",
                   width: "15em",
                   gap: 1,
+                  cursor: "pointer",
                 }}
               >
                 <Box sx={{ width: "3em" }}>

@@ -33,7 +33,11 @@ const Home = () => {
   return (
     <Box sx={{ backgroundColor: "#ececec" }}>
       <Box
-        sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
       >
         <Box
           sx={{
@@ -121,18 +125,16 @@ const Home = () => {
         </Box>
       </Box>
 
-      <CenteredBox sx={{ marginTop: "2em", flexDirection: "column" }}>
-        {/* <Typography
-          variant="h3"
+      <CenteredBox sx={{ marginTop: "2em" }}>
+        <Grid
+          container
           sx={{
-            fontWeight: 700,
-            fontSize: { xs: "1.7rem", md: "2rem" },
-            width: "100%",
+            margin: { xs: "1.8em 0", md: "2em 0" },
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
           }}
         >
-          Categories
-        </Typography> */}
-        <Grid container sx={{ margin: { xs: "1.8em 0", md: "2em 0" } }}>
           {categoryCard.map((item) => (
             <Grid
               item
@@ -186,7 +188,13 @@ const Home = () => {
         </Grid>
       </CenteredBox>
 
-      <Box sx={{ flexDirection: "column" }}>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
         {/* <CenteredBox
           sx={{
             justifyContent: "space-between",
@@ -247,6 +255,9 @@ const Home = () => {
             width: { xs: "90vw", md: "68vw", lg: "75vw" },
             borderRadius: "30px",
             overflow: "hidden",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
           }}
         >
           {isFetchingEvents && <LinearProgress />}

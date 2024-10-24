@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, FormControl, TextField } from "@mui/material";
+import { Box, FormControl } from "@mui/material";
 import { CenteredBox } from "../../../styles/styled-components/styledBox";
 import { FilledButton } from "../../../styles/styled-components/styledButtons";
 import { useSelector } from "react-redux";
@@ -10,6 +10,7 @@ import * as yup from "yup";
 import { useChatWithBotMutation } from "./chatApiSlice";
 import { aiMessageInput, aiMessageType } from "../../../types/message.types";
 import EmptyState from "../../../styles/custom-components/EmptyState";
+import { StyledTextField } from "../../../styles/styled-components/styledInputs";
 
 const ExploreAi = () => {
   const [messages, setMessages] = React.useState<aiMessageType[]>([]);
@@ -78,7 +79,7 @@ const ExploreAi = () => {
               <Box
                 // variant="body2"
                 sx={{
-                  fontSize: "1rem",
+                  fontSize: { xs: ".7rem", md: "1rem" },
                   margin: ".5em",
                   backgroundColor: message.type === "sent" ? "#3884FD" : "#fff",
                   color: message.type === "sent" ? "#fff" : "#000",
@@ -111,13 +112,14 @@ const ExploreAi = () => {
         onSubmit={formik.handleSubmit}
       >
         <FormControl error fullWidth>
-          <TextField
+          <StyledTextField
             label="Type in your message"
             id="message"
             type="message"
             value={formik.values.message}
             onChange={formik.handleChange}
             fullWidth
+            sx={{ fontSize: { xs: ".7rem", md: "1rem" } }}
           />
         </FormControl>
         <FilledButton
@@ -126,8 +128,8 @@ const ExploreAi = () => {
             // width: "7%",
             // marginTop: ".5em",
             // backgroundColor: "transparent",
-            padding: ".8em 2em",
-            fontSize: "1rem",
+            padding: { xs: "1.35em 2em", md: ".95em 2em" },
+            fontSize: { xs: ".7rem", md: "1rem" },
           }}
           disabled={isLoading}
         >
