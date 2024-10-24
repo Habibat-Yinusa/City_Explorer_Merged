@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { addEventToBusiness, getAllBusinesses, getEvents, getAllEvents, getBusinessDetails, registerBusiness, addPromo, getPromo, getAllPromos, deletePromo } from '../controllers/businessControllers';
-import upload from '../config/multer';
-import cloudinary from '../config/cloudinary';
+// import upload from '../config/multer';
+// import cloudinary from '../config/cloudinary';
 
 const router = Router();
 

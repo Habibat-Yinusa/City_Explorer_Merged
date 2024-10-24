@@ -7,10 +7,10 @@ import BusinessModel, {
 import { Types } from "mongoose";
 import { hash, compare } from "bcrypt";
 // import cloudinary from '../config/cloudinary';
-import upload from "../config/multer";
+// import upload from "../config/multer";
 import { ValidationError, ServerError } from "../middlewares/errorHandler";
-import uploadImages from "./images";
-const cloudinary = require("cloudinary").v2;
+// import uploadImages from "./images";
+// const cloudinary = require("cloudinary").v2;
 
 // import BusinessModel  from '../models/businessPage';
 
@@ -50,18 +50,18 @@ const registerBusiness = async (req: Request, res: Response) => {
 
     const hashedPassword = await hash(password, 10);
 
-    let uploadResults;
-    const logoFile = req.files;
-    let logoUrl;
-    if (logoFile?.length !== 0) {
-      uploadResults = await uploadImages(req, res);
-      logoUrl = uploadResults.length > 0 ? uploadResults[0].url : "";
-    }
+    // let uploadResults;
+    // const logoFile = req.files;
+    // let logoUrl;
+    // if (logoFile?.length !== 0) {
+    //   uploadResults = await uploadImages(req, res);
+    //   logoUrl = uploadResults.length > 0 ? uploadResults[0].url : "";
+    // }
 
     const newBusiness = new BusinessModel({
       name,
       category,
-      logo: logoUrl,
+      // logo: logoUrl,
       items,
       location,
       openHours,
@@ -121,9 +121,9 @@ const addEventToBusiness = async (req: Request, res: Response) => {
       return res.status(400).json({ message: "No image uploaded" });
     }
 
-    const result = await cloudinary.uploader.upload(file, {
-      folder: "events",
-    });
+    // const result = await cloudinary.uploader.upload(file, {
+    //   folder: "events",
+    // });
 
     const business = await BusinessModel.findById(businessId);
 
@@ -136,7 +136,7 @@ const addEventToBusiness = async (req: Request, res: Response) => {
       description,
       venue,
       date,
-      image: result.secure_url,
+      // image: result.secure_url,
     };
 
     business.events.push(newEvent);
@@ -306,53 +306,53 @@ const deletePromo = async (req: Request, res: Response) => {
 // })
 // };
 
-const addProduct = async (req: Request, res: Response) => {
-  upload.single("file")(req, res, async (err) => {
-    if (err) {
-      return res
-        .status(400)
-        .json({ message: "Error uploading file", error: err.message });
-    }
+// const addProduct = async (req: Request, res: Response) => {
+//   upload.single("file")(req, res, async (err) => {
+//     if (err) {
+//       return res
+//         .status(400)
+//         .json({ message: "Error uploading file", error: err.message });
+//     }
 
-    try {
-      const { businessId, name, description, price } = req.body;
-      const filePath = req.file?.path;
+//     try {
+//       const { businessId, name, description, price } = req.body;
+//       const filePath = req.file?.path;
 
-      if (!filePath) {
-        return res.status(400).json({ message: "No image uploaded" });
-      }
+//       if (!filePath) {
+//         return res.status(400).json({ message: "No image uploaded" });
+//       }
 
-      const result = await cloudinary.uploader.upload(filePath, {
-        folder: "products",
-      });
+//       // const result = await cloudinary.uploader.upload(filePath, {
+//       //   folder: "products",
+//       // });
 
-      const newProduct = {
-        name,
-        description,
-        price,
-        image: result.secure_ur,
-      };
+//       const newProduct = {
+//         name,
+//         description,
+//         price,
+//         // image: result.secure_ur,
+//       };
 
-      const updatedBusinessPage = await BusinessModel.findByIdAndUpdate(
-        businessId,
-        { $push: { items: newProduct } },
-        { new: true }
-      );
+//       const updatedBusinessPage = await BusinessModel.findByIdAndUpdate(
+//         businessId,
+//         { $push: { items: newProduct } },
+//         { new: true }
+//       );
 
-      if (!updatedBusinessPage) {
-        return res.status(404).json({ message: "Business not found" });
-      }
+//       if (!updatedBusinessPage) {
+//         return res.status(404).json({ message: "Business not found" });
+//       }
 
-      res
-        .status(200)
-        .json({ message: "Product added successfully", product: newProduct });
-    } catch (error: any) {
-      res.status(500).json({ message: error.message });
-    }
-  });
-};
+//       res
+//         .status(200)
+//         .json({ message: "Product added successfully", product: newProduct });
+//     } catch (error: any) {
+//       res.status(500).json({ message: error.message });
+//     }
+//   });
+// };
 
-export default addProduct;
+// export default addProduct;
 
 // export default { addProduct };
 
@@ -367,5 +367,5 @@ export {
   getPromo,
   getAllPromos,
   deletePromo,
-  addProduct,
+  // addProduct,
 };

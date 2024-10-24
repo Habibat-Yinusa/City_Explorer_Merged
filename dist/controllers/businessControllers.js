@@ -23,13 +23,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.addProduct = exports.deletePromo = exports.getAllPromos = exports.getPromo = exports.addPromo = exports.getAllEvents = exports.getEvents = exports.addEventToBusiness = exports.getAllBusinesses = exports.getBusinessDetails = exports.registerBusiness = void 0;
+exports.deletePromo = exports.getAllPromos = exports.getPromo = exports.addPromo = exports.getAllEvents = exports.getEvents = exports.addEventToBusiness = exports.getAllBusinesses = exports.getBusinessDetails = exports.registerBusiness = void 0;
 const businessPage_1 = __importDefault(require("../models/businessPage"));
 const bcrypt_1 = require("bcrypt");
-// import cloudinary from '../config/cloudinary';
-const multer_1 = __importDefault(require("../config/multer"));
-const images_1 = __importDefault(require("./images"));
-const cloudinary = require("cloudinary").v2;
+// import uploadImages from "./images";
+// const cloudinary = require("cloudinary").v2;
 // import BusinessModel  from '../models/businessPage';
 const registerBusiness = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     var _a;
@@ -50,17 +48,17 @@ const registerBusiness = (req, res) => __awaiter(void 0, void 0, void 0, functio
             throw new Error("Please enter a password");
         }
         const hashedPassword = yield (0, bcrypt_1.hash)(password, 10);
-        let uploadResults;
-        const logoFile = req.files;
-        let logoUrl;
-        if ((logoFile === null || logoFile === void 0 ? void 0 : logoFile.length) !== 0) {
-            uploadResults = yield (0, images_1.default)(req, res);
-            logoUrl = uploadResults.length > 0 ? uploadResults[0].url : "";
-        }
+        // let uploadResults;
+        // const logoFile = req.files;
+        // let logoUrl;
+        // if (logoFile?.length !== 0) {
+        //   uploadResults = await uploadImages(req, res);
+        //   logoUrl = uploadResults.length > 0 ? uploadResults[0].url : "";
+        // }
         const newBusiness = new businessPage_1.default({
             name,
             category,
-            logo: logoUrl,
+            // logo: logoUrl,
             items,
             location,
             openHours,
@@ -117,9 +115,9 @@ const addEventToBusiness = (req, res) => __awaiter(void 0, void 0, void 0, funct
         if (!file) {
             return res.status(400).json({ message: "No image uploaded" });
         }
-        const result = yield cloudinary.uploader.upload(file, {
-            folder: "events",
-        });
+        // const result = await cloudinary.uploader.upload(file, {
+        //   folder: "events",
+        // });
         const business = yield businessPage_1.default.findById(businessId);
         if (!business) {
             return res.status(404).send({ message: "Business not found" });
@@ -129,7 +127,7 @@ const addEventToBusiness = (req, res) => __awaiter(void 0, void 0, void 0, funct
             description,
             venue,
             date,
-            image: result.secure_url,
+            // image: result.secure_url,
         };
         business.events.push(newEvent);
         yield business.save();
@@ -238,75 +236,3 @@ const deletePromo = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
     }
 });
 exports.deletePromo = deletePromo;
-// const addProduct = async (req: Request, res: Response) => {
-//     upload.single('file')(req, res, async (err) => {
-//         if (err) {
-//           return res.status(400).json({ message: 'Error uploading file', error: err.message });
-//         }
-//   try {
-//     const { businessId, name, description, price } = req.body;
-//     const file = req.file;
-//     if (!file) {
-//       return res.status(400).json({ message: 'No image uploaded' });
-//     }
-//     const result = await cloudinary.uploader.upload(file, {
-//       folder: 'products'
-//     });
-//     const newProduct = {
-//       name,
-//       description,
-//       price,
-//       image: result.secure_url
-//     };
-//     const updatedBusinessPage = await BusinessModel.findByIdAndUpdate(
-//         businessId,
-//         { $push: { items: newProduct } },
-//         { new: true }
-//       );
-//       if (!updatedBusinessPage) {
-//         return res.status(404).json({ message: 'Business not found' });
-//       }
-//       res.status(200).json({ message: 'Product added successfully', product: newProduct });
-//     } catch (error: any) {
-//       res.status(500).json({ message: error.message });
-//     }
-// })
-// };
-const addProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    multer_1.default.single("file")(req, res, (err) => __awaiter(void 0, void 0, void 0, function* () {
-        var _d;
-        if (err) {
-            return res
-                .status(400)
-                .json({ message: "Error uploading file", error: err.message });
-        }
-        try {
-            const { businessId, name, description, price } = req.body;
-            const filePath = (_d = req.file) === null || _d === void 0 ? void 0 : _d.path;
-            if (!filePath) {
-                return res.status(400).json({ message: "No image uploaded" });
-            }
-            const result = yield cloudinary.uploader.upload(filePath, {
-                folder: "products",
-            });
-            const newProduct = {
-                name,
-                description,
-                price,
-                image: result.secure_ur,
-            };
-            const updatedBusinessPage = yield businessPage_1.default.findByIdAndUpdate(businessId, { $push: { items: newProduct } }, { new: true });
-            if (!updatedBusinessPage) {
-                return res.status(404).json({ message: "Business not found" });
-            }
-            res
-                .status(200)
-                .json({ message: "Product added successfully", product: newProduct });
-        }
-        catch (error) {
-            res.status(500).json({ message: error.message });
-        }
-    }));
-});
-exports.addProduct = addProduct;
-exports.default = addProduct;
