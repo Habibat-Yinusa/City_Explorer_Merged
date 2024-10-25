@@ -10,10 +10,16 @@ import {
   Select,
   MenuItem,
   InputLabel,
-  Grid,
+  InputAdornment,
 } from "@mui/material";
 import * as yup from "yup";
-import { AddCircle, Close, RemoveCircle } from "@mui/icons-material";
+import {
+  AddCircle,
+  Close,
+  RemoveCircle,
+  Visibility,
+  VisibilityOff,
+} from "@mui/icons-material";
 import { RegisterBusiness } from "../../../types/register.types";
 import {
   BgButton,
@@ -22,7 +28,7 @@ import {
 } from "../../../styles/styled-components/styledButtons";
 import successIcon from "../../../assets/success-icon.svg";
 import { useRegisterBusinessMutation } from "../authApiSlice";
-import { StyledTextArea } from "../../../styles/styled-components/styledInputs";
+import { useNavigate } from "react-router-dom";
 
 interface ModalProps {
   open: boolean;
@@ -32,6 +38,14 @@ interface ModalProps {
 const RegistrationModal = ({ open, handleClose }: ModalProps) => {
   const [step, setStep] = useState(0);
   const [registerRequest, { isLoading }] = useRegisterBusinessMutation();
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+  const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
+
+  const RegisterSuccess = () => {
+    handleClose();
+    navigate("/");
+  };
 
   const formik = useFormik<RegisterBusiness & { description: string }>({
     initialValues: {
@@ -47,19 +61,18 @@ const RegistrationModal = ({ open, handleClose }: ModalProps) => {
       email: "",
       website: "",
     },
-    validationSchema: yup.object({
-      name: yup.string().required("Required"),
-      category: yup.string().required("Required"),
-      description: yup.string().required("Required"),
-      password: yup.string().required("Required"),
-      items: yup.array(),
-      logo: yup.string(),
-      location: yup.string().required("Required"),
-      openHours: yup.string().required("Required"),
-      phone: yup.string().required("Required"),
-      email: yup.string().required("Required"),
-      website: yup.string(),
-    }),
+    // validationSchema: yup.object({
+    //   name: yup.string().required("Required"),
+    //   category: yup.string().required("Required"),
+    //   description: yup.string().required("Required"),
+    //   password: yup.string().required("Required"),
+    //   // items: yup.array(),
+    //   // logo: yup.string(),
+    //   location: yup.string().required("Required"),
+    //   openHours: yup.string().required("Required"),
+    //   phone: yup.string().required("Required"),
+    //   email: yup.string().required("Required"),
+    // }),
     onSubmit: async (values: RegisterBusiness) => {
       console.log("Form submitted with values:", values);
       try {
@@ -267,6 +280,29 @@ const RegistrationModal = ({ open, handleClose }: ModalProps) => {
             </FormControl>
             <FormControl fullWidth>
               <TextField
+                type={showPassword ? "text" : "password"}
+                name="password"
+                label="Password"
+                fullWidth
+                value={formik.values.password}
+                onChange={formik.handleChange}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment
+                      position="start"
+                      sx={{ display: "flex", alignItems: "center" }}
+                    >
+                      <IconButton onClick={handleClickShowPassword}>
+                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
+                sx={{ margin: ".7em 0" }}
+              />
+            </FormControl>
+            <FormControl fullWidth>
+              <TextField
                 name="website"
                 label="Website"
                 fullWidth
@@ -391,7 +427,7 @@ const RegistrationModal = ({ open, handleClose }: ModalProps) => {
                       width: "100%",
                     }}
                   >
-                    <BgButton sx={{ width: "50%" }} onClick={handleClose}>
+                    <BgButton sx={{ width: "50%" }} onClick={RegisterSuccess}>
                       Done
                     </BgButton>
                   </Box>
