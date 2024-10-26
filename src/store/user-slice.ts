@@ -5,6 +5,7 @@ export interface UserDetails {
   id: string;
   role: "user" | "business";
   username?: string;
+  description?: string;
   email: string;
   name?: string;
   category?: string;
@@ -76,6 +77,14 @@ export const selectCurrentUserEmail = (state: RootState) =>
   state.user.details?.email;
 export const selectCurrentBusinessName = (state: RootState) =>
   state.user.details?.role === "business" ? state.user.details.name : undefined;
+export const selectCurrentBusinessDescription = (state: RootState) =>
+  state.user.details?.role === "business"
+    ? state.user.details.description
+    : undefined;
+export const selectCurrentBusinessLocation = (state: RootState) =>
+  state.user.details?.role === "business"
+    ? state.user.details.location
+    : undefined;
 export const selectCurrentBusinessCategory = (state: RootState) =>
   state.user.details?.role === "business"
     ? state.user.details.category

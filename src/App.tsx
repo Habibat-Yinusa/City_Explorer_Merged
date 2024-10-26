@@ -22,6 +22,9 @@ import Explore from "./pages/Users/Explore/Explore";
 import Events from "./pages/Users/Explore/Events";
 import Collections from "./pages/Users/Explore/Collections";
 import MapExplore from "./pages/maps/Map";
+import Services from "./pages/Users/Me/Services";
+import Info from "./pages/Users/Me/Info";
+import Reviews from "./pages/Users/Me/Reviews";
 
 function App() {
   const user = useSelector(selectCurrentUser);
@@ -39,7 +42,13 @@ function App() {
 
   useEffect(() => {
     // Route the user to dashboard if a logged-in user tries to access signin page
-    if (user && location.pathname === "/") {
+    if (
+      user &&
+      (location.pathname === "/" ||
+        location.pathname === "/register" ||
+        location.pathname === "/register/individual" ||
+        location.pathname === "/register/business")
+    ) {
       navigate("/home");
     }
   }, [navigate, user]);
@@ -53,42 +62,87 @@ function App() {
         <Route path="/register/business" element={<NewBusiness />} />
         <Route path="/explore-maps" element={<MapExplore />} />
         <Route path="*" element={<h1>URL does not exist</h1>} />
-        <Route
-          element={
-            <Auth user={user}>
-              <Layout />
-            </Auth>
-          }
-        >
-          <Route path="/home">
-            <Route index element={<Home />} />
-            <Route path="promos/:id" element={<Promos />} />
-          </Route>
+        {user?.role != "business" ? (
+          <Route
+            element={
+              <Auth user={user}>
+                <Layout />
+              </Auth>
+            }
+          >
+            <Route path="/home">
+              <Route index element={<Home />} />
+              <Route path="promos/:id" element={<Promos />} />
+            </Route>
 
-          <Route path="/explore">
-            <Route index element={<Explore />} />
-            <Route path="business" element={<BusinessOpen />} />
-            <Route path="event" element={<Events />} />
-            <Route path="collections" element={<Collections />} />
-          </Route>
+            <Route path="/explore">
+              <Route index element={<Explore />} />
+              <Route path="business" element={<BusinessOpen />} />
+              <Route path="event" element={<Events />} />
+              <Route path="collections" element={<Collections />} />
+            </Route>
 
-          <Route path="/ai">
-            <Route index element={<ExploreAi />} />
-          </Route>
+            <Route path="/ai">
+              <Route index element={<ExploreAi />} />
+            </Route>
 
-          <Route path="/wallet">
-            <Route index element={<Wallet />} />
-          </Route>
+            <Route path="/wallet">
+              <Route index element={<Wallet />} />
+            </Route>
 
-          {/* <Route path="/search">
+            {/* <Route path="/search">
+   <Route index element={<Wallet />} />
+   </Route> */}
+
+            <Route path="/me">
+              <Route index element={<Me />} />
+              <Route path="favorites" element={<Favorites />} />
+              <Route path="services" element={<Services />} />
+              <Route path="info" element={<Info />} />
+              <Route path="reviews" element={<Reviews />} />
+            </Route>
+          </Route>
+        ) : (
+          <Route
+            element={
+              <Auth user={user}>
+                <Layout />
+              </Auth>
+            }
+          >
+            <Route path="/home">
+              <Route index element={<Home />} />
+              <Route path="promos/:id" element={<Promos />} />
+            </Route>
+
+            <Route path="/explore">
+              <Route index element={<Explore />} />
+              <Route path="business" element={<BusinessOpen />} />
+              <Route path="event" element={<Events />} />
+              <Route path="collections" element={<Collections />} />
+            </Route>
+
+            <Route path="/ai">
+              <Route index element={<ExploreAi />} />
+            </Route>
+
+            <Route path="/wallet">
+              <Route index element={<Wallet />} />
+            </Route>
+
+            {/* <Route path="/search">
             <Route index element={<Wallet />} />
             </Route> */}
 
-          <Route path="/me">
-            <Route index element={<Me />} />
-            <Route path="favorites" element={<Favorites />} />
+            <Route path="/me">
+              <Route index element={<Services />} />
+              <Route path="favorites" element={<Favorites />} />
+              {/* <Route path="services" element={<Services />} /> */}
+              <Route path="info" element={<Info />} />
+              <Route path="reviews" element={<Reviews />} />
+            </Route>
           </Route>
-        </Route>
+        )}
       </Routes>
     </Box>
   );

@@ -10,13 +10,7 @@ import ListItemButton from "@mui/material/ListItemButton";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
-import {
-  // Chat,
-  Logout,
-  // Notifications,
-  Person,
-  SmartToy,
-} from "@mui/icons-material";
+import { Logout, Person, SmartToy } from "@mui/icons-material";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import TravelExploreIcon from "@mui/icons-material/TravelExplore";
 import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
@@ -64,9 +58,15 @@ function Layout() {
     navigate("/");
   };
 
-  const headerLinkToUse = location.pathname.includes("/explore/business")
-    ? "business"
-    : "explore";
+  const getHeaderLinks = () => {
+    if (role === "business" && location.pathname.startsWith("/me")) {
+      return headerLinks.business;
+    }
+    if (location.pathname.includes("/explore")) {
+      return headerLinks.explore;
+    }
+    return [];
+  };
 
   const drawer = (
     <div>
@@ -128,7 +128,7 @@ function Layout() {
               color: "#6c6c6c",
               borderRadius: "10px",
               "&:hover": {
-                backgroundColor: "#6E83F3",
+                backgroundColor: "#3884FD",
                 color: "#fff",
               },
             }}
@@ -202,27 +202,26 @@ function Layout() {
                   alignItems: "center",
                 }}
               >
-                {location.pathname.includes("explore") &&
-                  headerLinks[headerLinkToUse].map((link) => (
-                    <Typography
-                      key={link.id}
-                      variant="body2"
-                      sx={{
-                        fontSize: "1rem",
-                        color:
-                          location.pathname === link.link ? "#3884FD" : "#000",
-                        textDecoration: "none",
-                        cursor: "pointer",
-                        gap: 2,
-                        "&:hover": {
-                          color: "#3884FD",
-                        },
-                      }}
-                      onClick={() => navigate(link.link)} // navigate to the correct link
-                    >
-                      {link.name}
-                    </Typography>
-                  ))}
+                {getHeaderLinks().map((link) => (
+                  <Typography
+                    key={link.id}
+                    variant="body2"
+                    sx={{
+                      fontSize: "1rem",
+                      color:
+                        location.pathname === link.link ? "#3884FD" : "#000",
+                      textDecoration: "none",
+                      cursor: "pointer",
+                      gap: 2,
+                      "&:hover": {
+                        color: "#3884FD",
+                      },
+                    }}
+                    onClick={() => navigate(link.link)}
+                  >
+                    {link.name}
+                  </Typography>
+                ))}
               </Box>
               <FilledButton
                 sx={{
@@ -362,9 +361,9 @@ const headerLinks = {
     { id: 3, name: "Collections", link: "/explore/collections" },
   ],
   business: [
-    { id: 1, name: "Services", link: "/explore/services" },
-    { id: 2, name: "Info", link: "/explore/info" },
-    { id: 3, name: "Reviews", link: "/explore/reviews" },
+    { id: 1, name: "Services", link: "/me" },
+    { id: 2, name: "Info", link: "/me/info" },
+    { id: 3, name: "Reviews", link: "/me/reviews" },
   ],
 };
 
