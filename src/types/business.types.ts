@@ -15,3 +15,5 @@ export interface Business {
   __v: number;
   openHours: openHours;
 }
+
+export type Businesses = Business[];

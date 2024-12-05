@@ -25,6 +25,9 @@ import MapExplore from "./pages/maps/Map";
 import Services from "./pages/Users/Me/Services";
 import Info from "./pages/Users/Me/Info";
 import Reviews from "./pages/Users/Me/Reviews";
+import Photos from "./pages/Users/Me/Photos";
+import Settings from "./pages/Users/Me/Settings";
+import BusinessServices from "./pages/Users/Explore/BusinessServices";
 
 function App() {
   const user = useSelector(selectCurrentUser);
@@ -77,9 +80,11 @@ function App() {
 
             <Route path="/explore">
               <Route index element={<Explore />} />
+              <Route path=":businessId" element={<BusinessServices />} />
               <Route path="business" element={<BusinessOpen />} />
               <Route path="event" element={<Events />} />
               <Route path="collections" element={<Collections />} />
+              <Route path=":businessId/info" element={<Collections />} />
             </Route>
 
             <Route path="/ai">
@@ -100,6 +105,8 @@ function App() {
               <Route path="services" element={<Services />} />
               <Route path="info" element={<Info />} />
               <Route path="reviews" element={<Reviews />} />
+              <Route path="photos" element={<Photos />} />
+              <Route path="settings" element={<Settings />} />
             </Route>
           </Route>
         ) : (

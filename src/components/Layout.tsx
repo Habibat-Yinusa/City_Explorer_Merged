@@ -9,7 +9,7 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import { Outlet, useLocation, useNavigate } from "react-router-dom";
+import { Outlet, useLocation, useNavigate, useParams } from "react-router-dom";
 import { Logout, Person, SmartToy } from "@mui/icons-material";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import TravelExploreIcon from "@mui/icons-material/TravelExplore";
@@ -37,6 +37,25 @@ function Layout() {
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
+  const { businessId } = useParams();
+
+  const headerLinks = {
+    explore: [
+      { id: 1, name: "Explore", link: "/explore" },
+      { id: 2, name: "Event", link: "/explore/event" },
+      { id: 3, name: "Collections", link: "/explore/collections" },
+    ],
+    exploreBusiness: [
+      { id: 1, name: "Services", link: `/explore/${businessId}` },
+      { id: 2, name: "Info", link: `/explore/${businessId}/info` },
+      { id: 3, name: "Reviews", link: `/explore/${businessId}/reviews` },
+    ],
+    business: [
+      { id: 1, name: "Services", link: "/me" },
+      { id: 2, name: "Info", link: "/me/info" },
+      { id: 3, name: "Reviews", link: "/me/reviews" },
+    ],
+  };
 
   const handleDrawerClose = () => {
     setIsClosing(true);
@@ -63,6 +82,9 @@ function Layout() {
       return headerLinks.business;
     }
     if (location.pathname.includes("/explore")) {
+      if (location.pathname.includes(`/explore/${businessId}`)) {
+        return headerLinks.exploreBusiness;
+      }
       return headerLinks.explore;
     }
     return [];
@@ -353,18 +375,5 @@ const pageLinks = [
   //   icon: <Notifications />,
   // },
 ];
-
-const headerLinks = {
-  explore: [
-    { id: 1, name: "Explore", link: "/explore" },
-    { id: 2, name: "Event", link: "/explore/event" },
-    { id: 3, name: "Collections", link: "/explore/collections" },
-  ],
-  business: [
-    { id: 1, name: "Services", link: "/me" },
-    { id: 2, name: "Info", link: "/me/info" },
-    { id: 3, name: "Reviews", link: "/me/reviews" },
-  ],
-};
 
 export default Layout;

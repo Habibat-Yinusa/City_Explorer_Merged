@@ -1,8 +1,5 @@
-import { Box, Typography, Grid } from "@mui/material";
-// import { CenteredBox } from "../../../styles/styled-components/styledBox";
-// import img2 from "../../../assets/img2.svg";
-// import { FilledButton } from "../../../styles/styled-components/styledButtons";
-// import React from "react";
+import { useState } from "react";
+import { Box, Typography, Grid, LinearProgress } from "@mui/material";
 import { StyledTextField } from "../../../styles/styled-components/styledInputs";
 import {
   selectCurrentBusinessName,
@@ -10,6 +7,7 @@ import {
   selectCurrentUserRole,
 } from "../../../store/user-slice";
 import { useSelector } from "react-redux";
+import all from "../../../assets/all.svg";
 import dinning from "../../../assets/dinning.svg";
 import entertainment from "../../../assets/entertainment.svg";
 import educational from "../../../assets/educational.svg";
@@ -20,30 +18,32 @@ import shopping from "../../../assets/shopping.svg";
 import social from "../../../assets/social.svg";
 import travels from "../../../assets/travels.svg";
 import outdoor from "../../../assets/outdoor.svg";
+import { useGetBusinessesQuery } from "./businessApiSlice";
+import { useNavigate } from "react-router-dom";
 
 const Explore = () => {
   const username = useSelector(selectCurrentUsername);
   const businessName = useSelector(selectCurrentBusinessName);
   const role = useSelector(selectCurrentUserRole);
-  // const [searchQuery, setSearchQuery] = React.useState("");
+  const navigate = useNavigate();
 
-  // const handleSearchChange = (event: {
-  //   target: { value: React.SetStateAction<string> };
-  // }) => {
-  //   setSearchQuery(event.target.value);
-  // };
+  const { data: businesses, isLoading: isFetchingBusinesses } =
+    useGetBusinessesQuery();
 
-  // const getSearchedItems = () => {
-  //   const filteredItems = interests.filter((item) =>
-  //     item.header.toLowerCase().includes(searchQuery.toLowerCase())
-  //   );
-  //   const rearrangedItems = filteredItems.sort(
-  //     (a, b) =>
-  //       a.header.toLowerCase().indexOf(searchQuery.toLowerCase()) -
-  //       b.header.toLowerCase().indexOf(searchQuery.toLowerCase())
-  //   );
-  //   return rearrangedItems;
-  // };
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+
+  const filteredBusinesses = businesses?.filter(
+    (business) =>
+      !selectedCategory ||
+      selectedCategory === "all" ||
+      business.category === selectedCategory
+  );
+
+  const handleCategoryClick = (category: string) => {
+    setSelectedCategory((prevCategory) =>
+      prevCategory === category ? null : category
+    );
+  };
 
   return (
     <Box>
@@ -57,23 +57,6 @@ const Explore = () => {
           marginBottom: "2em",
         }}
       >
-        {/* <Autocomplete
-          freeSolo
-          id="free-solo-2-demo"
-          disableClearable
-          options={interests.map((item) => item.header)}
-          renderInput={(params) => (
-            <TextField
-              {...params}
-              label="Search..."
-              onChange={handleSearchChange}
-              InputProps={{
-                type: "search",
-              }}
-            />
-          )}
-          sx={{ width: "60%", marginBottom: "1em" }}
-        /> */}
         <StyledTextField
           placeholder="Search for restaurants, hotels, etc..."
           sx={{
@@ -86,9 +69,9 @@ const Explore = () => {
         <Typography variant="h3" sx={{ fontSize: "1.5rem", color: "#1E1E1E" }}>
           Hey{" "}
           <span style={{ textTransform: "capitalize" }}>
-            {role != "business" ? username : businessName}
+            {role !== "business" ? username : businessName}
           </span>
-          , explore some places, businesses and lots more around the city
+          , explore some places, businesses, and lots more around the city
         </Typography>
       </Box>
       <Box>
@@ -108,21 +91,27 @@ const Explore = () => {
             <Grid item key={item.id}>
               <Box
                 sx={{
-                  border: "1px solid #3884FD",
+                  border:
+                    selectedCategory === item.category
+                      ? "2px solid #3884FD"
+                      : "1px solid #ccc",
                   display: "flex",
-                  // justifyContent: "space-between",
                   alignItems: "center",
                   padding: ".2em 1em",
                   borderRadius: "20px",
                   width: "15em",
                   gap: 1,
                   cursor: "pointer",
+                  backgroundColor:
+                    selectedCategory === item.category ? "#E6F1FF" : "white",
                 }}
+                onClick={() => handleCategoryClick(item.category)}
               >
                 <Box sx={{ width: "3em" }}>
                   <img
                     src={item.icon}
                     style={{ width: "100%", minWidth: "3em" }}
+                    alt={item.name}
                   />
                 </Box>
                 <Typography variant="body1" sx={{ fontSize: "1rem" }}>
@@ -133,161 +122,97 @@ const Explore = () => {
           ))}
         </Grid>
       </Box>
-      {/* <CenteredBox>
-        <CenteredBox sx={{ justifyContent: "space-between" }}>
-          <Grid
-            container
-            spacing={2}
-            sx={{
-              display: "flex",
-              justifyContent: { xs: "center", sm: "flex-start" },
-              alignItems: "center",
-            }}
-          >
-            {getSearchedItems().map((item) => (
-              <Grid item xs={10} sm={6} md={6} lg={4} key={item.id}>
-                <CenteredBox
+      <Box>
+        <Typography
+          variant="h3"
+          sx={{
+            fontWeight: 700,
+            fontSize: { xs: "1.7rem", md: "2rem" },
+            width: "100%",
+            marginBottom: ".6em",
+            margin: "1em 0",
+          }}
+        >
+          Businesses
+        </Typography>
+        <Grid container spacing={3}>
+          {isFetchingBusinesses && <LinearProgress />}
+          {!isFetchingBusinesses &&
+            filteredBusinesses?.map((business) => (
+              <Grid item key={business._id} xs={12} sm={6} md={4}>
+                <Box
                   sx={{
-                    borderRadius: "20px",
-                    padding: ".8em 1em",
-                    // width: "30%",
+                    border: "1px solid #ccc",
+                    borderRadius: "10px",
+                    padding: "1em",
+                    display: "flex",
                     flexDirection: "column",
-                    backgroundColor: "#fff",
+                    alignItems: "center",
                     cursor: "pointer",
-                    alignItems: "start",
-                    maxWidth: "20em",
                   }}
+                  onClick={() =>
+                    navigate(`${business._id}`, {
+                      state: { businessData: business },
+                    })
+                  }
                 >
-                  <CenteredBox
+                  <img
+                    src={business.logo}
+                    alt={business.name}
+                    style={{
+                      width: "100px",
+                      height: "100px",
+                      objectFit: "cover",
+                      borderRadius: "50%",
+                    }}
+                  />
+                  <Typography
+                    variant="h6"
                     sx={{
-                      width: "100%",
-                      flexDirection: "column",
+                      fontWeight: 700,
+                      margin: "1em 0",
+                      textTransform: "capitalize",
                     }}
                   >
-                    <Box sx={{ width: "100%", borderRadius: "30px" }}>
-                      <img src={item.image} alt="" style={{ width: "100%" }} />
-                    </Box>
-                    <Typography
-                      variant="body2"
-                      sx={{
-                        fontSize: { xs: ".9em", md: "1.1rem" },
-                        fontWeight: 700,
-                        textAlign: "left",
-                        margin: ".1em 0",
-                      }}
-                    >
-                      {item.header}
-                    </Typography>
-                    <Typography
-                      variant="body2"
-                      sx={{ fontSize: { xs: ".7em", md: ".9rem" } }}
-                    >
-                      {item.text}
-                    </Typography>
-                    <FilledButton
-                      sx={{
-                        width: "100%",
-                        marginTop: ".7em",
-                        fontSize: { xs: ".9em", md: "1.2rem" },
-                      }}
-                    >
-                      Check it out
-                    </FilledButton>
-                  </CenteredBox>
-                </CenteredBox>
+                    {business.name}
+                  </Typography>
+                  <Typography
+                    variant="body2"
+                    sx={{ textTransform: "capitalize" }}
+                  >
+                    {business.category}
+                  </Typography>
+                </Box>
               </Grid>
             ))}
-          </Grid>
-        </CenteredBox>
-      </CenteredBox> */}
+        </Grid>
+      </Box>
     </Box>
   );
 };
 
 const categoryCard = [
-  { id: 1, name: "Dinning", icon: dinning, link: "#" },
-  { id: 2, name: "Entertainment", icon: entertainment, link: "#" },
-  { id: 3, name: "Educational Services", icon: educational, link: "#" },
-  { id: 4, name: "Lifestyle", icon: lifestyle, link: "#" },
-  { id: 5, name: "Wellness", icon: wellness, link: "#" },
-  { id: 6, name: "Art & Culture", icon: art, link: "#" },
-  { id: 7, name: "Shopping & Retail", icon: shopping, link: "#" },
-  { id: 8, name: "Social Networking", icon: social, link: "#" },
-  { id: 9, name: "Travels & Tourism", icon: travels, link: "#" },
-  { id: 10, name: "Outdoor", icon: outdoor, link: "#" },
+  { id: 0, name: "All", category: "all", icon: all },
+  { id: 1, name: "Dinning", category: "dinning", icon: dinning },
+  {
+    id: 2,
+    name: "Entertainment",
+    category: "entertainment",
+    icon: entertainment,
+  },
+  {
+    id: 3,
+    name: "Educational Services",
+    category: "education",
+    icon: educational,
+  },
+  { id: 4, name: "Lifestyle", category: "lifestyle", icon: lifestyle },
+  { id: 5, name: "Wellness", category: "wellness", icon: wellness },
+  { id: 6, name: "Art & Culture", category: "art", icon: art },
+  { id: 7, name: "Shopping & Retail", category: "shopping", icon: shopping },
+  { id: 8, name: "Social Networking", category: "social", icon: social },
+  { id: 9, name: "Travels & Tourism", category: "travels", icon: travels },
+  { id: 10, name: "Outdoor", category: "outdoor", icon: outdoor },
 ];
-
-// const interests = [
-//   {
-//     id: 1,
-//     header: "Rahza Technology Ltd",
-//     text: `The biggest hackathon of the year is happening next month in Abuja. Get ready for vibes,
-//     lots of tech stuff and interesting solutions.`,
-//     image: img2,
-//   },
-//   {
-//     id: 2,
-//     header: "Capital Block Party",
-//     text: `The biggest pool party of the year is here. Don't miss it for anything. People from all
-//      over the country turn up to the Capital Block Party. Get your tickets now.`,
-//     image: img2,
-//   },
-//   {
-//     id: 3,
-//     header: "Capital Block Party",
-//     text: `The biggest pool party of the year is here. Don't miss it for anything. People from all
-//      over the country turn up to the Capital Block Party. Get your tickets now.`,
-//     image: img2,
-//   },
-//   {
-//     id: 4,
-//     header: "Rahza Technology Ltd",
-//     text: `The biggest hackathon of the year is happening next month in Abuja. Get ready for vibes,
-//     lots of tech stuff and interesting solutions.`,
-//     image: img2,
-//   },
-//   {
-//     id: 5,
-//     header: "Capital Block Party",
-//     text: `The biggest pool party of the year is here. Don't miss it for anything. People from all
-//      over the country turn up to the Capital Block Party. Get your tickets now.`,
-//     image: img2,
-//   },
-//   {
-//     id: 6,
-//     header: "Rahza Technology Ltd",
-//     text: `The biggest hackathon of the year is happening next month in Abuja. Get ready for vibes,
-//     lots of tech stuff and interesting solutions.`,
-//     image: img2,
-//   },
-//   {
-//     id: 7,
-//     header: "Capital Block Party",
-//     text: `The biggest pool party of the year is here. Don't miss it for anything. People from all
-//      over the country turn up to the Capital Block Party. Get your tickets now.`,
-//     image: img2,
-//   },
-//   {
-//     id: 8,
-//     header: "Rahza Technology Ltd",
-//     text: `The biggest hackathon of the year is happening next month in Abuja. Get ready for vibes,
-//     lots of tech stuff and interesting solutions.`,
-//     image: img2,
-//   },
-//   {
-//     id: 9,
-//     header: "Capital Block Party",
-//     text: `The biggest pool party of the year is here. Don't miss it for anything. People from all
-//      over the country turn up to the Capital Block Party. Get your tickets now.`,
-//     image: img2,
-//   },
-//   {
-//     id: 10,
-//     header: "Rahza Technology Ltd",
-//     text: `The biggest hackathon of the year is happening next month in Abuja. Get ready for vibes,
-//     lots of tech stuff and interesting solutions.`,
-//     image: img2,
-//   },
-// ];
 
 export default Explore;

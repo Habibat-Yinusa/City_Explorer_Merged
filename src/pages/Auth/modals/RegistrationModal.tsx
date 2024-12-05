@@ -12,7 +12,6 @@ import {
   InputLabel,
   InputAdornment,
 } from "@mui/material";
-import * as yup from "yup";
 import {
   AddCircle,
   Close,

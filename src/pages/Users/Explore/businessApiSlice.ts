@@ -1,5 +1,5 @@
 import { cityApi } from "../../../store/api";
-import { Business } from "../../../types/business.types";
+import { Businesses } from "../../../types/business.types";
 import { Events } from "../../../types/events.types";
 import { PromosData } from "../../../types/promo.types";
 
@@ -9,7 +9,7 @@ const apiSliceWithTags = cityApi.enhanceEndpoints({
 
 const businessApiSlice = apiSliceWithTags.injectEndpoints({
   endpoints: (builder) => ({
-    getBusinesses: builder.query<Business[], void>({
+    getBusinesses: builder.query<Businesses, void>({
       query: () => "/business",
       providesTags: ["Business"],
     }),
