@@ -135,8 +135,8 @@ const Explore = () => {
         >
           Businesses
         </Typography>
+        {isFetchingBusinesses && <LinearProgress />}
         <Grid container spacing={3}>
-          {isFetchingBusinesses && <LinearProgress />}
           {!isFetchingBusinesses &&
             filteredBusinesses?.map((business) => (
               <Grid item key={business._id} xs={12} sm={6} md={4}>

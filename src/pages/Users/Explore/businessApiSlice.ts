@@ -1,5 +1,5 @@
 import { cityApi } from "../../../store/api";
-import { Businesses } from "../../../types/business.types";
+import { Business, Businesses } from "../../../types/business.types";
 import { Events } from "../../../types/events.types";
 import { PromosData } from "../../../types/promo.types";
 
@@ -11,6 +11,10 @@ const businessApiSlice = apiSliceWithTags.injectEndpoints({
   endpoints: (builder) => ({
     getBusinesses: builder.query<Businesses, void>({
       query: () => "/business",
+      providesTags: ["Business"],
+    }),
+    getBusiness: builder.query<Business, string>({
+      query: (business_id) => `/business/${business_id}`,
       providesTags: ["Business"],
     }),
     getEvents: builder.query<Events[], void>({
@@ -30,6 +34,7 @@ const businessApiSlice = apiSliceWithTags.injectEndpoints({
 
 export const {
   useGetBusinessesQuery,
+  useGetBusinessQuery,
   useGetEventsQuery,
   useGetAllEventsQuery,
   useGetAllPromosQuery,
