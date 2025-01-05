@@ -156,7 +156,7 @@ const Explore = () => {
                     })
                   }
                 >
-                  <img
+                  {/* <img
                     src={business.logo}
                     alt={business.name}
                     style={{
@@ -165,7 +165,7 @@ const Explore = () => {
                       objectFit: "cover",
                       borderRadius: "50%",
                     }}
-                  />
+                  /> */}
                   <Typography
                     variant="h6"
                     sx={{
