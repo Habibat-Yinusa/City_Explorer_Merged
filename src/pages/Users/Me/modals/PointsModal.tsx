@@ -67,7 +67,8 @@ const PointsModal = ({ open, onClose, points, username }: PointsModalProps) => {
             {points}
           </Box>
           <Typography sx={{ textAlign: "center" }}>
-            Hey {username}, you have {points} explore points.
+            Hey <span style={{ textTransform: "capitalize" }}>{username}</span>,
+            you have {points} explore points.
           </Typography>
           <Typography
             sx={{ textAlign: "center", fontSize: "0.9rem", color: "#777" }}

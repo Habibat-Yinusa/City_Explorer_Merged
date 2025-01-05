@@ -28,6 +28,8 @@ import Reviews from "./pages/Users/Me/Reviews";
 import Photos from "./pages/Users/Me/Photos";
 import Settings from "./pages/Users/Me/Settings";
 import BusinessServices from "./pages/Users/Explore/BusinessServices";
+import BusinessInfo from "./pages/Users/Explore/BusinessInfo";
+import BusinessReviews from "./pages/Users/Explore/BusinessReviews";
 
 function App() {
   const user = useSelector(selectCurrentUser);
@@ -84,7 +86,8 @@ function App() {
               <Route path="business" element={<BusinessOpen />} />
               <Route path="event" element={<Events />} />
               <Route path="collections" element={<Collections />} />
-              <Route path=":businessId/info" element={<Collections />} />
+              <Route path=":businessId/info" element={<BusinessInfo />} />
+              <Route path=":businessId/reviews" element={<BusinessReviews />} />
             </Route>
 
             <Route path="/ai">

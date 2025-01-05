@@ -52,7 +52,7 @@ const EmptyState = ({ onMessageClick }: EmptyStateProps) => {
               }}
             >
               Good day{" "}
-              <span style={{ color: "#3884FD" }}>
+              <span style={{ color: "#3884FD", textTransform: "capitalize" }}>
                 {role != "business" ? username : businessName}
               </span>
             </Typography>

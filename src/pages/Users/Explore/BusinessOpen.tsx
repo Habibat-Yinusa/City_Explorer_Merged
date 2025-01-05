@@ -112,9 +112,14 @@ const BusinessOpen = () => {
               </CenteredBox>
               <Typography
                 variant="h3"
-                sx={{ color: "#fff", fontWeight: 700, padding: "1em 0" }}
+                sx={{
+                  color: "#fff",
+                  fontWeight: 700,
+                  padding: "1em 0",
+                  textTransform: "capitalize",
+                }}
               >
-                Business name
+                {username}
               </Typography>
             </CenteredBox>
           </CenteredBox>
