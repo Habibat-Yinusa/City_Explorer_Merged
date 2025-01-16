@@ -145,11 +145,12 @@ function App() {
             </Route> */}
 
             <Route path="/me">
-              <Route index element={<Services />} />
+              <Route index element={<BusinessServices />} />
               <Route path="favorites" element={<Favorites />} />
               {/* <Route path="services" element={<Services />} /> */}
-              <Route path="info" element={<Info />} />
-              <Route path="reviews" element={<Reviews />} />
+              <Route path="info" element={<BusinessInfo />} />
+              <Route path="reviews" element={<BusinessReviews />} />
+              <Route path="settings" element={<Settings />} />
             </Route>
           </Route>
         )}

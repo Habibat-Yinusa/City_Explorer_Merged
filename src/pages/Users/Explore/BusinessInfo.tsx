@@ -3,6 +3,7 @@ import {
   AccordionDetails,
   AccordionSummary,
   Box,
+  IconButton,
   LinearProgress,
   Typography,
 } from "@mui/material";
@@ -10,6 +11,7 @@ import { CenteredBox } from "../../../styles/styled-components/styledBox";
 import {
   AccessTimeFilled,
   Add,
+  Edit,
   ExpandMore,
   LocationOn,
   ManageAccounts,
@@ -21,10 +23,22 @@ import { FilledButton } from "../../../styles/styled-components/styledButtons";
 import { useParams } from "react-router-dom";
 import { useGetBusinessQuery } from "./businessApiSlice";
 import { useState } from "react";
+import {
+  selectCurrentBusinessId,
+  selectCurrentUserRole,
+} from "../../../store/user-slice";
+import { useSelector } from "react-redux";
 
 const BusinessInfo = () => {
-  const { businessId } = useParams();
-  const { data, isLoading } = useGetBusinessQuery(businessId as string);
+  const userRole = useSelector(selectCurrentUserRole);
+  const businessId = useSelector(selectCurrentBusinessId);
+  const { businessId: urlBusinessId } = useParams();
+
+  const targetBusinessId = userRole === "business" ? businessId : urlBusinessId;
+
+  const { data, isLoading } = useGetBusinessQuery(targetBusinessId as string, {
+    skip: !businessId,
+  });
 
   const [expanded, setExpanded] = useState(false);
   const [expandMap, setExpandMap] = useState(false);
@@ -205,54 +219,79 @@ const BusinessInfo = () => {
               <Box
                 sx={{
                   backgroundColor: "#fff",
-                  width: "100%",
                   borderRadius: "15px",
+                  width: "100%",
                   padding: ".7em",
-                  display: "flex",
-                  gap: 2,
-                  alignItems: "center",
-                  textDecoration: "none",
                   margin: "1em 0",
+                  display: "flex",
                 }}
-                component="a"
-                href={formatUrl(data?.website || "#")}
-                target="_blank"
-                rel="noopener noreferrer"
               >
-                <Public sx={{ color: "#758BFD" }} />
-                <Box>
-                  <Typography variant="body2" sx={{ color: "#000" }}>
-                    Website
-                  </Typography>
-                  <Typography variant="body2" sx={{ color: "#000" }}>
-                    {data?.website}
-                  </Typography>
+                <Box
+                  sx={{
+                    display: "flex",
+                    gap: 2,
+                    alignItems: "center",
+                    textDecoration: "none",
+                    width: "100%",
+                  }}
+                  component="a"
+                  href={formatUrl(data?.website || "#")}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Public sx={{ color: "#758BFD" }} />
+                  <Box>
+                    <Typography variant="body2" sx={{ color: "#000" }}>
+                      Website
+                    </Typography>
+                    <Typography variant="body2" sx={{ color: "#000" }}>
+                      {data?.website}
+                    </Typography>
+                  </Box>
                 </Box>
+                {userRole === "business" && (
+                  <IconButton onClick={() => console.log("Edit")}>
+                    <Edit sx={{ color: "#758BFD" }} />
+                  </IconButton>
+                )}
                 {/* <CallMade sx={{ color: "#758BFD" }} /> */}
               </Box>
 
               <Box
                 sx={{
                   backgroundColor: "#fff",
-                  width: "100%",
                   borderRadius: "15px",
+                  width: "100%",
                   padding: ".7em",
-                  display: "flex",
-                  gap: 2,
-                  alignItems: "center",
                   margin: "1em 0",
+                  display: "flex",
                 }}
               >
-                <Public sx={{ color: "#758BFD" }} />
-                <Box>
-                  <Typography variant="body2" sx={{ color: "#000" }}>
-                    Phone
-                  </Typography>
-                  <Typography variant="body2" sx={{ color: "#000" }}>
-                    {data?.phone}
-                  </Typography>
+                <Box
+                  sx={{
+                    display: "flex",
+                    gap: 2,
+                    alignItems: "center",
+                    textDecoration: "none",
+                    width: "100%",
+                  }}
+                >
+                  <Public sx={{ color: "#758BFD" }} />
+                  <Box>
+                    <Typography variant="body2" sx={{ color: "#000" }}>
+                      Phone
+                    </Typography>
+                    <Typography variant="body2" sx={{ color: "#000" }}>
+                      {data?.phone}
+                    </Typography>
+                  </Box>
                 </Box>
-                <Box></Box>
+                {userRole === "business" && (
+                  <IconButton onClick={() => console.log("Edit")}>
+                    <Edit sx={{ color: "#758BFD" }} />
+                  </IconButton>
+                )}
+                {/* <CallMade sx={{ color: "#758BFD" }} /> */}
               </Box>
 
               <Box

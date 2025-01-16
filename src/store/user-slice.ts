@@ -1,8 +1,13 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "./store";
+import { openHours } from "../types/hours.types";
+import { Events } from "../types/events.types";
+import { Promos } from "../types/promo.types";
+import { Items } from "../types/items.types";
 
 export interface UserDetails {
   id: string;
+  _id?: string;
   role: "user" | "business";
   username?: string;
   description?: string;
@@ -11,22 +16,11 @@ export interface UserDetails {
   category?: string;
   logo?: string;
   phone?: string;
-  items?: Array<{
-    name: string;
-    description: string;
-    price: string;
-    image: string;
-    _id: string;
-  }>;
+  items?: Items;
   location?: string;
-  openHours?: any[];
-  events?: any[];
-  promo?: Array<{
-    name: string;
-    description: string;
-    timeValid: string;
-    _id: string;
-  }>;
+  openHours?: openHours;
+  events?: Events;
+  promo?: Promos;
 }
 
 export interface UserState {
@@ -56,6 +50,7 @@ const userSlice = createSlice({
       state.details = null;
       state.access_token = "";
       localStorage.removeItem("userState");
+      localStorage.clear();
     },
   },
 });
@@ -75,6 +70,8 @@ export const selectCurrentUsername = (state: RootState) => {
 };
 export const selectCurrentUserEmail = (state: RootState) =>
   state.user.details?.email;
+export const selectCurrentBusinessId = (state: RootState) =>
+  state.user.details?._id;
 export const selectCurrentBusinessName = (state: RootState) =>
   state.user.details?.role === "business" ? state.user.details.name : undefined;
 export const selectCurrentBusinessDescription = (state: RootState) =>

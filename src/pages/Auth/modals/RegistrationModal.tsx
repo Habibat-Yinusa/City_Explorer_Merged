@@ -55,7 +55,7 @@ const RegistrationModal = ({ open, handleClose }: ModalProps) => {
       items: [],
       logo: "",
       location: "",
-      openHours: [{ day: "", time: "" }],
+      openHours: [{ day: "", time: "", startTime: "", endTime: "" }],
       phone: "",
       email: "",
       website: "",
@@ -73,7 +73,6 @@ const RegistrationModal = ({ open, handleClose }: ModalProps) => {
     //   email: yup.string().required("Required"),
     // }),
     onSubmit: async (values: RegisterBusiness) => {
-      console.log("Form submitted with values:", values);
       try {
         await registerRequest(values).unwrap();
         setStep(4);
@@ -206,26 +205,107 @@ const RegistrationModal = ({ open, handleClose }: ModalProps) => {
                                     />
                                   </IconButton>
                                 )}
-                                <Box sx={{ display: "flex", gap: 2 }}>
-                                  <TextField
-                                    // sx={{ bgcolor: "#fff", height: "7em" }}
-                                    name={`openHours.${index}.day`}
-                                    value={body.day}
-                                    onChange={formik.handleChange}
-                                    placeholder="Input a day of the week here"
-                                    label="Day"
-                                    fullWidth
-                                  />
-                                  <TextField
-                                    // sx={{ bgcolor: "#fff", height: "7em" }}
-                                    name={`openHours.${index}.time`}
-                                    value={body.time}
-                                    onChange={formik.handleChange}
-                                    placeholder="10am - 2pm"
-                                    fullWidth
-                                    label="Time"
-                                    // type="time"
-                                  />
+                                <Box
+                                  sx={{
+                                    display: "flex",
+                                    gap: 2,
+                                    width: "90%",
+                                  }}
+                                >
+                                  <FormControl fullWidth>
+                                    <TextField
+                                      select
+                                      name={`openHours.${index}.day`}
+                                      value={body.day}
+                                      onChange={formik.handleChange}
+                                      label="Day"
+                                      fullWidth
+                                    >
+                                      {[
+                                        "Monday",
+                                        "Tuesday",
+                                        "Wednesday",
+                                        "Thursday",
+                                        "Friday",
+                                        "Saturday",
+                                        "Sunday",
+                                      ].map((day) => (
+                                        <MenuItem key={day} value={day}>
+                                          {day}
+                                        </MenuItem>
+                                      ))}
+                                    </TextField>
+                                  </FormControl>
+
+                                  <Box sx={{ display: "flex", gap: 2 }}>
+                                    <TextField
+                                      value={
+                                        formik.values.openHours[index]
+                                          ?.startTime || ""
+                                      }
+                                      onChange={(e) => {
+                                        const startTime = e.target.value;
+                                        const endTime =
+                                          formik.values.openHours[index]
+                                            ?.endTime || "";
+                                        const combinedTime =
+                                          startTime && endTime
+                                            ? `${startTime} - ${endTime}`
+                                            : "";
+                                        formik.setFieldValue(
+                                          `openHours.${index}.time`,
+                                          combinedTime
+                                        );
+                                        formik.setFieldValue(
+                                          `openHours.${index}.startTime`,
+                                          startTime
+                                        );
+                                      }}
+                                      label="Open"
+                                      type="time"
+                                      fullWidth
+                                      InputLabelProps={{
+                                        shrink: true,
+                                      }}
+                                      inputProps={{
+                                        step: 300, // 5 min intervals
+                                      }}
+                                    />
+
+                                    <TextField
+                                      value={
+                                        formik.values.openHours[index]
+                                          ?.endTime || ""
+                                      }
+                                      onChange={(e) => {
+                                        const endTime = e.target.value;
+                                        const startTime =
+                                          formik.values.openHours[index]
+                                            ?.startTime || "";
+                                        const combinedTime =
+                                          startTime && endTime
+                                            ? `${startTime} - ${endTime}`
+                                            : "";
+                                        formik.setFieldValue(
+                                          `openHours.${index}.time`,
+                                          combinedTime
+                                        );
+                                        formik.setFieldValue(
+                                          `openHours.${index}.endTime`,
+                                          endTime
+                                        );
+                                      }}
+                                      label="Close"
+                                      type="time"
+                                      fullWidth
+                                      InputLabelProps={{
+                                        shrink: true,
+                                      }}
+                                      inputProps={{
+                                        step: 300, // 5 min intervals
+                                      }}
+                                    />
+                                  </Box>
                                 </Box>
                                 {/* <Box
                             sx={{

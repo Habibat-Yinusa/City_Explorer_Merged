@@ -11,12 +11,23 @@ import ReviewsCard from "../../../components/ReviewsCard";
 import CreateReviewModal from "../../../components/CreateReviewModal";
 import AwardedPointsModal from "../../../components/AwardedPointsModal";
 import { useSelector } from "react-redux";
-import { selectCurrentUser } from "../../../store/user-slice";
+import {
+  selectCurrentBusinessId,
+  selectCurrentUser,
+  selectCurrentUserRole,
+} from "../../../store/user-slice";
 
 const BusinessReviews = () => {
   const user = useSelector(selectCurrentUser);
-  const { businessId } = useParams();
-  const { data, isLoading } = useGetBusinessQuery(businessId as string);
+  const userRole = useSelector(selectCurrentUserRole);
+  const businessId = useSelector(selectCurrentBusinessId);
+  const { businessId: urlBusinessId } = useParams();
+
+  const targetBusinessId = userRole === "business" ? businessId : urlBusinessId;
+
+  const { data, isLoading } = useGetBusinessQuery(targetBusinessId as string, {
+    skip: !businessId,
+  });
 
   const [openReviewModal, setOpenReviewModal] = useState(false);
   const [openPointsModal, setOpenPointsModal] = useState(false);
@@ -263,9 +274,11 @@ const BusinessReviews = () => {
                 borderRadius: "50px",
               }}
             /> */}
-            <FilledButton onClick={() => setOpenReviewModal(true)}>
-              Write a review
-            </FilledButton>
+            {userRole !== "business" && (
+              <FilledButton onClick={() => setOpenReviewModal(true)}>
+                Write a review
+              </FilledButton>
+            )}
           </CenteredBox>
           <ReviewsCard
             sender={"Mubarak"}

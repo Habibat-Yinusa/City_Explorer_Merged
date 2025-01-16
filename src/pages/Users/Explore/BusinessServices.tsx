@@ -1,15 +1,34 @@
-import { Box, Grid, LinearProgress, Typography } from "@mui/material";
+import {
+  Box,
+  Grid,
+  LinearProgress,
+  Typography,
+  IconButton,
+} from "@mui/material";
 import { CenteredBox } from "../../../styles/styled-components/styledBox";
-import { Add, ManageAccounts } from "@mui/icons-material";
+import { Add, Edit, ManageAccounts } from "@mui/icons-material";
 // import { useNavigate } from "react-router-dom";
 import meBanner from "../../../assets/meBanner.svg";
 import { FilledButton } from "../../../styles/styled-components/styledButtons";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useGetBusinessQuery } from "./businessApiSlice";
+import { useSelector } from "react-redux";
+import {
+  selectCurrentBusinessId,
+  selectCurrentUserRole,
+} from "../../../store/user-slice";
 
 const BusinessServices = () => {
-  const { businessId } = useParams();
-  const { data, isLoading } = useGetBusinessQuery(businessId as string);
+  const navigate = useNavigate();
+  const userRole = useSelector(selectCurrentUserRole);
+  const businessId = useSelector(selectCurrentBusinessId);
+  const { businessId: urlBusinessId } = useParams();
+
+  const targetBusinessId = userRole === "business" ? businessId : urlBusinessId;
+
+  const { data, isLoading } = useGetBusinessQuery(targetBusinessId as string, {
+    skip: !businessId,
+  });
 
   if (isLoading) {
     return <LinearProgress />;
@@ -86,6 +105,121 @@ const BusinessServices = () => {
               100 photos
             </FilledButton>
           </CenteredBox>
+          <Box sx={{ width: "100%" }}>
+            <Box
+              sx={{
+                backgroundColor: "#fff",
+                width: "100%",
+                borderRadius: "15px",
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                textDecoration: "none",
+                margin: "1em 0",
+                padding: "1em",
+              }}
+            >
+              <Box>
+                <Typography
+                  variant="body2"
+                  sx={{
+                    color: "#000",
+                    textTransform: "capitalize",
+                    fontSize: "1rem",
+                  }}
+                >
+                  {data?.name}
+                </Typography>
+              </Box>
+              {userRole === "business" && (
+                <IconButton onClick={() => console.log("Edit")}>
+                  <Edit sx={{ color: "#758BFD" }} />
+                </IconButton>
+              )}
+            </Box>
+
+            <Box
+              sx={{
+                backgroundColor: "#fff",
+                width: "100%",
+                borderRadius: "15px",
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                textDecoration: "none",
+                margin: "1em 0",
+                padding: "1em",
+              }}
+            >
+              <Box>
+                <Typography
+                  variant="body2"
+                  sx={{
+                    color: "#000",
+                    textTransform: "capitalize",
+                  }}
+                >
+                  Description
+                </Typography>
+                <Typography
+                  variant="body2"
+                  sx={{
+                    color: "#000",
+                    textTransform: "capitalize",
+                    fontSize: "1rem",
+                  }}
+                >
+                  {data?.description}
+                </Typography>
+              </Box>
+              {userRole === "business" && (
+                <IconButton onClick={() => console.log("Edit")}>
+                  <Edit sx={{ color: "#758BFD" }} />
+                </IconButton>
+              )}
+            </Box>
+
+            <Box
+              sx={{
+                backgroundColor: "#fff",
+                width: "100%",
+                borderRadius: "15px",
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                textDecoration: "none",
+                margin: "1em 0",
+                padding: "1em",
+              }}
+            >
+              <Box>
+                <Typography
+                  variant="body2"
+                  sx={{
+                    color: "#000",
+                    textTransform: "capitalize",
+                  }}
+                >
+                  Category
+                </Typography>
+                <Typography
+                  variant="body2"
+                  sx={{
+                    color: "#000",
+                    textTransform: "capitalize",
+                    fontSize: "1rem",
+                  }}
+                >
+                  {data?.category}
+                </Typography>
+              </Box>
+              {userRole === "business" && (
+                <IconButton onClick={() => console.log("Edit")}>
+                  <Edit sx={{ color: "#758BFD" }} />
+                </IconButton>
+              )}
+            </Box>
+          </Box>
         </Box>
         <Box sx={{ width: "55%" }}>
           <CenteredBox
@@ -104,20 +238,28 @@ const BusinessServices = () => {
               <CenteredBox
                 sx={{
                   alignSelf: "end",
-                  padding: ".7em",
+                  padding: userRole === "business" ? "0" : ".7em",
                   backgroundColor: "#ececec80",
                   borderRadius: "50px",
                   marginTop: "1em",
                   cursor: "pointer",
                 }}
               >
-                <ManageAccounts sx={{ color: "#fff" }} />
+                {userRole === "business" ? (
+                  <IconButton onClick={() => navigate("settings")}>
+                    <ManageAccounts sx={{ color: "#fff" }} />
+                  </IconButton>
+                ) : (
+                  <IconButton>
+                    <ManageAccounts sx={{ color: "#fff" }} />
+                  </IconButton>
+                )}
               </CenteredBox>
               <Typography
                 variant="h3"
                 sx={{ color: "#fff", fontWeight: 700, padding: "1em 0" }}
               >
-                Business name
+                {data?.name}
               </Typography>
             </CenteredBox>
           </CenteredBox>
@@ -130,13 +272,17 @@ const BusinessServices = () => {
             >
               Services
             </Typography>
-            <Add
-              sx={{
-                border: "1px solid #3884FD",
-                color: "#3884FD",
-                borderRadius: "50px",
-              }}
-            />
+            {userRole === "business" && (
+              <IconButton onClick={() => console.log("Add item")}>
+                <Add
+                  sx={{
+                    border: "1px solid #3884FD",
+                    color: "#3884FD",
+                    borderRadius: "50px",
+                  }}
+                />
+              </IconButton>
+            )}
           </CenteredBox>
           {data?.items && data?.items.length <= 0 ? (
             <CenteredBox>
