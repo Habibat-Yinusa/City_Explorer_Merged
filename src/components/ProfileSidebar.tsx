@@ -97,7 +97,7 @@ const ProfileSidebar = ({ children }: any) => {
             gap: 1,
           }}
         >
-          <FilledButton
+          {/* <FilledButton
             sx={{
               width: "100%",
               fontSize: { xs: ".8rem", md: "1rem" },
@@ -106,7 +106,7 @@ const ProfileSidebar = ({ children }: any) => {
             onClick={() => navigate(`/explore/business`)}
           >
             Business Page
-          </FilledButton>
+          </FilledButton> */}
           <FilledButton
             sx={{
               width: "100%",

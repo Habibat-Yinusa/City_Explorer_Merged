@@ -62,7 +62,10 @@ const Wallet = () => {
           >
             <Grid
               container
-              // spacing={2}
+              // spacing={3}
+              xs={10}
+              sm={10}
+              md={10}
               sx={{
                 padding: "1em 0",
                 // width: { md: "80%" },
@@ -74,7 +77,12 @@ const Wallet = () => {
               }}
               gap={1}
             >
-              <Grid item xs={2} sx={{ textAlign: "center", width: "100%" }}>
+              <Grid
+                item
+                xs={3}
+                sm={2}
+                sx={{ textAlign: "center", width: "100%" }}
+              >
                 <FilledButton
                   sx={{
                     // backgroundColor: "#fff",
@@ -105,7 +113,12 @@ const Wallet = () => {
                   Send
                 </Typography>
               </Grid>
-              <Grid item xs={2} sx={{ textAlign: "center", width: "100%" }}>
+              <Grid
+                item
+                xs={3}
+                sm={2}
+                sx={{ textAlign: "center", width: "100%" }}
+              >
                 <FilledButton
                   sx={{
                     // backgroundColor: "#fff",
@@ -136,7 +149,12 @@ const Wallet = () => {
                   Receive
                 </Typography>
               </Grid>
-              <Grid item xs={2} sx={{ textAlign: "center", width: "100%" }}>
+              <Grid
+                item
+                xs={3}
+                sm={2}
+                sx={{ textAlign: "center", width: "100%" }}
+              >
                 <FilledButton
                   sx={{
                     // backgroundColor: "#fff",
@@ -167,7 +185,12 @@ const Wallet = () => {
                   Top-Up
                 </Typography>
               </Grid>
-              <Grid item xs={2} sx={{ textAlign: "center", width: "100%" }}>
+              <Grid
+                item
+                xs={3}
+                sm={2}
+                sx={{ textAlign: "center", width: "100%" }}
+              >
                 <FilledButton
                   sx={{
                     // backgroundColor: "#fff",
@@ -198,7 +221,12 @@ const Wallet = () => {
                   Airtime
                 </Typography>
               </Grid>
-              <Grid item xs={2} sx={{ textAlign: "center", width: "100%" }}>
+              <Grid
+                item
+                xs={3}
+                sm={2}
+                sx={{ textAlign: "center", width: "100%" }}
+              >
                 <FilledButton
                   sx={{
                     // backgroundColor: "#fff",

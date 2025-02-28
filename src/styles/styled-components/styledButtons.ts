@@ -80,8 +80,9 @@ const FilledInvertedButton = styled(Button)(({ theme }) => ({
 const BgButton = styled(Button)(({ theme }) => ({
   color: "white",
   // backgroundColor: "#3884FD",
-  backgroundImage: `url(${bgButtom})`,
-  backgroundSize: "cover",
+  backgroundColor: "#3884FD",
+  // backgroundImage: `url(${bgButtom})`,
+  // backgroundSize: "cover",
   // border: "1px solid transparent",
   padding: " .5em 2em",
   fontSize: "18px",
