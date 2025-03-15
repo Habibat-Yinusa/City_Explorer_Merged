@@ -23,9 +23,10 @@ const UserTypeSelect = ({ onChange }: any) => {
         gap: 5,
         justifyContent: "space-between",
         alignItems: "center",
+        flexDirection: { xs: "column", md: "row" },
       }}
     >
-      <Box sx={{ maxWidth: "200px" }}>
+      <Box sx={{ maxWidth: { xs: "100%", md: "200px" } }}>
         <Box
           onClick={() => handleChange({ target: { value: "business" } })}
           sx={{
@@ -63,7 +64,7 @@ const UserTypeSelect = ({ onChange }: any) => {
         </Typography>
       </Box>
 
-      <Box sx={{ maxWidth: "200px" }}>
+      <Box sx={{ maxWidth: { xs: "100%", md: "200px" } }}>
         <Box
           onClick={() => handleChange({ target: { value: "individual" } })}
           sx={{

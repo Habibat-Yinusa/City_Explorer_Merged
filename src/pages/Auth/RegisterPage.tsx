@@ -59,7 +59,7 @@ const RegisterPage = () => {
             <BgButton
               sx={{
                 margin: "3em 0",
-                width: "50%",
+                width: { xs: "100%", md: "50%" },
                 color: "#fff",
                 "&:hover": {
                   color: "#fff8",
