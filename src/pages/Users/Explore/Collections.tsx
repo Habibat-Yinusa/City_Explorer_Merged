@@ -16,7 +16,7 @@ const Collections = () => {
         marginBottom: "1em",
       }}
     >
-      <Box sx={{ width: "75%" }}>
+      <Box sx={{ width: { xs: "100%", md: "75%" } }}>
         <Box
           sx={{
             width: "100%",
@@ -30,7 +30,7 @@ const Collections = () => {
           <StyledTextField
             placeholder="Search for restaurants, hotels, etc..."
             sx={{
-              width: "63%",
+              width: { xs: "100%", md: "63%" },
               marginBottom: "1em",
               fontSize: "1rem",
               color: "#1E1E1E",
@@ -38,7 +38,7 @@ const Collections = () => {
           />
           <Typography
             variant="h3"
-            sx={{ fontSize: "1.5rem", color: "#1E1E1E" }}
+            sx={{ fontSize: { xs: "1.2rem", md: "1.5rem" }, color: "#1E1E1E" }}
           >
             Check out these collections of places to explore for the month of
             June
@@ -61,7 +61,7 @@ const Collections = () => {
                 pagination: false,
                 type: "loop",
                 padding: "10%",
-                perPage: 3,
+                perPage: { xs: 1, md: 3 },
                 AutoScroll: {
                   speed: 1,
                   pauseOnHover: true,
@@ -125,7 +125,7 @@ const Collections = () => {
                 flexDirection: "column",
                 backgroundColor: "#fff",
                 cursor: "pointer",
-                width: "80%",
+                width: { xs: "100%", md: "80%" },
                 gap: 5,
               }}
             >
@@ -161,7 +161,7 @@ const Collections = () => {
         sx={{
           borderLeft: "1px solid #0000004D",
           width: "25%",
-          display: "flex",
+          display: { xs: "none", md: "flex" },
           // justifyContent: "center",
           alignItems: "center",
           flexDirection: "column",

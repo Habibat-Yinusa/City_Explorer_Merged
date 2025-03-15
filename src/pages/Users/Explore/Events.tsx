@@ -53,7 +53,7 @@ const Events = () => {
               }}
             />
           )}
-          sx={{ width: "60%", marginBottom: "1em" }}
+          sx={{ width: { xs: "100%", md: "60%" }, marginBottom: "1em" }}
         />
       </Box>
       <Box>

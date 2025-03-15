@@ -23,21 +23,17 @@ import { FilledButton } from "../../../styles/styled-components/styledButtons";
 import { useParams } from "react-router-dom";
 import { useGetBusinessQuery } from "./businessApiSlice";
 import { useState } from "react";
-import {
-  selectCurrentBusinessId,
-  selectCurrentUserRole,
-} from "../../../store/user-slice";
+import { selectCurrentUserRole } from "../../../store/user-slice";
 import { useSelector } from "react-redux";
 
 const BusinessInfo = () => {
   const userRole = useSelector(selectCurrentUserRole);
-  const businessId = useSelector(selectCurrentBusinessId);
   const { businessId: urlBusinessId } = useParams();
 
-  const targetBusinessId = userRole === "business" ? businessId : urlBusinessId;
+  const targetBusinessId = urlBusinessId;
 
   const { data, isLoading } = useGetBusinessQuery(targetBusinessId as string, {
-    skip: !businessId,
+    skip: !targetBusinessId,
   });
 
   const [expanded, setExpanded] = useState(false);
@@ -68,11 +64,12 @@ const BusinessInfo = () => {
           width: "100%",
           justifyContent: "space-between",
           // alignItems: "center",
+          flexDirection: { xs: "column", md: "row" },
         }}
       >
         <Box
           sx={{
-            width: "40%",
+            width: { xs: "100%", md: "40%" },
             display: "flex",
             flexDirection: "column",
             justifyContent: "start",
@@ -131,7 +128,13 @@ const BusinessInfo = () => {
               100 photos
             </FilledButton>
           </CenteredBox>
-          <Box sx={{ marginTop: "1em", width: "100%" }}>
+          <Box
+            sx={{
+              marginTop: "1em",
+              marginBottom: { xs: "1em", md: "0" },
+              width: "100%",
+            }}
+          >
             <Accordion
               expanded={expanded}
               onChange={handleChange}
@@ -163,7 +166,7 @@ const BusinessInfo = () => {
             </Accordion>
           </Box>
         </Box>
-        <Box sx={{ width: "55%" }}>
+        <Box sx={{ width: { xs: "100%", md: "55%" } }}>
           <CenteredBox
             sx={{
               justifyContent: "start",
@@ -214,8 +217,13 @@ const BusinessInfo = () => {
               }}
             />
           </CenteredBox>
-          <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-            <Box sx={{ width: "43%" }}>
+          <Box
+            sx={{
+              display: { xs: "blocl", md: "flex" },
+              justifyContent: "space-between",
+            }}
+          >
+            <Box sx={{ width: { xs: "100%", md: "43%" } }}>
               <Box
                 sx={{
                   backgroundColor: "#fff",
@@ -249,11 +257,12 @@ const BusinessInfo = () => {
                     </Typography>
                   </Box>
                 </Box>
-                {userRole === "business" && (
-                  <IconButton onClick={() => console.log("Edit")}>
-                    <Edit sx={{ color: "#758BFD" }} />
-                  </IconButton>
-                )}
+                {userRole === "business" &&
+                  location.pathname.includes("/me") && (
+                    <IconButton onClick={() => console.log("Edit")}>
+                      <Edit sx={{ color: "#758BFD" }} />
+                    </IconButton>
+                  )}
                 {/* <CallMade sx={{ color: "#758BFD" }} /> */}
               </Box>
 
@@ -286,11 +295,12 @@ const BusinessInfo = () => {
                     </Typography>
                   </Box>
                 </Box>
-                {userRole === "business" && (
-                  <IconButton onClick={() => console.log("Edit")}>
-                    <Edit sx={{ color: "#758BFD" }} />
-                  </IconButton>
-                )}
+                {userRole === "business" &&
+                  location.pathname.includes("/me") && (
+                    <IconButton onClick={() => console.log("Edit")}>
+                      <Edit sx={{ color: "#758BFD" }} />
+                    </IconButton>
+                  )}
                 {/* <CallMade sx={{ color: "#758BFD" }} /> */}
               </Box>
 
@@ -318,7 +328,7 @@ const BusinessInfo = () => {
                 <Box></Box>
               </Box>
             </Box>
-            <Box sx={{ width: "50%", margin: "1em 0" }}>
+            <Box sx={{ width: { xs: "100%", md: "50%" }, margin: "1em 0" }}>
               <Accordion
                 expanded={expandMap}
                 onChange={handleExpandMap}

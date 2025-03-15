@@ -7,27 +7,22 @@ import {
 } from "@mui/material";
 import { CenteredBox } from "../../../styles/styled-components/styledBox";
 import { Add, Edit, ManageAccounts } from "@mui/icons-material";
-// import { useNavigate } from "react-router-dom";
-import meBanner from "../../../assets/meBanner.svg";
-import { FilledButton } from "../../../styles/styled-components/styledButtons";
 import { useNavigate, useParams } from "react-router-dom";
+import meBanner from "../../../assets/meBanner.svg";
 import { useGetBusinessQuery } from "./businessApiSlice";
 import { useSelector } from "react-redux";
-import {
-  selectCurrentBusinessId,
-  selectCurrentUserRole,
-} from "../../../store/user-slice";
+import { selectCurrentUserRole } from "../../../store/user-slice";
+import { FilledButton } from "../../../styles/styled-components/styledButtons";
 
 const BusinessServices = () => {
   const navigate = useNavigate();
   const userRole = useSelector(selectCurrentUserRole);
-  const businessId = useSelector(selectCurrentBusinessId);
   const { businessId: urlBusinessId } = useParams();
 
-  const targetBusinessId = userRole === "business" ? businessId : urlBusinessId;
+  const targetBusinessId = urlBusinessId;
 
   const { data, isLoading } = useGetBusinessQuery(targetBusinessId as string, {
-    skip: !businessId,
+    skip: !targetBusinessId,
   });
 
   if (isLoading) {
@@ -41,21 +36,18 @@ const BusinessServices = () => {
           display: "flex",
           width: "100%",
           justifyContent: "space-between",
-          // alignItems: "center",
+          flexDirection: { xs: "column", md: "row" },
         }}
       >
         <Box
           sx={{
-            width: "40%",
+            width: { xs: "100%", md: "40%" },
             display: "flex",
             flexDirection: "column",
             justifyContent: "start",
             alignItems: "center",
           }}
         >
-          {/* <CenteredBox sx={{ width: "7em", marginTop: "2em" }}>
-            <img src={data?.logo} alt="" style={{ width: "100%" }} />
-          </CenteredBox> */}
           <Typography
             variant="h3"
             sx={{
@@ -80,7 +72,6 @@ const BusinessServices = () => {
           </Typography>
           <CenteredBox
             sx={{
-              // width: { xs: "100%", sm: "90%", md: "90%", lg: "80%" },
               width: "100%",
               marginTop: ".5em",
               justifyContent: "space-between",
@@ -131,7 +122,7 @@ const BusinessServices = () => {
                   {data?.name}
                 </Typography>
               </Box>
-              {userRole === "business" && (
+              {userRole === "business" && location.pathname.includes("/me") && (
                 <IconButton onClick={() => console.log("Edit")}>
                   <Edit sx={{ color: "#758BFD" }} />
                 </IconButton>
@@ -172,7 +163,7 @@ const BusinessServices = () => {
                   {data?.description}
                 </Typography>
               </Box>
-              {userRole === "business" && (
+              {userRole === "business" && location.pathname.includes("/me") && (
                 <IconButton onClick={() => console.log("Edit")}>
                   <Edit sx={{ color: "#758BFD" }} />
                 </IconButton>
@@ -213,7 +204,7 @@ const BusinessServices = () => {
                   {data?.category}
                 </Typography>
               </Box>
-              {userRole === "business" && (
+              {userRole === "business" && location.pathname.includes("/me") && (
                 <IconButton onClick={() => console.log("Edit")}>
                   <Edit sx={{ color: "#758BFD" }} />
                 </IconButton>
@@ -221,7 +212,7 @@ const BusinessServices = () => {
             </Box>
           </Box>
         </Box>
-        <Box sx={{ width: "55%" }}>
+        <Box sx={{ width: { xs: "100%", md: "55%" } }}>
           <CenteredBox
             sx={{
               justifyContent: "start",
@@ -230,7 +221,6 @@ const BusinessServices = () => {
               backgroundSize: "cover",
               backgroundRepeat: "no-repeat",
               padding: "1.5em 2em",
-              // width: "60%",
               borderRadius: "10px",
             }}
           >

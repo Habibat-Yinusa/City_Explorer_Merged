@@ -60,13 +60,16 @@ const Explore = () => {
         <StyledTextField
           placeholder="Search for restaurants, hotels, etc..."
           sx={{
-            width: "63%",
+            width: { xs: "100%", md: "63%" },
             marginBottom: "1em",
             fontSize: "1rem",
             color: "#1E1E1E",
           }}
         />
-        <Typography variant="h3" sx={{ fontSize: "1.5rem", color: "#1E1E1E" }}>
+        <Typography
+          variant="h3"
+          sx={{ fontSize: { xs: "1.2em", md: "1.5rem" }, color: "#1E1E1E" }}
+        >
           Hey{" "}
           <span style={{ textTransform: "capitalize" }}>
             {role !== "business" ? username : businessName}
@@ -86,41 +89,49 @@ const Explore = () => {
         >
           Categories
         </Typography>
-        <Grid container spacing={3}>
-          {categoryCard.map((item) => (
-            <Grid item key={item.id}>
-              <Box
-                sx={{
-                  border:
-                    selectedCategory === item.category
-                      ? "2px solid #3884FD"
-                      : "1px solid #ccc",
-                  display: "flex",
-                  alignItems: "center",
-                  padding: ".2em 1em",
-                  borderRadius: "20px",
-                  width: "15em",
-                  gap: 1,
-                  cursor: "pointer",
-                  backgroundColor:
-                    selectedCategory === item.category ? "#E6F1FF" : "white",
-                }}
-                onClick={() => handleCategoryClick(item.category)}
-              >
-                <Box sx={{ width: "3em" }}>
-                  <img
-                    src={item.icon}
-                    style={{ width: "100%", minWidth: "3em" }}
-                    alt={item.name}
-                  />
+        <Box>
+          <Grid container spacing={3}>
+            {categoryCard.map((item) => (
+              <Grid item key={item.id}>
+                <Box
+                  sx={{
+                    border:
+                      selectedCategory === item.category
+                        ? "2px solid #3884FD"
+                        : "1px solid #ccc",
+                    display: "flex",
+                    alignItems: "center",
+                    padding: ".2em 1em",
+                    borderRadius: "20px",
+                    // width: "15em",
+                    gap: 1,
+                    cursor: "pointer",
+                    backgroundColor:
+                      selectedCategory === item.category ? "#E6F1FF" : "white",
+                  }}
+                  onClick={() => handleCategoryClick(item.category)}
+                >
+                  <Box sx={{ width: "3em" }}>
+                    <img
+                      src={item.icon}
+                      style={{ width: "100%", minWidth: "3em" }}
+                      alt={item.name}
+                    />
+                  </Box>
+                  <Typography
+                    variant="body1"
+                    sx={{
+                      fontSize: "1rem",
+                      display: { xs: "none", md: "block" },
+                    }}
+                  >
+                    {item.name}
+                  </Typography>
                 </Box>
-                <Typography variant="body1" sx={{ fontSize: "1rem" }}>
-                  {item.name}
-                </Typography>
-              </Box>
-            </Grid>
-          ))}
-        </Grid>
+              </Grid>
+            ))}
+          </Grid>
+        </Box>
       </Box>
       <Box>
         <Typography

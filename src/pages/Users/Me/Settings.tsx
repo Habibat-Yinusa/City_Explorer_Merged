@@ -1,6 +1,5 @@
 import { Box, Typography, Switch, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import ProfileSidebar from "../../../components/ProfileSidebar";
 
 const Settings = () => {
   const navigate = useNavigate();

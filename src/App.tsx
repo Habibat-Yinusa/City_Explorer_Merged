@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import { Route, Routes, useNavigate } from "react-router-dom";
+import { Route, Routes, useNavigate, useLocation } from "react-router-dom";
 import Login from "./pages/Auth/Login";
 import RegisterPage from "./pages/Auth/RegisterPage";
 import Register from "./pages/Auth/Register";
@@ -35,6 +35,7 @@ function App() {
   const user = useSelector(selectCurrentUser);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     // Log the user back in with local storage data
@@ -56,7 +57,14 @@ function App() {
     ) {
       navigate("/home");
     }
-  }, [navigate, user]);
+  }, [navigate, user, location]);
+
+  useEffect(() => {
+    // Navigate to the current location to ensure the user stays on the same page after refresh
+    if (user) {
+      navigate(location.pathname);
+    }
+  }, [user, navigate, location.pathname]);
 
   return (
     <Box sx={{ backgroundColor: "#ececec" }}>
@@ -127,9 +135,12 @@ function App() {
 
             <Route path="/explore">
               <Route index element={<Explore />} />
-              <Route path="business" element={<BusinessOpen />} />
               <Route path="event" element={<Events />} />
+              <Route path=":businessId" element={<BusinessServices />} />
+              <Route path="business" element={<BusinessOpen />} />
               <Route path="collections" element={<Collections />} />
+              <Route path=":businessId/info" element={<BusinessInfo />} />
+              <Route path=":businessId/reviews" element={<BusinessReviews />} />
             </Route>
 
             <Route path="/ai">

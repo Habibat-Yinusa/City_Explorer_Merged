@@ -2,21 +2,24 @@ import { Box, Typography } from "@mui/material";
 import { CenteredBox } from "../styles/styled-components/styledBox";
 import profileImg from "../assets/profileImg.svg";
 import { FilledButton } from "../styles/styled-components/styledButtons";
-import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { selectCurrentUsername } from "../store/user-slice";
 
 const ProfileSidebar = ({ children }: any) => {
-  const navigate = useNavigate();
   const username = useSelector(selectCurrentUsername);
 
   return (
     <Box
-      sx={{ display: "flex", width: "100%", justifyContent: "space-between" }}
+      sx={{
+        display: "flex",
+        width: "100%",
+        justifyContent: "space-between",
+        flexDirection: { xs: "column", md: "row" },
+      }}
     >
       <Box
         sx={{
-          width: "40%",
+          width: { xs: "100%", md: "40%" },
           display: "flex",
           flexDirection: "column",
           justifyContent: "start",
@@ -112,13 +115,14 @@ const ProfileSidebar = ({ children }: any) => {
               width: "100%",
               fontSize: { xs: ".8rem", md: "1rem" },
               padding: ".5rem 0",
+              margin: { xs: "1em", md: "0" },
             }}
           >
             Plan My Day
           </FilledButton>
         </CenteredBox>
       </Box>
-      <Box sx={{ width: "55%" }}>{children}</Box>
+      <Box sx={{ width: { xs: "100%", md: "55%" } }}>{children}</Box>
     </Box>
   );
 };

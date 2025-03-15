@@ -63,9 +63,9 @@ const Wallet = () => {
             <Grid
               container
               // spacing={3}
-              xs={10}
-              sm={10}
-              md={10}
+              // xs={10}
+              // sm={10}
+              // md={10}
               sx={{
                 padding: "1em 0",
                 // width: { md: "80%" },
@@ -98,7 +98,7 @@ const Wallet = () => {
                   <CallMade
                     sx={{
                       fontSize: { xs: ".9rem", md: "1rem" },
-                      color: "#inherit",
+                      color: "inherit",
                     }}
                   />
                 </FilledButton>

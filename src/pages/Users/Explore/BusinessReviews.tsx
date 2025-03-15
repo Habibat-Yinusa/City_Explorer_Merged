@@ -12,7 +12,6 @@ import CreateReviewModal from "../../../components/CreateReviewModal";
 import AwardedPointsModal from "../../../components/AwardedPointsModal";
 import { useSelector } from "react-redux";
 import {
-  selectCurrentBusinessId,
   selectCurrentUser,
   selectCurrentUserRole,
 } from "../../../store/user-slice";
@@ -20,13 +19,12 @@ import {
 const BusinessReviews = () => {
   const user = useSelector(selectCurrentUser);
   const userRole = useSelector(selectCurrentUserRole);
-  const businessId = useSelector(selectCurrentBusinessId);
   const { businessId: urlBusinessId } = useParams();
 
-  const targetBusinessId = userRole === "business" ? businessId : urlBusinessId;
+  const targetBusinessId = urlBusinessId;
 
   const { data, isLoading } = useGetBusinessQuery(targetBusinessId as string, {
-    skip: !businessId,
+    skip: !targetBusinessId,
   });
 
   const [openReviewModal, setOpenReviewModal] = useState(false);
@@ -53,11 +51,12 @@ const BusinessReviews = () => {
           width: "100%",
           justifyContent: "space-between",
           // alignItems: "center",
+          flexDirection: { xs: "column", md: "row" },
         }}
       >
         <Box
           sx={{
-            width: "40%",
+            width: { xs: "100%", md: "40%" },
             display: "flex",
             flexDirection: "column",
             justifyContent: "start",
@@ -125,6 +124,7 @@ const BusinessReviews = () => {
                 display: "flex",
                 justifyContent: "space-between",
                 height: "100%",
+                margin: { xs: "1em 0", md: "0" },
               }}
             >
               <Box
@@ -224,7 +224,7 @@ const BusinessReviews = () => {
             </Box>
           </Box>
         </Box>
-        <Box sx={{ width: "55%" }}>
+        <Box sx={{ width: { xs: "100%", md: "55%" } }}>
           <CenteredBox
             sx={{
               justifyContent: "start",
