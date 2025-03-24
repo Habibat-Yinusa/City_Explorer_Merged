@@ -23,13 +23,13 @@ const Services = () => {
         }}
         id="services"
       >
-        <Box sx={{ width: { xs: "22em", sm: "28em", md: "35em" } }}>
+        <Box sx={{ width: { xs: "22em", sm: "28em", md: "28em", lg: "35em" } }}>
           <img src={serviceIcon} style={{ width: "100%" }} />
         </Box>
         <Box
           sx={{
-            width: { xs: "100%", md: "42%" },
-            textAlign: { xs: "center", md: "left" },
+            width: { xs: "90%", md: "42%" },
+            textAlign: { xs: "left", md: "left" },
           }}
         >
           <ul>

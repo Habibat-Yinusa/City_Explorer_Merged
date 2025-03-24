@@ -3,8 +3,13 @@ import { FilledButton } from "../../../styles/styled-components/styledButtons";
 // import map from "../../../assets/icons/map.svg";
 // import { FilledButton } from "../../../custom-components/styled/styledButtons";
 import heroBg from "../../../assets/heroBg.svg";
+import { useNavigate } from "react-router-dom";
 
 const Hero = () => {
+  const navigate = useNavigate();
+
+  const handleLogin = () => navigate("login");
+
   return (
     <Box
       sx={{
@@ -67,6 +72,7 @@ const Hero = () => {
                 fontSize: "1rem",
                 margin: { xs: "1em 0", md: "0" },
               }}
+              onClick={handleLogin}
             >
               Join Us
             </FilledButton>

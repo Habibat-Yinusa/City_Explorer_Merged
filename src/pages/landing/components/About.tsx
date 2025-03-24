@@ -60,7 +60,7 @@ const About = () => {
             bring timely and relevant information to diverse populations.
           </Typography> */}
         </Box>
-        <Box sx={{ width: { xs: "22em", sm: "28em", md: "35em" } }}>
+        <Box sx={{ width: { xs: "22em", sm: "28em", md: "28em", lg: "35em" } }}>
           <img src={aboutIcon} style={{ width: "100%" }} />
         </Box>
       </Box>

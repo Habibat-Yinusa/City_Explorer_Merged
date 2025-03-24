@@ -106,7 +106,7 @@ const Footer = () => {
               </Typography>
             </Link> */}
             <Link
-              to="tel:+2347035251445"
+              to="tel:+2348109423227"
               target="_blank"
               style={{
                 display: "flex",
@@ -184,7 +184,7 @@ const Footer = () => {
               color: "grey",
             }}
           >
-            &copy; {currentYear} ConnectED All rights reserved
+            &copy; {currentYear} City Explorer All rights reserved
           </Typography>
         </Box>
       </Box>
