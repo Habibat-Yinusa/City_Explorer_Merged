@@ -4,7 +4,7 @@ import { Box, Typography } from "@mui/material";
 // import linkedinIcon from "../../../assets/icons/linkedin.svg";
 // import instagramIcon from "../../../assets/icons/instagram.svg";
 import { Link } from "react-router-dom";
-import { Call, LocationOn, Mail } from "@mui/icons-material";
+import { Call, LocationOn } from "@mui/icons-material";
 // import connectedLogoDark from "../../../assets/icons/connected-logo-dark.svg";
 
 const Footer = () => {
@@ -192,31 +192,31 @@ const Footer = () => {
   );
 };
 
-const socialList = [
-  {
-    id: 1,
-    name: "Connectedai",
-    link: "https://www.facebook.com/profile.php?id=61557326654563&mibextid=LQQJ4d",
-    // icon: facebookIcon,
-  },
-  {
-    id: 2,
-    name: "connected_ai",
-    link: "https://x.com/connected_ai",
-    // icon: twitterIcon,
-  },
-  {
-    id: 3,
-    name: "ConnectED",
-    link: "https://www.linkedin.com/company/connected-ai/",
-    // icon: linkedinIcon,
-  },
-  {
-    id: 4,
-    name: "connected_ai",
-    link: "https://www.instagram.com/connected_ai?igsh=MTgxMmZtcDluZGVmcw%3D%3D&utm_source=qr",
-    // icon: instagramIcon,
-  },
-];
+// const socialList = [
+//   {
+//     id: 1,
+//     name: "Connectedai",
+//     link: "https://www.facebook.com/profile.php?id=61557326654563&mibextid=LQQJ4d",
+//     // icon: facebookIcon,
+//   },
+//   {
+//     id: 2,
+//     name: "connected_ai",
+//     link: "https://x.com/connected_ai",
+//     // icon: twitterIcon,
+//   },
+//   {
+//     id: 3,
+//     name: "ConnectED",
+//     link: "https://www.linkedin.com/company/connected-ai/",
+//     // icon: linkedinIcon,
+//   },
+//   {
+//     id: 4,
+//     name: "connected_ai",
+//     link: "https://www.instagram.com/connected_ai?igsh=MTgxMmZtcDluZGVmcw%3D%3D&utm_source=qr",
+//     // icon: instagramIcon,
+//   },
+// ];
 
 export default Footer;

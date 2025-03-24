@@ -21,7 +21,7 @@ const Services = () => {
           alignItems: "center",
           flexDirection: { xs: "column", md: "row" },
         }}
-        id="about"
+        id="services"
       >
         <Box sx={{ width: { xs: "22em", sm: "28em", md: "35em" } }}>
           <img src={serviceIcon} style={{ width: "100%" }} />
@@ -32,22 +32,74 @@ const Services = () => {
             textAlign: { xs: "center", md: "left" },
           }}
         >
-          <Typography
-            variant="body2"
-            sx={{
-              fontSize: { xs: ".9rem", md: "1rem" },
-              margin: "2em 0",
-              lineHeight: "30px",
-            }}
-          >
-            City Explorer is a smart platform that helps people discover
-            restaurants, events, and businesses in their city with AI-powered
-            recommendations. It personalizes suggestions based on location and
-            interests, making exploration seamless and efficient. Users can
-            easily navigate to places, access real-time insights, and plan
-            experiences effortlessly, offering a more intuitive alternative to
-            traditional search methods.
-          </Typography>
+          <ul>
+            <li>
+              <Typography
+                variant="body2"
+                sx={{
+                  fontSize: { xs: ".9rem", md: "1rem" },
+                  margin: "2em 0",
+                  lineHeight: "30px",
+                }}
+              >
+                ⁠Personalized City Discovery – Get tailored recommendations for
+                restaurants, events, and experiences.
+              </Typography>
+            </li>
+
+            <li>
+              <Typography
+                variant="body2"
+                sx={{
+                  fontSize: { xs: ".9rem", md: "1rem" },
+                  margin: "2em 0",
+                  lineHeight: "30px",
+                }}
+              >
+                ⁠Event Promotion & Management – List and manage events to reach
+                the right audience.
+              </Typography>
+            </li>
+            <li>
+              <Typography
+                variant="body2"
+                sx={{
+                  fontSize: { xs: ".9rem", md: "1rem" },
+                  margin: "2em 0",
+                  lineHeight: "30px",
+                }}
+              >
+                ⁠Business Visibility & Growth – Connect local businesses with
+                potential customers.
+              </Typography>
+            </li>
+            <li>
+              <Typography
+                variant="body2"
+                sx={{
+                  fontSize: { xs: ".9rem", md: "1rem" },
+                  margin: "2em 0",
+                  lineHeight: "30px",
+                }}
+              >
+                ⁠Seamless Ticketing & Reservations – Book tickets and make
+                reservations easily.
+              </Typography>
+            </li>
+            <li>
+              <Typography
+                variant="body2"
+                sx={{
+                  fontSize: { xs: ".9rem", md: "1rem" },
+                  margin: "2em 0",
+                  lineHeight: "30px",
+                }}
+              >
+                ⁠Real-Time Updates & Alerts– Stay informed about local
+                happenings and special deals.
+              </Typography>
+            </li>
+          </ul>
           {/* <Typography
             variant="body2"
             sx={{

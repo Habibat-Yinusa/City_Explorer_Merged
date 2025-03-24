@@ -4,7 +4,6 @@ import Hero from "./components/Hero";
 import Features from "./components/Features";
 import About from "./components/About";
 // import For from "./components/For";
-import Contact from "./components/Contact";
 import Footer from "./components/Footer";
 import Services from "./components/Services";
 // import { ThemeProviderWrapper } from "../../styles/ThemeContext";

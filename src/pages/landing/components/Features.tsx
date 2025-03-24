@@ -7,7 +7,7 @@ import { Box, Typography } from "@mui/material";
 const Features = () => {
   return (
     <Box sx={{ margin: "5em 0" }}>
-      <Box id="services" sx={{ textAlign: { xs: "center", md: "left" } }}>
+      <Box id="features" sx={{ textAlign: { xs: "center", md: "left" } }}>
         <Typography
           variant="h3"
           sx={{
@@ -34,6 +34,7 @@ const Features = () => {
               display: "flex",
               justifyContent: "space-between",
               gap: 4,
+              flexDirection: { xs: "column", md: "row" },
             }}
           >
             {featureCards.map((card) => (

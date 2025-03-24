@@ -35,7 +35,7 @@ const Hero = () => {
               alignItems: "center",
               flexDirection: "column",
               textAlign: { xs: "center", md: "left" },
-              width: "60%",
+              width: { xs: "100%", md: "60%" },
             }}
           >
             <Typography
@@ -54,7 +54,7 @@ const Hero = () => {
                 fontSize: { xs: ".9rem", md: "1rem" },
                 margin: "1em 0",
                 lineHeight: "30px",
-                width: "50%",
+                width: { xs: "100%", md: "50%" },
               }}
             >
               City Explorer helps you discover local event, activities &
