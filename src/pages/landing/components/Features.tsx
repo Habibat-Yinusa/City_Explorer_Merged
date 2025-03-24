@@ -34,7 +34,7 @@ const Features = () => {
               display: "flex",
               justifyContent: "space-between",
               gap: 4,
-              flexDirection: { xs: "column", md: "row" },
+              flexDirection: { xs: "column", lg: "row" },
             }}
           >
             {featureCards.map((card) => (

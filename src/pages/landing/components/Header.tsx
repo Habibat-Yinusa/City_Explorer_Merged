@@ -15,6 +15,7 @@ import { useTheme } from "@mui/material";
 // import connectedLogoLight from "../../../assets/icons/connected-logo-light.svg";
 // import connectedLogoDark from "../../../assets/icons/connected-logo-dark.svg";
 // import flag from "../../../assets/icons/flag.svg";
+import logo from "../../../assets/city-logo.png";
 import { useNavigate } from "react-router-dom";
 import { FilledButton } from "../../../styles/styled-components/styledButtons";
 
@@ -22,9 +23,10 @@ const drawerWidth = 240;
 // const navItems = ["Home", "Services", "About", "Contact"];
 const navItems = [
   { id: 1, name: "Home", component_id: "home" },
-  { id: 2, name: "Services", component_id: "services" },
-  { id: 3, name: "About", component_id: "about" },
-  { id: 4, name: "Contact", component_id: "contact" },
+  { id: 2, name: "Features", component_id: "features" },
+  { id: 3, name: "Services", component_id: "services" },
+  { id: 4, name: "About", component_id: "about" },
+  // { id: 4, name: "Contact", component_id: "contact" },
 ];
 
 const Header = () => {
@@ -33,6 +35,7 @@ const Header = () => {
   const theme = useTheme();
   const navigate = useNavigate();
   const handleLogin = () => navigate("login");
+  const handleSignup = () => navigate("register");
 
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
@@ -53,11 +56,7 @@ const Header = () => {
     <Box onClick={handleDrawerToggle} sx={{ marginTop: "7em" }}>
       <Box sx={{ display: "flex", justifyContent: "center" }}>
         <Box sx={{ width: "10em" }}>
-          {/* <img
-            src={mode === "light" ? connectedLogoLight : connectedLogoDark}
-            alt="logo"
-            style={{ width: "100%" }}
-          /> */}
+          <img src={logo} alt="logo" style={{ width: "100%" }} />
         </Box>
       </Box>
       <Box sx={{ marginTop: "2em" }}>
@@ -76,7 +75,7 @@ const Header = () => {
               </ListItemButton>
             </ListItem>
           ))}
-          <ListItemButton sx={{ textAlign: "left" }}>
+          <ListItemButton onClick={handleSignup} sx={{ textAlign: "left" }}>
             <ListItemText
               primary="Sign Up"
               sx={{
@@ -143,11 +142,7 @@ const Header = () => {
             <MenuIcon sx={{ fontSize: "1.8rem" }} />
           </IconButton>
           <Box sx={{ width: "10em", minWidth: "7em" }}>
-            {/* <img
-              src={mode === "light" ? connectedLogoLight : connectedLogoDark}
-              alt="logo"
-              style={{ width: "100%" }}
-            /> */}
+            <img src={logo} alt="logo" style={{ width: "80%" }} />
           </Box>
           <Box
             sx={{
@@ -185,6 +180,7 @@ const Header = () => {
                   color: theme.palette.text.primary,
                   fontSize: { xs: ".6rem", md: ".7rem" },
                 }}
+                onClick={handleSignup}
               >
                 Sign Up
               </Button>
