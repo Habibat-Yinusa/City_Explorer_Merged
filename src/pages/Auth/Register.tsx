@@ -58,7 +58,7 @@ const Register = () => {
   const handleRegister = async (values: registerInput) => {
     try {
       await register(values).unwrap();
-      navigate("/");
+      navigate("/login");
     } catch (error) {
       console.error(error);
       alert("Something went wrong! Please try again");
@@ -210,7 +210,7 @@ const Register = () => {
               )}
             </BgButton>
             <Link
-              to="/"
+              to="/login"
               style={{
                 fontSize: "1rem",
                 color: "#3884FD",

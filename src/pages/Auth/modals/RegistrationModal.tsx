@@ -43,7 +43,7 @@ const RegistrationModal = ({ open, handleClose }: ModalProps) => {
 
   const RegisterSuccess = () => {
     handleClose();
-    navigate("/");
+    navigate("/login");
   };
 
   const formik = useFormik<RegisterBusiness & { description: string }>({

@@ -74,7 +74,7 @@ function Layout() {
 
   const handleLogout = () => {
     dispatch(logout());
-    navigate("/");
+    navigate("/login");
   };
 
   const getHeaderLinks = () => {

@@ -30,6 +30,7 @@ import Settings from "./pages/Users/Me/Settings";
 import BusinessServices from "./pages/Users/Explore/BusinessServices";
 import BusinessInfo from "./pages/Users/Explore/BusinessInfo";
 import BusinessReviews from "./pages/Users/Explore/BusinessReviews";
+import Landing from "./pages/landing/Landing";
 
 function App() {
   const user = useSelector(selectCurrentUser);
@@ -50,7 +51,7 @@ function App() {
     // Route the user to dashboard if a logged-in user tries to access signin page
     if (
       user &&
-      (location.pathname === "/" ||
+      (location.pathname === "/login" ||
         location.pathname === "/register" ||
         location.pathname === "/register/individual" ||
         location.pathname === "/register/business")
@@ -69,7 +70,8 @@ function App() {
   return (
     <Box sx={{ backgroundColor: "#ececec" }}>
       <Routes>
-        <Route path="/" element={<Login />} />
+        <Route path="/" element={<Landing />} />
+        <Route path="/login" element={<Login />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/register/individual" element={<Register />} />
         <Route path="/register/business" element={<NewBusiness />} />
