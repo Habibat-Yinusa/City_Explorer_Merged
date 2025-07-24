@@ -14,8 +14,18 @@ import { ValidationError, ServerError } from "../middlewares/errorHandler";
 
 // import BusinessModel  from '../models/businessPage';
 
+// import type { File as MulterFile } from "multer";
+import type { Request as ExpressRequest } from "express";
+
+type MulterFile = Express.Multer.File;
+
+interface MulterRequest extends Request {
+  file?: MulterFile;
+}
+
 const registerBusiness = async (req: Request, res: Response) => {
   try {
+    const multerReq = req as MulterRequest;
     const {
       name,
       category,
@@ -32,9 +42,9 @@ const registerBusiness = async (req: Request, res: Response) => {
     const existingBusiness = await BusinessModel.findOne({ email });
 
     console.log("email", req.body.email);
-    console.log("file", req.file);
+    console.log("file", multerReq.file);
     console.log("Request Body:", req.body);
-    console.log("Uploaded Files:", req.file?.path);
+    console.log("Uploaded Files:", multerReq.file?.path);
 
     if (!email) {
       throw new Error("Please enter a valid email address");

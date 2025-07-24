@@ -10,11 +10,11 @@ const chatbot = async (req: Request, res: Response) => {
 
   const userMessages = user?.userMessages;
   const botReplies = user?.botReplies;
-  let history = <Content[]>[];
+  let history: { role: "user" | "model"; parts: { text: string }[] }[] = [];
 
   for (let i = 0; i < userMessages!.length; i++) {
     if (userMessages && botReplies) {
-      const newHistory = <Content[]><unknown>[
+      const newHistory: { role: "user" | "model"; parts: { text: string }[] }[] = [
         {
           role: "user",
           parts: [
@@ -34,23 +34,23 @@ const chatbot = async (req: Request, res: Response) => {
       ];
 
       // console.log(newHistory);
-      history = <Content[]>[...history, ...newHistory];
+      history = [...history, ...newHistory];
     }
   }
 
   if (!_id) {
     const reply = await runChat(message, history);
     res.json(reply);
-    messages.push(reply);
+    messages.push(reply ?? "");
     console.log(messages, "unregistered");
   } else {
     const user = await User.findOne({ _id });
     const reply = await runChat(message, history);
     user?.userMessages.push(message);
-    user?.botReplies.push(reply);
+    user?.botReplies.push(reply ?? "");
     await user?.save();
     res.json({
-      message: reply.split("*").join(""),
+      message: (reply ?? "").split("*").join(""),
     });
   }
 };
