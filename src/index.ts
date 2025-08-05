@@ -9,7 +9,7 @@ import userRoutes from "./routes/userRoutes";
 import chatbotRoute from "./routes/chatbotRoute";
 import businessRoute from "./routes/bussinesRoute"
 // import { protect } from "./middlewares/authMiddleware";
-import {botware} from "./middlewares/botMiddleware"
+// import {botware} from "./middlewares/botMiddleware"
 import uploadRoute from './routes/uploadRoute';
 import { getAllEvents, getAllPromos } from './controllers/businessControllers';
 // import upload from './config/multer';

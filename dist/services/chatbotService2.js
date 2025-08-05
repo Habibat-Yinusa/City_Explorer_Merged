@@ -1736,8 +1736,8 @@ function runChat(message, history) {
     "Contact": "0708 476 8369"
   },
   {
-    "Restaurants": "Wakhomey’s restaurant",
-    "Address": "Wakhomey’s restaurant - B 33 Discovery Mall, Adetokunbo Ademola Cres, street, Abuja",
+    "Restaurants": "Wakhomey's restaurant",
+    "Address": "Wakhomey's restaurant - B 33 Discovery Mall, Adetokunbo Ademola Cres, street, Abuja",
     "Dining Experience": "Casual Dining",
     "Cuisine": "Nigerian/Intercontinental",
     "Price range": "Mid-range",
