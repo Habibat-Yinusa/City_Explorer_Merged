@@ -1,26 +1,23 @@
 import { Router } from 'express';
-import { addEventToBusiness, getAllBusinesses, getEvents, getAllEvents, getBusinessDetails, registerBusiness, addPromo, getPromo, getAllPromos, deletePromo } from '../controllers/businessControllers';
-// import upload from '../config/multer';
-// import cloudinary from '../config/cloudinary';
+import * as businessController from '../controllers/businessControllers';
+import upload from '../config/multer';
 
 const router = Router();
 
-router.post('/register', registerBusiness);
-router.get('/:id', getBusinessDetails);
-router.get('/', getAllBusinesses);
-router.post('/createevent/:id', addEventToBusiness);
-router.get('/event/:id', getEvents)
-router.post('/promo/:id', addPromo)
-router.get('/promo/:id', getPromo)
-router.delete('/:businessId/promo/:promoId', deletePromo)
-// router.post('/upload/single', upload.single('file'), async (req: Request, res: Response) => {
-//     try {
-//         const result = await cloudinary.uploader.upload(req.file.path, { folder: 'single_uploads' });
-//         res.status(200).send({ url: result.secure_url, public_id: result.public_id });
-//     } catch (error) {
-//         res.status(500).send({ message: error.message });
-//     }
-//   });
+router.post('/register', upload.single('image'), businessController.registerBusiness);
+router.get('/activate/:id', businessController.activateBusiness);
+router.get('/', businessController.getBusinessDetails);
+router.get('/', businessController.getAllBusinesses);
 
+router.post('/event', businessController.addEventToBusiness);
+router.get('/events', businessController.getEvents);
+// router.get('/events', businessController.getAllEvents);
+
+router.post('/promo', businessController.addPromo);
+router.get('/promo', businessController.getPromos);
+// router.get('/promos', businessController.getAllPromos);
+router.delete('/promo', businessController.deletePromo);
+
+router.post('/:businessId/product', upload.single('file'), businessController.addProduct);
 
 export default router;
