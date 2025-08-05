@@ -10,7 +10,7 @@ import chatbotRoute from "./routes/chatbotRoute";
 import businessRoute from "./routes/bussinesRoute"
 // import { protect } from "./middlewares/authMiddleware";
 // import {botware} from "./middlewares/botMiddleware"
-// import uploadRoute from './routes/uploadRoute';
+import uploadRoute from './routes/uploadRoute';
 import { getAllEvents, getAllPromos } from './controllers/businessControllers';
 // import upload from './config/multer';
 // import cloudinary from './config/cloudinary';
@@ -53,6 +53,7 @@ app.use("/business", businessRoute)
 // app.use("/business", uploadRoute)
 app.use("/events", getAllEvents)
 app.use("/promos", getAllPromos)
+app.use("/upload", uploadRoute);
 
 app.options('/*', cors());
 app.options('/chatbot', cors());

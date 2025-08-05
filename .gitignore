@@ -3,3 +3,5 @@ node_modules
 .vercel
 /dist
 dist
+/src/generated/prisma
+/src/config/ca.pem
