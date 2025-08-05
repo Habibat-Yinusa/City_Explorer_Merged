@@ -12,26 +12,46 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.protect = void 0;
+exports.authenticate = void 0;
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
-const user_1 = __importDefault(require("../models/user"));
-const protect = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    var _a;
+const prisma_1 = require("../generated/prisma");
+const prisma = new prisma_1.PrismaClient();
+const authenticate = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const token = (_a = req.header("Authorization")) === null || _a === void 0 ? void 0 : _a.replace("Bearer ", "");
-        if (!token) {
-            throw new Error("Token not provided");
+        const authHeader = req.headers.authorization;
+        if (!authHeader || !authHeader.startsWith("Bearer ")) {
+            return res.status(401).json({ message: "Missing token" });
         }
-        const decodedToken = jsonwebtoken_1.default.verify(token, process.env.JWT_SECRET || "");
-        const user = yield user_1.default.findById(decodedToken.userId);
-        if (!user) {
-            throw new Error("Invalid token");
+        const token = authHeader.split(" ")[1];
+        const decoded = jsonwebtoken_1.default.verify(token, process.env.JWT_SECRET);
+        const { userId, role } = decoded;
+        if (role === 'USER') {
+            const user = yield prisma.user.findUnique({ where: { userId } });
+            if (!user)
+                return res.status(401).json({ message: "User not found" });
+            req.user = user;
         }
-        // req.user = { userId: user._id };
+        else if (role === 'BUSINESS') {
+            const business = yield prisma.business.findUnique({ where: { businessId: userId } });
+            if (!business || business.status !== 'APPROVED') {
+                return res.status(403).json({ message: "Business account is not active" });
+            }
+            req.user = business;
+        }
+        else if (role === 'ADMIN') {
+            const admin = yield prisma.admin.findUnique({ where: { adminId: userId } });
+            if (!admin)
+                return res.status(401).json({ message: "Admin not found" });
+            req.user = admin;
+        }
+        else {
+            return res.status(401).json({ message: "Invalid role" });
+        }
+        req.userRole = role;
         next();
     }
     catch (error) {
-        res.status(401).send({ message: error.message });
+        res.status(401).json({ message: error.message || "Unauthorized" });
     }
 });
-exports.protect = protect;
+exports.authenticate = authenticate;

@@ -23,8 +23,9 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const user = __importStar(require("../controllers/userControllers"));
+const user = __importStar(require("../controllers/authController"));
 const express_1 = require("express");
+// import { protect } from "../middlewares/authMiddleware";
 const router = (0, express_1.Router)();
 router.post("/signup", user.createUser);
 router.post("/login", user.loginUser);

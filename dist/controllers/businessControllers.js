@@ -8,229 +8,310 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __rest = (this && this.__rest) || function (s, e) {
-    var t = {};
-    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
-        t[p] = s[p];
-    if (s != null && typeof Object.getOwnPropertySymbols === "function")
-        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
-            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
-                t[p[i]] = s[p[i]];
-        }
-    return t;
-};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deletePromo = exports.getAllPromos = exports.getPromo = exports.addPromo = exports.getAllEvents = exports.getEvents = exports.addEventToBusiness = exports.getAllBusinesses = exports.getBusinessDetails = exports.registerBusiness = void 0;
-const businessPage_1 = __importDefault(require("../models/businessPage"));
+exports.addProduct = exports.deletePromo = exports.getAllPromos = exports.getPromos = exports.addPromo = exports.getAllEvents = exports.getEvents = exports.addEventToBusiness = exports.getAllBusinesses = exports.getBusinessDetails = exports.activateBusiness = exports.registerBusiness = void 0;
+const prisma_1 = require("../generated/prisma");
 const bcrypt_1 = require("bcrypt");
+const cloudinary_1 = __importDefault(require("../config/cloudinary"));
+const uploadImage_1 = __importDefault(require("../services/uploadImage"));
+const helper_1 = require("../helpers/helper");
+const prisma = new prisma_1.PrismaClient();
+const API_BASE_URL = process.env.API_BASE_URL;
+const CLIENT_BASE_URL = process.env.CLIENT_BASE_URL;
 const registerBusiness = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    var _a;
     try {
-        const multerReq = req;
-        const { name, category, items, location, openHours, phone, email, password, website, description, } = req.body;
-        const existingBusiness = yield businessPage_1.default.findOne({ email });
-        console.log("email", req.body.email);
-        console.log("file", multerReq.file);
-        console.log("Request Body:", req.body);
-        console.log("Uploaded Files:", (_a = multerReq.file) === null || _a === void 0 ? void 0 : _a.path);
-        if (!email) {
-            throw new Error("Please enter a valid email address");
+        const { name, category, items, location, longitude, latitude, openHours, phone, email, password, website, description, role = "BUSINESS", } = req.body;
+        if (!email || !password) {
+            throw new Error("Please enter all required fields");
         }
-        if (existingBusiness) {
-            throw new Error("This email already exists");
-        }
-        if (!password) {
-            throw new Error("Please enter a password");
-        }
-        const hashedPassword = yield (0, bcrypt_1.hash)(password, 10);
-        // let uploadResults;
-        // const logoFile = req.files;
-        // let logoUrl;
-        // if (logoFile?.length !== 0) {
-        //   uploadResults = await uploadImages(req, res);
-        //   logoUrl = uploadResults.length > 0 ? uploadResults[0].url : "";
-        // }
-        const newBusiness = new businessPage_1.default({
-            name,
-            category,
-            // logo: logoUrl,
-            items,
-            location,
-            openHours,
-            phone,
-            email,
-            password: hashedPassword,
-            website,
-            description,
+        const existing = yield prisma.business.findUnique({
+            where: { email_role: { email, role } },
         });
-        yield newBusiness.save();
-        const _b = newBusiness.toObject(), { password: _ } = _b, newBusinessDetails = __rest(_b, ["password"]);
-        res
-            .status(201)
-            .send({
-            message: "Business registered successfully",
-            business: newBusinessDetails,
+        if (existing)
+            throw new Error("This email already exists");
+        const hashedPassword = yield (0, bcrypt_1.hash)(password, 10);
+        let logoUrl;
+        if (req.file) {
+            const result = yield cloudinary_1.default.uploader.upload(req.file.path, {
+                folder: "logo",
+            });
+            logoUrl = result.secure_url;
+        }
+        const newBusiness = yield prisma.business.create({
+            data: {
+                name,
+                category,
+                location,
+                longitude,
+                latitude,
+                phone,
+                email,
+                website,
+                description,
+                role,
+                logo: logoUrl,
+                openHours: openHours || "9 AM - 5 PM", // Default open hours
+                password: {
+                    create: {
+                        hashedPassword,
+                    },
+                },
+            },
+        });
+        const activationLink = `${API_BASE_URL}/business/activate/${newBusiness.businessId}`;
+        yield (0, helper_1.sendEmail)(email, "Activate Your City Explorer Account", '', `<h1>Hello ${name},</h1>
+        <h4>Welcome to City Explorer!</h4>
+        <p>
+        Discover, promote, and grow your business with City Explorer. We're excited to have you on board and can't wait to see your business thrive!
+        </p>
+      <p>Click the button below to activate your account:</p>
+      <a href="${activationLink}" style="padding: 10px 20px; background-color: #5b8df3ff; color: white; text-decoration: none;">Activate Account</a>
+      <p>If you did not create this account, please ignore this email.</p>`);
+        res.status(201).json({
+            message: "Business registered successfully. Please check your email to activate your account.",
+            business: Object.assign(Object.assign({}, newBusiness), { password: undefined }),
         });
     }
     catch (error) {
-        return res.status(500).send({ message: error.message });
+        res.status(500).json({ error: JSON.stringify(error) });
     }
 });
 exports.registerBusiness = registerBusiness;
-const getBusinessDetails = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const activateBusiness = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const businessId = req.params.id;
-        const business = yield businessPage_1.default.findById(businessId);
+        const { id } = req.params;
+        const business = yield prisma.business.update({
+            where: { businessId: id },
+            data: { status: 'APPROVED' },
+        });
         if (!business) {
-            return res.status(404).send({ message: "Business not found" });
+            return res.status(404).send(`
+        <html>
+          <body>
+            <h2>Activation failed</h2>
+            <p>We couldn't find your account. Please try again or contact support.</p>
+          </body>
+        </html>
+      `);
         }
-        res.status(200).send(business);
+        return res.status(200).send(`
+      <html>
+        <head>
+          <meta http-equiv="refresh" content="5; />
+        </head>
+        <body style="font-family: Arial, sans-serif; text-align: center; padding: 40px;">
+          <h2>Account Activated ✅</h2>
+          <p>Your account has been successfully activated!</p>
+          <p>You can now <a href="${CLIENT_BASE_URL}/login">login here</a>.</p>
+          <p>You will be redirected shortly...</p>
+        </body>
+      </html>
+    `);
     }
     catch (error) {
-        return res.status(500).send({ message: error.message });
+        console.error(error);
+        return res.status(500).send(`
+      <html>
+        <body>
+          <h2>Error Activating Account</h2>
+          <p>Something went wrong. Please try again later.</p>
+        </body>
+      </html>
+    `);
+    }
+});
+exports.activateBusiness = activateBusiness;
+const getBusinessDetails = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { businessId } = req.query;
+        if (!businessId || typeof businessId !== 'string') {
+            return res.status(400).json({ message: 'Missing or invalid businessId' });
+        }
+        const business = yield prisma.business.findUnique({
+            where: { businessId },
+            include: { items: true, events: true, promos: true },
+        });
+        if (!business)
+            return res.status(404).json({ message: "Business not found" });
+        res.status(200).json(business);
+    }
+    catch (error) {
+        res.status(500).json({ message: error.message });
     }
 });
 exports.getBusinessDetails = getBusinessDetails;
 const getAllBusinesses = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const businesses = yield businessPage_1.default.find();
-        res.status(200).send(businesses);
+        const { category } = req.query;
+        const businesses = yield prisma.business.findMany({
+            where: category
+                ? {
+                    category: {
+                        equals: category,
+                        mode: 'insensitive',
+                    },
+                }
+                : undefined,
+        });
+        if (businesses.length === 0) {
+            return res.status(404).json({ message: "No businesses found" });
+        }
+        res.status(200).json(businesses);
     }
     catch (error) {
-        res.status(500).send({ message: error.message });
+        res.status(500).json({ message: error.message });
     }
 });
 exports.getAllBusinesses = getAllBusinesses;
 const addEventToBusiness = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    var _c;
     try {
-        const businessId = req.params.id;
-        const { title, description, venue, date } = req.body;
-        const file = (_c = req.file) === null || _c === void 0 ? void 0 : _c.path;
-        if (!file) {
-            return res.status(400).json({ message: "No image uploaded" });
+        const { businessId } = req.query;
+        if (!businessId || typeof businessId !== 'string') {
+            return res.status(400).json({ message: 'Missing or invalid businessId' });
         }
-        // const result = await cloudinary.uploader.upload(file, {
-        //   folder: "events",
-        // });
-        const business = yield businessPage_1.default.findById(businessId);
-        if (!business) {
-            return res.status(404).send({ message: "Business not found" });
-        }
-        const newEvent = {
-            title,
-            description,
-            venue,
-            date,
-            // image: result.secure_url,
-        };
-        business.events.push(newEvent);
-        yield business.save();
-        res
-            .status(201)
-            .send({ message: "Event added successfully", event: newEvent });
+        const { title, description, location, longitude, latitude, date, paid } = req.body;
+        const event = yield prisma.event.create({
+            data: { title, description, location, longitude, latitude, date, businessId, paid },
+        });
+        res.status(201).json({ message: "Event added", event });
     }
     catch (error) {
-        res.status(500).send({ message: error.message });
+        res.status(500).json({ message: error.message });
     }
 });
 exports.addEventToBusiness = addEventToBusiness;
-const getEvents = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const businessId = req.params.id;
-        const business = yield businessPage_1.default.findById(businessId);
-        if (!business) {
-            return res.status(404).send({ message: "Business not found" });
-        }
-        res.status(200).send(business.events);
-    }
-    catch (error) {
-        res.status(500).send({ message: error.message });
-    }
-});
-exports.getEvents = getEvents;
 const getAllEvents = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const businesses = yield businessPage_1.default.find();
-        const allEvents = [];
-        businesses.forEach((business) => {
-            allEvents.push(...business.events);
-        });
-        res.status(200).send(allEvents);
+        const events = yield prisma.event.findMany();
+        res.status(200).json(events);
     }
     catch (error) {
-        res.status(500).send({ message: error.message });
+        res.status(500).json({ message: error.message });
     }
 });
 exports.getAllEvents = getAllEvents;
-const addPromo = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const getEvents = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const businessId = req.params.id;
-        const { _id, name, description, timeValid } = req.body;
-        const business = yield businessPage_1.default.findById(businessId);
-        if (!business) {
-            return res.status(404).send({ message: "Business not found" });
+        const { businessId } = req.query;
+        if (!businessId || typeof businessId !== 'string') {
+            return res.status(400).json({ message: 'Missing or invalid businessId' });
         }
-        const newPromo = { _id, name, description, timeValid };
-        business.promo.push(newPromo);
-        yield business.save();
-        res
-            .status(201)
-            .send({ message: "Event added successfully", event: newPromo });
+        const events = yield prisma.event.findMany({ where: { businessId } });
+        res.status(200).json(events);
     }
     catch (error) {
-        res.status(500).send({ message: error.message });
+        res.status(500).json({ message: error.message });
+    }
+});
+exports.getEvents = getEvents;
+const addPromo = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { businessId } = req.query;
+        if (!businessId || typeof businessId !== 'string') {
+            return res.status(400).json({ message: 'Missing or invalid businessId' });
+        }
+        const { name, description, startDate, endDate, image } = req.body;
+        const promo = yield prisma.promo.create({
+            data: { name, description, startDate, endDate, businessId, images: image },
+        });
+        res.status(201).json({ message: "Promo added", promo });
+    }
+    catch (error) {
+        res.status(500).json({ message: error.message });
     }
 });
 exports.addPromo = addPromo;
-const getPromo = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const getPromos = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const businessId = req.params.id;
-        const business = yield businessPage_1.default.findById(businessId);
-        if (!business) {
-            return res.status(404).send({ message: "Business not found" });
+        const { businessId } = req.query;
+        if (!businessId || typeof businessId !== 'string') {
+            return res.status(400).json({ message: 'Missing or invalid businessId' });
         }
-        res.status(200).send(business.promo);
+        const promos = yield prisma.promo.findMany({
+            where: {
+                businessId,
+                endDate: {
+                    gte: new Date(),
+                }
+            }
+        });
+        res.status(200).json(promos);
     }
     catch (error) {
-        res.status(500).send({ message: error.message });
+        res.status(500).json({ message: error.message });
     }
 });
-exports.getPromo = getPromo;
+exports.getPromos = getPromos;
 const getAllPromos = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const businesses = yield businessPage_1.default.find();
-        const allPromos = [];
-        businesses.forEach((business) => {
-            allPromos.push(...business.promo);
+        const promos = yield prisma.promo.findMany({
+            where: {
+                endDate: {
+                    gte: new Date(),
+                }
+            }
         });
-        res.status(200).send(allPromos);
+        res.status(200).json(promos);
     }
     catch (error) {
-        res.status(500).send({ message: error.message });
+        res.status(500).json({ message: error.message });
     }
 });
 exports.getAllPromos = getAllPromos;
 const deletePromo = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { businessId, promoId } = req.params;
-        const business = yield businessPage_1.default.findById(businessId);
-        if (!business) {
-            return res.status(404).send({ message: "Business not found" });
+        const { promoId } = req.query;
+        if (!promoId || typeof promoId !== 'string') {
+            return res.status(400).json({ message: 'Missing or invalid promoId' });
         }
-        const promoIndex = business.promo.findIndex((promo) => promo._id.toString() === promoId);
-        if (promoIndex === -1) {
-            return res.status(404).send({ message: "Promo deal not found" });
-        }
-        business.promo.splice(promoIndex, 1);
-        yield business.save();
-        res.status(200).send({ message: "Promo deal deleted successfully" });
+        yield prisma.promo.delete({ where: { promoId } });
+        res.status(200).json({ message: "Promo deleted" });
     }
     catch (error) {
-        res.status(500).send({ message: error.message });
+        res.status(500).json({ message: error.message });
     }
 });
 exports.deletePromo = deletePromo;
+const addProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const multerReq = req;
+        const { businessId } = req.params;
+        const { name, description, price } = req.body;
+        if (!name || !description || !price) {
+            return res.status(400).json({ message: "All fields are required" });
+        }
+        // Check if business exists
+        const business = yield prisma.business.findUnique({
+            where: { businessId },
+        });
+        if (!business) {
+            return res.status(404).json({ message: "Business not found" });
+        }
+        const uploadResult = yield (0, uploadImage_1.default)(req, res);
+        if (!uploadResult ||
+            typeof uploadResult !== "object" ||
+            !("url" in uploadResult)) {
+            return;
+        }
+        const newProduct = yield prisma.item.create({
+            data: {
+                name,
+                description,
+                price,
+                image: uploadResult.url,
+                businessId,
+            },
+        });
+        res.status(201).json({
+            message: "Product added successfully",
+            product: newProduct,
+        });
+    }
+    catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
+exports.addProduct = addProduct;

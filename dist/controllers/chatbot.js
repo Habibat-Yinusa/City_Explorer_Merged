@@ -12,64 +12,66 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.messagesArray = exports.chatbot = void 0;
+exports.chatbot = void 0;
 const chatbotService2_1 = __importDefault(require("../services/chatbotService2"));
-const userControllers_1 = require("./userControllers");
-const user_1 = __importDefault(require("../models/user"));
+const prisma_1 = require("../generated/prisma");
+const prisma = new prisma_1.PrismaClient();
 const chatbot = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { _id, message } = req.body;
-    const user = yield user_1.default.findById(_id);
-    const userMessages = user === null || user === void 0 ? void 0 : user.userMessages;
-    const botReplies = user === null || user === void 0 ? void 0 : user.botReplies;
-    let history = [];
-    for (let i = 0; i < userMessages.length; i++) {
-        if (userMessages && botReplies) {
-            const newHistory = [
-                {
-                    role: "user",
-                    parts: [
-                        {
-                            text: userMessages[i] || "",
-                        },
-                    ],
-                },
-                {
-                    role: "model",
-                    parts: [
-                        {
-                            text: botReplies[i] || "",
-                        },
-                    ],
-                },
-            ];
-            // console.log(newHistory);
-            history = [...history, ...newHistory];
+    var _a;
+    try {
+        const { id, message } = req.body;
+        if (!message) {
+            return res.status(400).json({ message: "Message is required" });
         }
-    }
-    if (!_id) {
+        let history = [];
+        // Unregistered user
+        if (!id) {
+            const reply = yield (0, chatbotService2_1.default)(message, []);
+            res.json({ message: reply !== null && reply !== void 0 ? reply : "" });
+            return;
+        }
+        // Registered user
+        const user = yield prisma.user.findUnique({
+            where: { userId: id },
+            select: {
+                userId: true,
+                userMessages: true,
+                botReplies: true,
+            },
+        });
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+        // Construct chat history
+        for (let i = 0; i < user.userMessages.length; i++) {
+            history.push({
+                role: "user",
+                parts: [{ text: user.userMessages[i] }],
+            }, {
+                role: "model",
+                parts: [{ text: (_a = user.botReplies[i]) !== null && _a !== void 0 ? _a : "" }],
+            });
+        }
         const reply = yield (0, chatbotService2_1.default)(message, history);
-        res.json(reply);
-        userControllers_1.messages.push(reply !== null && reply !== void 0 ? reply : "");
-        console.log(userControllers_1.messages, "unregistered");
-    }
-    else {
-        const user = yield user_1.default.findOne({ _id });
-        const reply = yield (0, chatbotService2_1.default)(message, history);
-        user === null || user === void 0 ? void 0 : user.userMessages.push(message);
-        user === null || user === void 0 ? void 0 : user.botReplies.push(reply !== null && reply !== void 0 ? reply : "");
-        yield (user === null || user === void 0 ? void 0 : user.save());
+        // Update conversation history
+        yield prisma.user.update({
+            where: { userId: id },
+            data: {
+                userMessages: {
+                    push: message,
+                },
+                botReplies: {
+                    push: reply !== null && reply !== void 0 ? reply : "",
+                },
+            },
+        });
         res.json({
             message: (reply !== null && reply !== void 0 ? reply : "").split("*").join(""),
         });
     }
+    catch (error) {
+        console.error("Chatbot Error:", error.message);
+        res.status(500).json({ message: error.message });
+    }
 });
 exports.chatbot = chatbot;
-const messagesArray = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        res.status(200).send(userControllers_1.messages);
-    }
-    catch (error) {
-        res.status(400).send({ message: error.message });
-    }
-});
-exports.messagesArray = messagesArray;

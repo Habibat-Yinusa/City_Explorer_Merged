@@ -36,7 +36,9 @@ const db_1 = require("./config/db");
 const userRoutes_1 = __importDefault(require("./routes/userRoutes"));
 const chatbotRoute_1 = __importDefault(require("./routes/chatbotRoute"));
 const bussinesRoute_1 = __importDefault(require("./routes/bussinesRoute"));
-// import uploadRoute from './routes/uploadRoute';
+// import { protect } from "./middlewares/authMiddleware";
+// import {botware} from "./middlewares/botMiddleware"
+const uploadRoute_1 = __importDefault(require("./routes/uploadRoute"));
 const businessControllers_1 = require("./controllers/businessControllers");
 // import upload from './config/multer';
 // import cloudinary from './config/cloudinary';
@@ -68,6 +70,7 @@ app.use("/business", bussinesRoute_1.default);
 // app.use("/business", uploadRoute)
 app.use("/events", businessControllers_1.getAllEvents);
 app.use("/promos", businessControllers_1.getAllPromos);
+app.use("/upload", uploadRoute_1.default);
 app.options('/*', (0, cors_1.default)());
 app.options('/chatbot', (0, cors_1.default)());
 app.options('/user', (0, cors_1.default)());

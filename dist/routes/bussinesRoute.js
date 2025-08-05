@@ -1,24 +1,45 @@
 "use strict";
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
-const businessControllers_1 = require("../controllers/businessControllers");
-// import upload from '../config/multer';
-// import cloudinary from '../config/cloudinary';
+const businessController = __importStar(require("../controllers/businessControllers"));
+const multer_1 = __importDefault(require("../config/multer"));
 const router = (0, express_1.Router)();
-router.post('/register', businessControllers_1.registerBusiness);
-router.get('/:id', businessControllers_1.getBusinessDetails);
-router.get('/', businessControllers_1.getAllBusinesses);
-router.post('/createevent/:id', businessControllers_1.addEventToBusiness);
-router.get('/event/:id', businessControllers_1.getEvents);
-router.post('/promo/:id', businessControllers_1.addPromo);
-router.get('/promo/:id', businessControllers_1.getPromo);
-router.delete('/:businessId/promo/:promoId', businessControllers_1.deletePromo);
-// router.post('/upload/single', upload.single('file'), async (req: Request, res: Response) => {
-//     try {
-//         const result = await cloudinary.uploader.upload(req.file.path, { folder: 'single_uploads' });
-//         res.status(200).send({ url: result.secure_url, public_id: result.public_id });
-//     } catch (error) {
-//         res.status(500).send({ message: error.message });
-//     }
-//   });
+router.post('/register', multer_1.default.single('image'), businessController.registerBusiness);
+router.get('/activate/:id', businessController.activateBusiness);
+router.get('/', businessController.getBusinessDetails);
+router.get('/', businessController.getAllBusinesses);
+router.post('/event', businessController.addEventToBusiness);
+router.get('/events', businessController.getEvents);
+// router.get('/events', businessController.getAllEvents);
+router.post('/promo', businessController.addPromo);
+router.get('/promo', businessController.getPromos);
+// router.get('/promos', businessController.getAllPromos);
+router.delete('/promo', businessController.deletePromo);
+router.post('/:businessId/product', multer_1.default.single('file'), businessController.addProduct);
 exports.default = router;
