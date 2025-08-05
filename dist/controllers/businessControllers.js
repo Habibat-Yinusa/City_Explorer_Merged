@@ -26,18 +26,16 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.deletePromo = exports.getAllPromos = exports.getPromo = exports.addPromo = exports.getAllEvents = exports.getEvents = exports.addEventToBusiness = exports.getAllBusinesses = exports.getBusinessDetails = exports.registerBusiness = void 0;
 const businessPage_1 = __importDefault(require("../models/businessPage"));
 const bcrypt_1 = require("bcrypt");
-// import uploadImages from "./images";
-// const cloudinary = require("cloudinary").v2;
-// import BusinessModel  from '../models/businessPage';
 const registerBusiness = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     var _a;
     try {
+        const multerReq = req;
         const { name, category, items, location, openHours, phone, email, password, website, description, } = req.body;
         const existingBusiness = yield businessPage_1.default.findOne({ email });
         console.log("email", req.body.email);
-        console.log("file", req.file);
+        console.log("file", multerReq.file);
         console.log("Request Body:", req.body);
-        console.log("Uploaded Files:", (_a = req.file) === null || _a === void 0 ? void 0 : _a.path);
+        console.log("Uploaded Files:", (_a = multerReq.file) === null || _a === void 0 ? void 0 : _a.path);
         if (!email) {
             throw new Error("Please enter a valid email address");
         }

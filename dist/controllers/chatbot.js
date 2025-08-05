@@ -49,17 +49,17 @@ const chatbot = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     if (!_id) {
         const reply = yield (0, chatbotService2_1.default)(message, history);
         res.json(reply);
-        userControllers_1.messages.push(reply);
+        userControllers_1.messages.push(reply !== null && reply !== void 0 ? reply : "");
         console.log(userControllers_1.messages, "unregistered");
     }
     else {
         const user = yield user_1.default.findOne({ _id });
         const reply = yield (0, chatbotService2_1.default)(message, history);
         user === null || user === void 0 ? void 0 : user.userMessages.push(message);
-        user === null || user === void 0 ? void 0 : user.botReplies.push(reply);
+        user === null || user === void 0 ? void 0 : user.botReplies.push(reply !== null && reply !== void 0 ? reply : "");
         yield (user === null || user === void 0 ? void 0 : user.save());
         res.json({
-            message: reply.split("*").join(""),
+            message: (reply !== null && reply !== void 0 ? reply : "").split("*").join(""),
         });
     }
 });
