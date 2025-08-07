@@ -5,7 +5,7 @@ import { Request, Response } from 'express';
 const uploadImages = async (req: Request, res: Response) => {
   try {
     const file = req.file;
-    if (!file || !file.path) {
+    if (!file) {
       return res.status(400).json({ message: 'No image file provided' });
     }
 

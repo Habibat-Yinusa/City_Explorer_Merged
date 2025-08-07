@@ -17,7 +17,7 @@ const uploadImages = (req, res) => __awaiter(void 0, void 0, void 0, function* (
     var _a;
     try {
         const file = req.file;
-        if (!file || !file.path) {
+        if (!file) {
             return res.status(400).json({ message: 'No image file provided' });
         }
         let folder = 'general';
