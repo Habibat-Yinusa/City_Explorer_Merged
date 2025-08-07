@@ -36,12 +36,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.resetPassword = exports.forgotPassword = exports.loginUser = exports.createUser = void 0;
-const prisma_1 = require("../generated/prisma");
+// import { PrismaClient } from '@prisma/client';
 const bcrypt_1 = require("bcrypt");
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const helper_1 = require("../helpers/helper");
 const imageType_1 = require("../constants/imageType");
-const prisma = new prisma_1.PrismaClient();
+const prisma_1 = __importDefault(require("../helpers/prisma"));
+// const prisma = new PrismaClient();
 let messages = [];
 const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -49,7 +50,7 @@ const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         if (!username || !email || !password) {
             throw new Error('Please fill in all fields');
         }
-        const existing = yield prisma.user.findUnique({ where: { email_role: { email, role } } });
+        const existing = yield prisma_1.default.user.findUnique({ where: { email_role: { email, role } } });
         if (existing)
             throw new Error(`Email already exists for a ${role.toLowerCase()} account`);
         const hashedPassword = yield (0, bcrypt_1.hash)(password, 10);
@@ -57,14 +58,14 @@ const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         if (req.file) {
             imageUrl = yield (0, helper_1.uploadImage)(req.file, imageType_1.ImageType.PROMO);
         }
-        const user = yield prisma.user.create({
+        const user = yield prisma_1.default.user.create({
             data: {
                 username,
                 email,
                 profilePic: imageUrl
             },
         });
-        yield prisma.password.create({
+        yield prisma_1.default.password.create({
             data: {
                 hashedPassword,
                 userId: user.userId,
@@ -84,10 +85,10 @@ const loginUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             throw new Error('Please fill in all fields including role');
         }
         if (role === 'USER') {
-            const user = yield prisma.user.findUnique({ where: { email_role: { email, role } } });
+            const user = yield prisma_1.default.user.findUnique({ where: { email_role: { email, role } } });
             if (!user)
                 throw new Error('User not found');
-            const passwordRecord = yield prisma.password.findUnique({
+            const passwordRecord = yield prisma_1.default.password.findUnique({
                 where: { userId: user.userId },
             });
             if (!passwordRecord)
@@ -102,10 +103,10 @@ const loginUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             res.status(200).json({ token, details: userDetails });
         }
         else if (role === 'BUSINESS') {
-            const business = yield prisma.business.findUnique({ where: { email_role: { email, role } } });
+            const business = yield prisma_1.default.business.findUnique({ where: { email_role: { email, role } } });
             if (!business)
                 throw new Error('Business not found');
-            const passwordRecord = yield prisma.password.findUnique({
+            const passwordRecord = yield prisma_1.default.password.findUnique({
                 where: { businessId: business.businessId },
             });
             if (!passwordRecord)
@@ -134,13 +135,13 @@ const forgotPassword = (req, res) => __awaiter(void 0, void 0, void 0, function*
             throw new Error("Email and role are required");
         let accountId;
         if (role === "USER") {
-            const user = yield prisma.user.findUnique({ where: { email_role: { email, role } } });
+            const user = yield prisma_1.default.user.findUnique({ where: { email_role: { email, role } } });
             if (!user)
                 throw new Error("User not found");
             accountId = user.userId;
         }
         else if (role === "BUSINESS") {
-            const business = yield prisma.business.findUnique({ where: { email_role: { email, role } } });
+            const business = yield prisma_1.default.business.findUnique({ where: { email_role: { email, role } } });
             if (!business)
                 throw new Error("Business not found");
             accountId = business.businessId;
@@ -156,7 +157,7 @@ const forgotPassword = (req, res) => __awaiter(void 0, void 0, void 0, function*
             .digest("hex");
         const resetTokenExpires = new Date(Date.now() + 10 * 60 * 1000); // 10 minutes
         // Update or create Password record
-        yield prisma.password.upsert({
+        yield prisma_1.default.password.upsert({
             where: role === "USER"
                 ? { userId: accountId }
                 : { businessId: accountId },
@@ -199,11 +200,11 @@ const resetPassword = (req, res) => __awaiter(void 0, void 0, void 0, function* 
         let account;
         let accountId;
         if (role === "USER") {
-            account = yield prisma.user.findUnique({ where: { email_role: { email, role } } });
+            account = yield prisma_1.default.user.findUnique({ where: { email_role: { email, role } } });
             accountId = account === null || account === void 0 ? void 0 : account.userId;
         }
         else if (role === "BUSINESS") {
-            account = yield prisma.business.findUnique({ where: { email_role: { email, role } } });
+            account = yield prisma_1.default.business.findUnique({ where: { email_role: { email, role } } });
             accountId = account === null || account === void 0 ? void 0 : account.businessId;
         }
         else {
@@ -211,7 +212,7 @@ const resetPassword = (req, res) => __awaiter(void 0, void 0, void 0, function* 
         }
         if (!account)
             throw new Error(`${role} not found`);
-        const passwordRecord = yield prisma.password.findFirst({
+        const passwordRecord = yield prisma_1.default.password.findFirst({
             where: role === "USER"
                 ? { userId: accountId }
                 : { businessId: accountId },
@@ -223,7 +224,7 @@ const resetPassword = (req, res) => __awaiter(void 0, void 0, void 0, function* 
             throw new Error("Invalid or expired reset token");
         }
         const newHashedPassword = yield (0, bcrypt_1.hash)(newPassword, 10);
-        yield prisma.password.update({
+        yield prisma_1.default.password.update({
             where: role === "USER"
                 ? { userId: (_a = passwordRecord.userId) !== null && _a !== void 0 ? _a : undefined }
                 : { businessId: (_b = passwordRecord.businessId) !== null && _b !== void 0 ? _b : undefined },

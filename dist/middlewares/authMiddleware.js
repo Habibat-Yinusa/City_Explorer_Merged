@@ -14,8 +14,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.authenticate = void 0;
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
-const prisma_1 = require("../generated/prisma");
-const prisma = new prisma_1.PrismaClient();
+// import { PrismaClient } from '../generated/prisma';
+const prisma_1 = __importDefault(require("../helpers/prisma"));
 const authenticate = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const authHeader = req.headers.authorization;
@@ -26,13 +26,13 @@ const authenticate = (req, res, next) => __awaiter(void 0, void 0, void 0, funct
         const decoded = jsonwebtoken_1.default.verify(token, process.env.JWT_SECRET);
         const { userId, role } = decoded;
         if (role === 'USER') {
-            const user = yield prisma.user.findUnique({ where: { userId } });
+            const user = yield prisma_1.default.user.findUnique({ where: { userId } });
             if (!user)
                 return res.status(401).json({ message: "User not found" });
             req.user = user;
         }
         else if (role === 'BUSINESS') {
-            const business = yield prisma.business.findUnique({ where: { businessId: userId } });
+            const business = yield prisma_1.default.business.findUnique({ where: { businessId: userId } });
             if (!business || business.status !== 'APPROVED') {
                 return res.status(403).json({ message: "Business account is not active" });
             }
@@ -42,7 +42,7 @@ const authenticate = (req, res, next) => __awaiter(void 0, void 0, void 0, funct
             req.user = business;
         }
         else if (role === 'ADMIN') {
-            const admin = yield prisma.admin.findUnique({ where: { adminId: userId } });
+            const admin = yield prisma_1.default.admin.findUnique({ where: { adminId: userId } });
             if (!admin)
                 return res.status(401).json({ message: "Admin not found" });
             req.user = admin;

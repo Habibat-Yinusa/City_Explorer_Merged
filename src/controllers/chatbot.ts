@@ -1,9 +1,10 @@
 import { Request, Response } from "express";
 import runChat from "../services/chatbotService2";
-import { PrismaClient } from "../generated/prisma";
+// import { PrismaClient } from "../generated/prisma";
 
-const prisma = new PrismaClient()
+// const prisma = new PrismaClient()
 // import type { RolePart } from "@google/generative-ai";
+import prisma from '../helpers/prisma';
 
 type RoleMessage = {
   role: "user" | "model";

@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
-import { PrismaClient } from '../generated/prisma';
+// import { PrismaClient } from '../generated/prisma';
+import prisma from '../helpers/prisma';
 
 declare global {
   namespace Express {
@@ -11,7 +12,7 @@ declare global {
   }
 }
 
-const prisma = new PrismaClient();
+// const prisma = new PrismaClient();
 
 interface AuthPayload {
   userId: string;

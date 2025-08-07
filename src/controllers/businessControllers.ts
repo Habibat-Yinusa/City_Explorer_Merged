@@ -1,18 +1,18 @@
 import { Request, Response } from "express";
-import { PrismaClient } from '../generated/prisma';
+// import { PrismaClient } from '../generated/prisma';
 import { hash } from "bcrypt";
-import cloudinary from "../config/cloudinary";
 import type { Request as ExpressRequest } from "express";
 import uploadImages from "../services/uploadImage";
 import { buildUpdateData, sendEmail, uploadImage } from "../helpers/helper";
 import { ImageType } from "../constants/imageType";
+import prisma from '../helpers/prisma';
 
 type MulterFile = Express.Multer.File;
 interface MulterRequest extends ExpressRequest {
   file?: MulterFile;
 }
 
-const prisma = new PrismaClient();
+// const prisma = new PrismaClient();
 const API_BASE_URL = process.env.API_BASE_URL
 const CLIENT_BASE_URL = process.env.CLIENT_BASE_URL
 

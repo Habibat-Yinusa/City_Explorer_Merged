@@ -1,11 +1,12 @@
-import { PrismaClient } from '../generated/prisma';
+// import { PrismaClient } from '@prisma/client';
 import { hash, compare } from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { Request, Response } from 'express';
 import { uploadImage } from '../helpers/helper';
 import { ImageType } from '../constants/imageType';
+import prisma from '../helpers/prisma';
 
-const prisma = new PrismaClient();
+// const prisma = new PrismaClient();
 let messages: string[] = [];
 
 const createUser = async (req: Request, res: Response) => {

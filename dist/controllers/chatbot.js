@@ -14,8 +14,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.chatbot = void 0;
 const chatbotService2_1 = __importDefault(require("../services/chatbotService2"));
-const prisma_1 = require("../generated/prisma");
-const prisma = new prisma_1.PrismaClient();
+// import { PrismaClient } from "../generated/prisma";
+// const prisma = new PrismaClient()
+// import type { RolePart } from "@google/generative-ai";
+const prisma_1 = __importDefault(require("../helpers/prisma"));
 const chatbot = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     var _a;
     try {
@@ -31,7 +33,7 @@ const chatbot = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             return;
         }
         // Registered user
-        const user = yield prisma.user.findUnique({
+        const user = yield prisma_1.default.user.findUnique({
             where: { userId: id },
             select: {
                 userId: true,
@@ -54,7 +56,7 @@ const chatbot = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         }
         const reply = yield (0, chatbotService2_1.default)(message, history);
         // Update conversation history
-        yield prisma.user.update({
+        yield prisma_1.default.user.update({
             where: { userId: id },
             data: {
                 userMessages: {

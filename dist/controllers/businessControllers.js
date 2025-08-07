@@ -13,12 +13,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.uploadBusinessFlier = exports.addProduct = exports.deletePromo = exports.updatePromo = exports.getAllPromos = exports.getPromos = exports.addPromo = exports.deleteEvent = exports.updateEvent = exports.getAllEvents = exports.getEvents = exports.addEventToBusiness = exports.deleteBusiness = exports.updateBusinessDetails = exports.getAllBusinesses = exports.getBusinessDetails = exports.activateBusiness = exports.registerBusiness = void 0;
-const prisma_1 = require("../generated/prisma");
+// import { PrismaClient } from '../generated/prisma';
 const bcrypt_1 = require("bcrypt");
 const uploadImage_1 = __importDefault(require("../services/uploadImage"));
 const helper_1 = require("../helpers/helper");
 const imageType_1 = require("../constants/imageType");
-const prisma = new prisma_1.PrismaClient();
+const prisma_1 = __importDefault(require("../helpers/prisma"));
+// const prisma = new PrismaClient();
 const API_BASE_URL = process.env.API_BASE_URL;
 const CLIENT_BASE_URL = process.env.CLIENT_BASE_URL;
 const registerBusiness = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -27,7 +28,7 @@ const registerBusiness = (req, res) => __awaiter(void 0, void 0, void 0, functio
         if (!email || !password) {
             throw new Error("Please enter all required fields");
         }
-        const existing = yield prisma.business.findUnique({
+        const existing = yield prisma_1.default.business.findUnique({
             where: { email_role: { email, role } },
         });
         if (existing)
@@ -37,7 +38,7 @@ const registerBusiness = (req, res) => __awaiter(void 0, void 0, void 0, functio
         if (req.file) {
             logoUrl = yield (0, helper_1.uploadImage)(req.file, imageType_1.ImageType.LOGO);
         }
-        const newBusiness = yield prisma.business.create({
+        const newBusiness = yield prisma_1.default.business.create({
             data: {
                 name,
                 category,
@@ -92,7 +93,7 @@ exports.registerBusiness = registerBusiness;
 const activateBusiness = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { id } = req.params;
-        const business = yield prisma.business.update({
+        const business = yield prisma_1.default.business.update({
             where: { businessId: id },
             data: { status: 'APPROVED' },
         });
@@ -139,7 +140,7 @@ const getBusinessDetails = (req, res) => __awaiter(void 0, void 0, void 0, funct
         if (!businessId || typeof businessId !== 'string') {
             return res.status(400).json({ message: 'Missing or invalid businessId' });
         }
-        const business = yield prisma.business.findUnique({
+        const business = yield prisma_1.default.business.findUnique({
             where: { businessId },
             include: { items: true, events: true, promos: true },
         });
@@ -155,7 +156,7 @@ exports.getBusinessDetails = getBusinessDetails;
 const getAllBusinesses = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { category } = req.query;
-        const businesses = yield prisma.business.findMany({
+        const businesses = yield prisma_1.default.business.findMany({
             where: category
                 ? {
                     category: {
@@ -185,7 +186,7 @@ const updateBusinessDetails = (req, res) => __awaiter(void 0, void 0, void 0, fu
         if (!businessId) {
             return res.status(400).json({ message: 'Business ID is required' });
         }
-        const existingBusiness = yield prisma.business.findUnique({ where: { businessId } });
+        const existingBusiness = yield prisma_1.default.business.findUnique({ where: { businessId } });
         if (!existingBusiness) {
             return res.status(404).json({ message: 'Business not found' });
         }
@@ -194,7 +195,7 @@ const updateBusinessDetails = (req, res) => __awaiter(void 0, void 0, void 0, fu
         if (req.file) {
             logoUrl = yield (0, helper_1.uploadImage)(req.file, imageType_1.ImageType.LOGO);
         }
-        const updatedBusiness = yield prisma.business.update({
+        const updatedBusiness = yield prisma_1.default.business.update({
             where: { businessId },
             data: Object.assign({ name,
                 category,
@@ -217,11 +218,11 @@ const deleteBusiness = (req, res) => __awaiter(void 0, void 0, void 0, function*
         if (!businessId || typeof businessId !== 'string') {
             return res.status(400).json({ message: 'Missing or invalid businessId' });
         }
-        const existingBusiness = yield prisma.business.findUnique({ where: { businessId } });
+        const existingBusiness = yield prisma_1.default.business.findUnique({ where: { businessId } });
         if (!existingBusiness) {
             return res.status(404).json({ message: 'Business not found' });
         }
-        yield prisma.business.delete({ where: { businessId } });
+        yield prisma_1.default.business.delete({ where: { businessId } });
         res.status(200).json({ message: "Business deleted" });
     }
     catch (error) {
@@ -241,7 +242,7 @@ const addEventToBusiness = (req, res) => __awaiter(void 0, void 0, void 0, funct
         if (req.file) {
             eventImageUrl = yield (0, helper_1.uploadImage)(req.file, imageType_1.ImageType.EVENT);
         }
-        const event = yield prisma.event.create({
+        const event = yield prisma_1.default.event.create({
             data: {
                 title,
                 description,
@@ -264,7 +265,7 @@ const addEventToBusiness = (req, res) => __awaiter(void 0, void 0, void 0, funct
 exports.addEventToBusiness = addEventToBusiness;
 const getAllEvents = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const events = yield prisma.event.findMany();
+        const events = yield prisma_1.default.event.findMany();
         res.status(200).json(events);
     }
     catch (error) {
@@ -278,7 +279,7 @@ const getEvents = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         if (!businessId || typeof businessId !== 'string') {
             return res.status(400).json({ message: 'Missing or invalid businessId' });
         }
-        const events = yield prisma.event.findMany({ where: { businessId } });
+        const events = yield prisma_1.default.event.findMany({ where: { businessId } });
         res.status(200).json(events);
     }
     catch (error) {
@@ -292,7 +293,7 @@ const updateEvent = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
         if (!eventId || typeof eventId !== 'string') {
             return res.status(400).json({ message: 'Missing or invalid eventId' });
         }
-        const existingEvent = yield prisma.event.findUnique({ where: { eventId } });
+        const existingEvent = yield prisma_1.default.event.findUnique({ where: { eventId } });
         if (!existingEvent) {
             return res.status(404).json({ message: 'Event not found' });
         }
@@ -311,7 +312,7 @@ const updateEvent = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
             const newImageUrl = yield (0, helper_1.uploadImage)(req.file, imageType_1.ImageType.EVENT);
             dataToUpdate.images = { push: newImageUrl };
         }
-        const updatedEvent = yield prisma.event.update({
+        const updatedEvent = yield prisma_1.default.event.update({
             where: { eventId },
             data: dataToUpdate,
         });
@@ -328,11 +329,11 @@ const deleteEvent = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
         if (!eventId || typeof eventId !== 'string') {
             return res.status(400).json({ message: 'Missing or invalid eventId' });
         }
-        const existingEvent = yield prisma.event.findUnique({ where: { eventId } });
+        const existingEvent = yield prisma_1.default.event.findUnique({ where: { eventId } });
         if (!existingEvent) {
             return res.status(404).json({ message: 'Event not found' });
         }
-        yield prisma.event.delete({ where: { eventId } });
+        yield prisma_1.default.event.delete({ where: { eventId } });
         res.status(200).json({ message: "Event deleted" });
     }
     catch (error) {
@@ -352,7 +353,7 @@ const addPromo = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         if (req.file) {
             promoImageUrl = yield (0, helper_1.uploadImage)(req.file, imageType_1.ImageType.PROMO);
         }
-        const promo = yield prisma.promo.create({
+        const promo = yield prisma_1.default.promo.create({
             data: {
                 name,
                 description,
@@ -375,7 +376,7 @@ const getPromos = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         if (!businessId || typeof businessId !== 'string') {
             return res.status(400).json({ message: 'Missing or invalid businessId' });
         }
-        const promos = yield prisma.promo.findMany({
+        const promos = yield prisma_1.default.promo.findMany({
             where: {
                 businessId,
                 endDate: {
@@ -392,7 +393,7 @@ const getPromos = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 exports.getPromos = getPromos;
 const getAllPromos = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const promos = yield prisma.promo.findMany({
+        const promos = yield prisma_1.default.promo.findMany({
             where: {
                 endDate: {
                     gte: new Date(),
@@ -412,7 +413,7 @@ const updatePromo = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
         if (!promoId || typeof promoId !== 'string') {
             return res.status(400).json({ message: 'Missing or invalid promoId' });
         }
-        const existingPromo = yield prisma.promo.findUnique({ where: { promoId } });
+        const existingPromo = yield prisma_1.default.promo.findUnique({ where: { promoId } });
         if (!existingPromo) {
             return res.status(404).json({ message: 'Promo not found' });
         }
@@ -422,7 +423,7 @@ const updatePromo = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
             const newImageUrl = yield (0, helper_1.uploadImage)(req.file, imageType_1.ImageType.PROMO);
             dataToUpdate.images = { push: newImageUrl };
         }
-        const updatedPromo = yield prisma.promo.update({
+        const updatedPromo = yield prisma_1.default.promo.update({
             where: { promoId },
             data: dataToUpdate,
         });
@@ -439,11 +440,11 @@ const deletePromo = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
         if (!promoId || typeof promoId !== 'string') {
             return res.status(400).json({ message: 'Missing or invalid promoId' });
         }
-        const existingPromo = yield prisma.promo.findUnique({ where: { promoId } });
+        const existingPromo = yield prisma_1.default.promo.findUnique({ where: { promoId } });
         if (!existingPromo) {
             return res.status(404).json({ message: 'Promo not found' });
         }
-        yield prisma.promo.delete({ where: { promoId } });
+        yield prisma_1.default.promo.delete({ where: { promoId } });
         res.status(200).json({ message: "Promo deleted" });
     }
     catch (error) {
@@ -460,7 +461,7 @@ const addProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
             return res.status(400).json({ message: "All fields are required" });
         }
         // Check if business exists
-        const business = yield prisma.business.findUnique({
+        const business = yield prisma_1.default.business.findUnique({
             where: { businessId },
         });
         if (!business) {
@@ -472,7 +473,7 @@ const addProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
             !("url" in uploadResult)) {
             return;
         }
-        const newProduct = yield prisma.item.create({
+        const newProduct = yield prisma_1.default.item.create({
             data: {
                 name,
                 description,
@@ -497,7 +498,7 @@ const uploadBusinessFlier = (req, res) => __awaiter(void 0, void 0, void 0, func
         if (!req.file)
             throw new Error("No file uploaded");
         const flierUrl = yield (0, helper_1.uploadImage)(req.file, imageType_1.ImageType.GENERAL);
-        const updatedBusiness = yield prisma.business.update({
+        const updatedBusiness = yield prisma_1.default.business.update({
             where: { businessId },
             data: { image: flierUrl },
         });
