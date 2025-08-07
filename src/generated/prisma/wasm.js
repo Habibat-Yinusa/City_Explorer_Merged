@@ -194,6 +194,8 @@ exports.Prisma.EventScalarFieldEnum = {
   longitude: 'longitude',
   images: 'images',
   paid: 'paid',
+  amount: 'amount',
+  isPaymentSuccessful: 'isPaymentSuccessful',
   businessId: 'businessId'
 };
 

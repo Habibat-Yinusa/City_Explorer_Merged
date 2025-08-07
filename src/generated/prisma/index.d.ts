@@ -7675,11 +7675,13 @@ export namespace Prisma {
   export type EventAvgAggregateOutputType = {
     latitude: number | null
     longitude: number | null
+    amount: number | null
   }
 
   export type EventSumAggregateOutputType = {
     latitude: number | null
     longitude: number | null
+    amount: number | null
   }
 
   export type EventMinAggregateOutputType = {
@@ -7691,6 +7693,8 @@ export namespace Prisma {
     latitude: number | null
     longitude: number | null
     paid: boolean | null
+    amount: number | null
+    isPaymentSuccessful: boolean | null
     businessId: string | null
   }
 
@@ -7703,6 +7707,8 @@ export namespace Prisma {
     latitude: number | null
     longitude: number | null
     paid: boolean | null
+    amount: number | null
+    isPaymentSuccessful: boolean | null
     businessId: string | null
   }
 
@@ -7716,6 +7722,8 @@ export namespace Prisma {
     longitude: number
     images: number
     paid: number
+    amount: number
+    isPaymentSuccessful: number
     businessId: number
     _all: number
   }
@@ -7724,11 +7732,13 @@ export namespace Prisma {
   export type EventAvgAggregateInputType = {
     latitude?: true
     longitude?: true
+    amount?: true
   }
 
   export type EventSumAggregateInputType = {
     latitude?: true
     longitude?: true
+    amount?: true
   }
 
   export type EventMinAggregateInputType = {
@@ -7740,6 +7750,8 @@ export namespace Prisma {
     latitude?: true
     longitude?: true
     paid?: true
+    amount?: true
+    isPaymentSuccessful?: true
     businessId?: true
   }
 
@@ -7752,6 +7764,8 @@ export namespace Prisma {
     latitude?: true
     longitude?: true
     paid?: true
+    amount?: true
+    isPaymentSuccessful?: true
     businessId?: true
   }
 
@@ -7765,6 +7779,8 @@ export namespace Prisma {
     longitude?: true
     images?: true
     paid?: true
+    amount?: true
+    isPaymentSuccessful?: true
     businessId?: true
     _all?: true
   }
@@ -7865,6 +7881,8 @@ export namespace Prisma {
     longitude: number | null
     images: string[]
     paid: boolean
+    amount: number | null
+    isPaymentSuccessful: boolean | null
     businessId: string
     _count: EventCountAggregateOutputType | null
     _avg: EventAvgAggregateOutputType | null
@@ -7897,6 +7915,8 @@ export namespace Prisma {
     longitude?: boolean
     images?: boolean
     paid?: boolean
+    amount?: boolean
+    isPaymentSuccessful?: boolean
     businessId?: boolean
     business?: boolean | BusinessDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["event"]>
@@ -7911,6 +7931,8 @@ export namespace Prisma {
     longitude?: boolean
     images?: boolean
     paid?: boolean
+    amount?: boolean
+    isPaymentSuccessful?: boolean
     businessId?: boolean
     business?: boolean | BusinessDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["event"]>
@@ -7925,6 +7947,8 @@ export namespace Prisma {
     longitude?: boolean
     images?: boolean
     paid?: boolean
+    amount?: boolean
+    isPaymentSuccessful?: boolean
     businessId?: boolean
     business?: boolean | BusinessDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["event"]>
@@ -7939,10 +7963,12 @@ export namespace Prisma {
     longitude?: boolean
     images?: boolean
     paid?: boolean
+    amount?: boolean
+    isPaymentSuccessful?: boolean
     businessId?: boolean
   }
 
-  export type EventOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"eventId" | "title" | "description" | "date" | "location" | "latitude" | "longitude" | "images" | "paid" | "businessId", ExtArgs["result"]["event"]>
+  export type EventOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"eventId" | "title" | "description" | "date" | "location" | "latitude" | "longitude" | "images" | "paid" | "amount" | "isPaymentSuccessful" | "businessId", ExtArgs["result"]["event"]>
   export type EventInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     business?: boolean | BusinessDefaultArgs<ExtArgs>
   }
@@ -7968,6 +7994,8 @@ export namespace Prisma {
       longitude: number | null
       images: string[]
       paid: boolean
+      amount: number | null
+      isPaymentSuccessful: boolean | null
       businessId: string
     }, ExtArgs["result"]["event"]>
     composites: {}
@@ -8402,6 +8430,8 @@ export namespace Prisma {
     readonly longitude: FieldRef<"Event", 'Float'>
     readonly images: FieldRef<"Event", 'String[]'>
     readonly paid: FieldRef<"Event", 'Boolean'>
+    readonly amount: FieldRef<"Event", 'Float'>
+    readonly isPaymentSuccessful: FieldRef<"Event", 'Boolean'>
     readonly businessId: FieldRef<"Event", 'String'>
   }
     
@@ -12209,6 +12239,8 @@ export namespace Prisma {
     longitude: 'longitude',
     images: 'images',
     paid: 'paid',
+    amount: 'amount',
+    isPaymentSuccessful: 'isPaymentSuccessful',
     businessId: 'businessId'
   };
 
@@ -12824,6 +12856,8 @@ export namespace Prisma {
     longitude?: FloatNullableFilter<"Event"> | number | null
     images?: StringNullableListFilter<"Event">
     paid?: BoolFilter<"Event"> | boolean
+    amount?: FloatNullableFilter<"Event"> | number | null
+    isPaymentSuccessful?: BoolNullableFilter<"Event"> | boolean | null
     businessId?: StringFilter<"Event"> | string
     business?: XOR<BusinessScalarRelationFilter, BusinessWhereInput>
   }
@@ -12838,6 +12872,8 @@ export namespace Prisma {
     longitude?: SortOrderInput | SortOrder
     images?: SortOrder
     paid?: SortOrder
+    amount?: SortOrderInput | SortOrder
+    isPaymentSuccessful?: SortOrderInput | SortOrder
     businessId?: SortOrder
     business?: BusinessOrderByWithRelationInput
   }
@@ -12855,6 +12891,8 @@ export namespace Prisma {
     longitude?: FloatNullableFilter<"Event"> | number | null
     images?: StringNullableListFilter<"Event">
     paid?: BoolFilter<"Event"> | boolean
+    amount?: FloatNullableFilter<"Event"> | number | null
+    isPaymentSuccessful?: BoolNullableFilter<"Event"> | boolean | null
     businessId?: StringFilter<"Event"> | string
     business?: XOR<BusinessScalarRelationFilter, BusinessWhereInput>
   }, "eventId">
@@ -12869,6 +12907,8 @@ export namespace Prisma {
     longitude?: SortOrderInput | SortOrder
     images?: SortOrder
     paid?: SortOrder
+    amount?: SortOrderInput | SortOrder
+    isPaymentSuccessful?: SortOrderInput | SortOrder
     businessId?: SortOrder
     _count?: EventCountOrderByAggregateInput
     _avg?: EventAvgOrderByAggregateInput
@@ -12890,6 +12930,8 @@ export namespace Prisma {
     longitude?: FloatNullableWithAggregatesFilter<"Event"> | number | null
     images?: StringNullableListFilter<"Event">
     paid?: BoolWithAggregatesFilter<"Event"> | boolean
+    amount?: FloatNullableWithAggregatesFilter<"Event"> | number | null
+    isPaymentSuccessful?: BoolNullableWithAggregatesFilter<"Event"> | boolean | null
     businessId?: StringWithAggregatesFilter<"Event"> | string
   }
 
@@ -13574,6 +13616,8 @@ export namespace Prisma {
     longitude?: number | null
     images?: EventCreateimagesInput | string[]
     paid?: boolean
+    amount?: number | null
+    isPaymentSuccessful?: boolean | null
     business: BusinessCreateNestedOneWithoutEventsInput
   }
 
@@ -13587,6 +13631,8 @@ export namespace Prisma {
     longitude?: number | null
     images?: EventCreateimagesInput | string[]
     paid?: boolean
+    amount?: number | null
+    isPaymentSuccessful?: boolean | null
     businessId: string
   }
 
@@ -13600,6 +13646,8 @@ export namespace Prisma {
     longitude?: NullableFloatFieldUpdateOperationsInput | number | null
     images?: EventUpdateimagesInput | string[]
     paid?: BoolFieldUpdateOperationsInput | boolean
+    amount?: NullableFloatFieldUpdateOperationsInput | number | null
+    isPaymentSuccessful?: NullableBoolFieldUpdateOperationsInput | boolean | null
     business?: BusinessUpdateOneRequiredWithoutEventsNestedInput
   }
 
@@ -13613,6 +13661,8 @@ export namespace Prisma {
     longitude?: NullableFloatFieldUpdateOperationsInput | number | null
     images?: EventUpdateimagesInput | string[]
     paid?: BoolFieldUpdateOperationsInput | boolean
+    amount?: NullableFloatFieldUpdateOperationsInput | number | null
+    isPaymentSuccessful?: NullableBoolFieldUpdateOperationsInput | boolean | null
     businessId?: StringFieldUpdateOperationsInput | string
   }
 
@@ -13626,6 +13676,8 @@ export namespace Prisma {
     longitude?: number | null
     images?: EventCreateimagesInput | string[]
     paid?: boolean
+    amount?: number | null
+    isPaymentSuccessful?: boolean | null
     businessId: string
   }
 
@@ -13639,6 +13691,8 @@ export namespace Prisma {
     longitude?: NullableFloatFieldUpdateOperationsInput | number | null
     images?: EventUpdateimagesInput | string[]
     paid?: BoolFieldUpdateOperationsInput | boolean
+    amount?: NullableFloatFieldUpdateOperationsInput | number | null
+    isPaymentSuccessful?: NullableBoolFieldUpdateOperationsInput | boolean | null
   }
 
   export type EventUncheckedUpdateManyInput = {
@@ -13651,6 +13705,8 @@ export namespace Prisma {
     longitude?: NullableFloatFieldUpdateOperationsInput | number | null
     images?: EventUpdateimagesInput | string[]
     paid?: BoolFieldUpdateOperationsInput | boolean
+    amount?: NullableFloatFieldUpdateOperationsInput | number | null
+    isPaymentSuccessful?: NullableBoolFieldUpdateOperationsInput | boolean | null
     businessId?: StringFieldUpdateOperationsInput | string
   }
 
@@ -14345,6 +14401,11 @@ export namespace Prisma {
     businessId?: SortOrder
   }
 
+  export type BoolNullableFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
+    not?: NestedBoolNullableFilter<$PrismaModel> | boolean | null
+  }
+
   export type EventCountOrderByAggregateInput = {
     eventId?: SortOrder
     title?: SortOrder
@@ -14355,12 +14416,15 @@ export namespace Prisma {
     longitude?: SortOrder
     images?: SortOrder
     paid?: SortOrder
+    amount?: SortOrder
+    isPaymentSuccessful?: SortOrder
     businessId?: SortOrder
   }
 
   export type EventAvgOrderByAggregateInput = {
     latitude?: SortOrder
     longitude?: SortOrder
+    amount?: SortOrder
   }
 
   export type EventMaxOrderByAggregateInput = {
@@ -14372,6 +14436,8 @@ export namespace Prisma {
     latitude?: SortOrder
     longitude?: SortOrder
     paid?: SortOrder
+    amount?: SortOrder
+    isPaymentSuccessful?: SortOrder
     businessId?: SortOrder
   }
 
@@ -14384,12 +14450,23 @@ export namespace Prisma {
     latitude?: SortOrder
     longitude?: SortOrder
     paid?: SortOrder
+    amount?: SortOrder
+    isPaymentSuccessful?: SortOrder
     businessId?: SortOrder
   }
 
   export type EventSumOrderByAggregateInput = {
     latitude?: SortOrder
     longitude?: SortOrder
+    amount?: SortOrder
+  }
+
+  export type BoolNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
+    not?: NestedBoolNullableWithAggregatesFilter<$PrismaModel> | boolean | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedBoolNullableFilter<$PrismaModel>
+    _max?: NestedBoolNullableFilter<$PrismaModel>
   }
 
   export type PromoCountOrderByAggregateInput = {
@@ -14999,6 +15076,10 @@ export namespace Prisma {
     push?: string | string[]
   }
 
+  export type NullableBoolFieldUpdateOperationsInput = {
+    set?: boolean | null
+  }
+
   export type BusinessUpdateOneRequiredWithoutEventsNestedInput = {
     create?: XOR<BusinessCreateWithoutEventsInput, BusinessUncheckedCreateWithoutEventsInput>
     connectOrCreate?: BusinessCreateOrConnectWithoutEventsInput
@@ -15361,6 +15442,19 @@ export namespace Prisma {
     _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
+  export type NestedBoolNullableFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
+    not?: NestedBoolNullableFilter<$PrismaModel> | boolean | null
+  }
+
+  export type NestedBoolNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
+    not?: NestedBoolNullableWithAggregatesFilter<$PrismaModel> | boolean | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedBoolNullableFilter<$PrismaModel>
+    _max?: NestedBoolNullableFilter<$PrismaModel>
+  }
+
   export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel> | null
     in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
@@ -15554,6 +15648,8 @@ export namespace Prisma {
     longitude?: number | null
     images?: EventCreateimagesInput | string[]
     paid?: boolean
+    amount?: number | null
+    isPaymentSuccessful?: boolean | null
   }
 
   export type EventUncheckedCreateWithoutBusinessInput = {
@@ -15566,6 +15662,8 @@ export namespace Prisma {
     longitude?: number | null
     images?: EventCreateimagesInput | string[]
     paid?: boolean
+    amount?: number | null
+    isPaymentSuccessful?: boolean | null
   }
 
   export type EventCreateOrConnectWithoutBusinessInput = {
@@ -15716,6 +15814,8 @@ export namespace Prisma {
     longitude?: FloatNullableFilter<"Event"> | number | null
     images?: StringNullableListFilter<"Event">
     paid?: BoolFilter<"Event"> | boolean
+    amount?: FloatNullableFilter<"Event"> | number | null
+    isPaymentSuccessful?: BoolNullableFilter<"Event"> | boolean | null
     businessId?: StringFilter<"Event"> | string
   }
 
@@ -16901,6 +17001,8 @@ export namespace Prisma {
     longitude?: number | null
     images?: EventCreateimagesInput | string[]
     paid?: boolean
+    amount?: number | null
+    isPaymentSuccessful?: boolean | null
   }
 
   export type ItemCreateManyBusinessInput = {
@@ -16938,6 +17040,8 @@ export namespace Prisma {
     longitude?: NullableFloatFieldUpdateOperationsInput | number | null
     images?: EventUpdateimagesInput | string[]
     paid?: BoolFieldUpdateOperationsInput | boolean
+    amount?: NullableFloatFieldUpdateOperationsInput | number | null
+    isPaymentSuccessful?: NullableBoolFieldUpdateOperationsInput | boolean | null
   }
 
   export type EventUncheckedUpdateWithoutBusinessInput = {
@@ -16950,6 +17054,8 @@ export namespace Prisma {
     longitude?: NullableFloatFieldUpdateOperationsInput | number | null
     images?: EventUpdateimagesInput | string[]
     paid?: BoolFieldUpdateOperationsInput | boolean
+    amount?: NullableFloatFieldUpdateOperationsInput | number | null
+    isPaymentSuccessful?: NullableBoolFieldUpdateOperationsInput | boolean | null
   }
 
   export type EventUncheckedUpdateManyWithoutBusinessInput = {
@@ -16962,6 +17068,8 @@ export namespace Prisma {
     longitude?: NullableFloatFieldUpdateOperationsInput | number | null
     images?: EventUpdateimagesInput | string[]
     paid?: BoolFieldUpdateOperationsInput | boolean
+    amount?: NullableFloatFieldUpdateOperationsInput | number | null
+    isPaymentSuccessful?: NullableBoolFieldUpdateOperationsInput | boolean | null
   }
 
   export type ItemUpdateWithoutBusinessInput = {

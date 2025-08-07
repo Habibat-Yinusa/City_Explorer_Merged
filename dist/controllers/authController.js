@@ -39,22 +39,29 @@ exports.resetPassword = exports.forgotPassword = exports.loginUser = exports.cre
 const prisma_1 = require("../generated/prisma");
 const bcrypt_1 = require("bcrypt");
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
+const helper_1 = require("../helpers/helper");
+const imageType_1 = require("../constants/imageType");
 const prisma = new prisma_1.PrismaClient();
 let messages = [];
 const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { username, email, password, role, profilePic } = req.body;
-        if (!username || !email || !password || !role) {
+        const { username, email, password, role = 'USER' } = req.body;
+        if (!username || !email || !password) {
             throw new Error('Please fill in all fields');
         }
         const existing = yield prisma.user.findUnique({ where: { email_role: { email, role } } });
         if (existing)
             throw new Error(`Email already exists for a ${role.toLowerCase()} account`);
         const hashedPassword = yield (0, bcrypt_1.hash)(password, 10);
+        let imageUrl;
+        if (req.file) {
+            imageUrl = yield (0, helper_1.uploadImage)(req.file, imageType_1.ImageType.PROMO);
+        }
         const user = yield prisma.user.create({
             data: {
                 username,
                 email,
+                profilePic: imageUrl
             },
         });
         yield prisma.password.create({

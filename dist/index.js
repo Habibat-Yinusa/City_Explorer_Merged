@@ -40,6 +40,7 @@ const bussinesRoute_1 = __importDefault(require("./routes/bussinesRoute"));
 // import {botware} from "./middlewares/botMiddleware"
 const uploadRoute_1 = __importDefault(require("./routes/uploadRoute"));
 const businessControllers_1 = require("./controllers/businessControllers");
+const authController_1 = require("./controllers/authController");
 // import upload from './config/multer';
 // import cloudinary from './config/cloudinary';
 dotenv.config();
@@ -71,6 +72,7 @@ app.use("/business", bussinesRoute_1.default);
 app.use("/events", businessControllers_1.getAllEvents);
 app.use("/promos", businessControllers_1.getAllPromos);
 app.use("/upload", uploadRoute_1.default);
+app.use("/login", authController_1.loginUser);
 app.options('/*', (0, cors_1.default)());
 app.options('/chatbot', (0, cors_1.default)());
 app.options('/user', (0, cors_1.default)());

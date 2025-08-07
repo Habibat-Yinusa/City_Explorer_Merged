@@ -2,15 +2,17 @@ import { PrismaClient } from '../generated/prisma';
 import { hash, compare } from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { Request, Response } from 'express';
+import { uploadImage } from '../helpers/helper';
+import { ImageType } from '../constants/imageType';
 
 const prisma = new PrismaClient();
 let messages: string[] = [];
 
 const createUser = async (req: Request, res: Response) => {
   try {
-    const { username, email, password, role, profilePic } = req.body;
+    const { username, email, password, role = 'USER' } = req.body;
 
-    if (!username || !email || !password || !role) {
+    if (!username || !email || !password) {
       throw new Error('Please fill in all fields');
     }
 
@@ -20,10 +22,16 @@ const createUser = async (req: Request, res: Response) => {
 
     const hashedPassword = await hash(password, 10);
 
+    let imageUrl: string | undefined
+    if (req.file) {
+          imageUrl = await uploadImage(req.file, ImageType.PROMO);
+        }
+
     const user = await prisma.user.create({
       data: {
         username,
         email,
+        profilePic: imageUrl
       },
     });
 

@@ -99,6 +99,8 @@ model Event {
   longitude   Float?
   images      String[]
   paid        Boolean  @default(false)
+  amount      Float?  
+  isPaymentSuccessful Boolean? 
   businessId  String
   business    Business @relation(fields: [businessId], references: [businessId])
 }

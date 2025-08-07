@@ -90,17 +90,19 @@ model Item {
 }
 
 model Event {
-  eventId     String   @id @default(uuid())
-  title       String
-  description String
-  date        DateTime
-  location    String
-  latitude    Float?
-  longitude   Float?
-  images      String[]
-  paid        Boolean  @default(false)
-  businessId  String
-  business    Business @relation(fields: [businessId], references: [businessId])
+  eventId             String   @id @default(uuid())
+  title               String
+  description         String
+  date                DateTime
+  location            String
+  latitude            Float?
+  longitude           Float?
+  images              String[]
+  paid                Boolean  @default(false)
+  amount              Float?
+  isPaymentSuccessful Boolean?
+  businessId          String
+  business            Business @relation(fields: [businessId], references: [businessId])
 }
 
 model Promo {

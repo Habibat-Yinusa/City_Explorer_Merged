@@ -24,7 +24,7 @@ export const authenticate = async (req: Request, res: Response, next: NextFuncti
     const authHeader = req.headers.authorization;
     
     if (!authHeader || !authHeader.startsWith("Bearer ")) {
-      return res.status(401).json({ message: "Missing token" });
+      return res.status(401).json({ message: "Unauthorized!" });
     }
 
     const token = authHeader.split(" ")[1];
@@ -44,6 +44,10 @@ export const authenticate = async (req: Request, res: Response, next: NextFuncti
 
       if (!business || business.status !== 'APPROVED') {
         return res.status(403).json({ message: "Business account is not active" });
+      }
+
+      if (business.suspended) {
+        return res.status(403).json({ message: "Your business account is suspended, please contact admin for support" });    
       }
 
       req.user = business;

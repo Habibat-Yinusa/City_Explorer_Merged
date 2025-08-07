@@ -4,7 +4,8 @@ import { hash } from "bcrypt";
 import cloudinary from "../config/cloudinary";
 import type { Request as ExpressRequest } from "express";
 import uploadImages from "../services/uploadImage";
-import { sendEmail } from "../helpers/helper";
+import { buildUpdateData, sendEmail, uploadImage } from "../helpers/helper";
+import { ImageType } from "../constants/imageType";
 
 type MulterFile = Express.Multer.File;
 interface MulterRequest extends ExpressRequest {
@@ -21,7 +22,6 @@ const registerBusiness = async (req: Request, res: Response) => {
     const {
       name,
       category,
-      items,
       location,
       longitude,
       latitude,
@@ -48,10 +48,7 @@ const registerBusiness = async (req: Request, res: Response) => {
 
     let logoUrl: string | undefined;
     if (req.file) {
-      const result = await cloudinary.uploader.upload(req.file.path, {
-        folder: "logo",
-      });
-      logoUrl = result.secure_url;
+      logoUrl = await uploadImage(req.file, ImageType.LOGO);
     }
 
     const newBusiness = await prisma.business.create({
@@ -80,16 +77,28 @@ const registerBusiness = async (req: Request, res: Response) => {
 
     await sendEmail(
       email,
-      "Activate Your City Explorer Account",
+      "🎉 Activate Your City Explorer Account",
       '',
-      `<h1>Hello ${name},</h1>
-        <h4>Welcome to City Explorer!</h4>
-        <p>
-        Discover, promote, and grow your business with City Explorer. We're excited to have you on board and can't wait to see your business thrive!
-        </p>
-      <p>Click the button below to activate your account:</p>
-      <a href="${activationLink}" style="padding: 10px 20px; background-color: #5b8df3ff; color: white; text-decoration: none;">Activate Account</a>
-      <p>If you did not create this account, please ignore this email.</p>`
+      `
+      <div style="font-family: Arial, sans-serif; padding: 20px; background-color: #f5f7fa;">
+        <div style="max-width: 600px; margin: auto; background: #fff; padding: 30px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
+          <h2 style="color: #5b8df3;">Welcome to City Explorer, ${name}!</h2>
+          <p style="font-size: 16px; color: #333;">Thanks for signing up. You're one step away from discovering and promoting your business with us.</p>
+          
+          <p style="font-size: 16px;">Click the button below to activate your account:</p>
+          <div style="text-align: center; margin: 30px 0;">
+            <a href="${activationLink}" style="display: inline-block; background-color: #5b8df3; color: white; padding: 14px 28px; text-decoration: none; border-radius: 6px; font-size: 16px;">
+              Activate My Account
+            </a>
+          </div>
+
+          <p style="font-size: 14px; color: #999;">If you didn’t sign up for this account, you can safely ignore this email.</p>
+
+          <hr style="margin: 30px 0; border: none; border-top: 1px solid #eee;" />
+          <p style="font-size: 12px; color: #ccc;">City Explorer Team</p>
+        </div>
+      </div>
+      `
     );
 
     res.status(201).json({
@@ -178,6 +187,7 @@ const getAllBusinesses = async (req: Request, res: Response) => {
               equals: category as string,
               mode: 'insensitive',
             },
+            suspended: false
           }
         : undefined,
     });
@@ -192,6 +202,84 @@ const getAllBusinesses = async (req: Request, res: Response) => {
   }
 };
 
+const updateBusinessDetails = async (req: Request, res: Response) => {
+  try {
+    const { businessId } = req.query;
+    if (!businessId || typeof businessId !== 'string') {
+      return res.status(400).json({ message: 'Invalid businessId' });
+    }
+
+    if (!businessId) {
+      return res.status(400).json({ message: 'Business ID is required' });
+    }
+
+    const existingBusiness = await prisma.business.findUnique({ where: { businessId } });
+    if (!existingBusiness) {
+      return res.status(404).json({ message: 'Business not found' });
+    }
+
+    const {
+      name,
+      category,
+      location,
+      longitude,
+      latitude,
+      openHours,
+      phone,
+      email,
+      website,
+      description
+    } = req.body;
+
+    let logoUrl: string | undefined;
+    if (req.file) {
+      logoUrl = await uploadImage(req.file, ImageType.LOGO);
+    }
+
+    const updatedBusiness = await prisma.business.update({
+      where: { businessId },
+      data: {
+        name,
+        category,
+        location,
+        longitude: parseFloat(longitude),
+        latitude: parseFloat(latitude),
+        openHours,
+        phone,
+        email,
+        website,
+        description,
+        ...(logoUrl && { logo: logoUrl })
+      },
+    });
+
+    res.status(200).json({ message: 'Business updated successfully', business: updatedBusiness });
+  } catch (error: any) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+const deleteBusiness = async (req: Request, res: Response) => {
+  try {
+    const { businessId } = req.query;
+
+    if (!businessId || typeof businessId !== 'string') {
+      return res.status(400).json({ message: 'Missing or invalid businessId' });
+    }
+    const existingBusiness = await prisma.business.findUnique({ where: { businessId } });
+    if (!existingBusiness) { 
+      return res.status(404).json({ message: 'Business not found' });
+    }
+
+    await prisma.business.delete({ where: { businessId } });
+    res.status(200).json({ message: "Business deleted" });
+  } catch (error: any) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+
+//EVENT
 const addEventToBusiness = async (req: Request, res: Response) => {
   try {
      const { businessId } = req.query;
@@ -199,10 +287,26 @@ const addEventToBusiness = async (req: Request, res: Response) => {
       return res.status(400).json({ message: 'Missing or invalid businessId' });
     }
 
-    const { title, description, location, longitude, latitude, date, paid } = req.body;
+    const { title, description, location, longitude, latitude, date, paid, amount } = req.body;
+
+    let eventImageUrl: string | undefined;
+    if (req.file) {
+      eventImageUrl = await uploadImage(req.file, ImageType.EVENT);
+    }
 
     const event = await prisma.event.create({
-      data: { title, description, location, longitude, latitude, date, businessId, paid },
+      data: { 
+        title, 
+        description, 
+        location, 
+        longitude, 
+        latitude, 
+        date, 
+        businessId, 
+        paid, 
+        amount,
+        images: eventImageUrl ? [eventImageUrl] : undefined 
+      },
     });
 
     res.status(201).json({ message: "Event added", event });
@@ -233,6 +337,67 @@ const getEvents = async (req: Request, res: Response) => {
   }
 };
 
+const updateEvent = async (req: Request, res: Response) => {
+  try {
+    const { eventId } = req.query;
+
+    if (!eventId || typeof eventId !== 'string') {
+      return res.status(400).json({ message: 'Missing or invalid eventId' });
+    }
+
+    const existingEvent = await prisma.event.findUnique({ where: { eventId } });
+    if (!existingEvent) {
+      return res.status(404).json({ message: 'Event not found' });
+    }
+    const allowedFields = [
+          "title",
+          "description",
+          "location",
+          "longitude",
+          "latitude",
+          "date",
+          "paid",
+          "amount"
+        ];
+
+    const dataToUpdate = buildUpdateData(req.body, allowedFields);
+
+    if (req.file) {
+      const newImageUrl = await uploadImage(req.file, ImageType.EVENT);
+      dataToUpdate.images = { push: newImageUrl };
+    }
+
+    const updatedEvent = await prisma.event.update({
+      where: { eventId },
+      data: dataToUpdate,
+    });
+
+    res.status(200).json({ message: "Event updated", event: updatedEvent });
+  } catch (error: any) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+const deleteEvent = async (req: Request, res: Response) => {
+  try {
+    const { eventId } = req.query;
+
+    if (!eventId || typeof eventId !== 'string') {
+      return res.status(400).json({ message: 'Missing or invalid eventId' });
+    }
+    const existingEvent = await prisma.event.findUnique({ where: { eventId } });
+    if (!existingEvent) {
+      return res.status(404).json({ message: 'Event not found' });
+    }
+
+    await prisma.event.delete({ where: { eventId } });
+    res.status(200).json({ message: "Event deleted" });
+  } catch (error: any) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+//PROMOS
 const addPromo = async (req: Request, res: Response) => {
   try {
     const { businessId } = req.query;
@@ -241,10 +406,22 @@ const addPromo = async (req: Request, res: Response) => {
       return res.status(400).json({ message: 'Missing or invalid businessId' });
     }
 
-    const { name, description, startDate, endDate, image } = req.body;
+    const { name, description, startDate, endDate } = req.body;
+
+    let promoImageUrl: string | undefined;
+    if (req.file) {
+      promoImageUrl = await uploadImage(req.file, ImageType.PROMO);
+    }
 
     const promo = await prisma.promo.create({
-      data: { name, description, startDate, endDate, businessId, images: image },
+      data: { 
+        name, 
+        description, 
+        startDate, 
+        endDate, 
+        businessId, 
+        images: promoImageUrl ? [promoImageUrl] : undefined  
+      },
     });
 
     res.status(201).json({ message: "Promo added", promo });
@@ -290,12 +467,49 @@ const getAllPromos = async (req: Request, res: Response) => {
   }
 };
 
+const updatePromo = async (req: Request, res: Response) => {
+  try {
+    const { promoId } = req.query;
+
+    if (!promoId || typeof promoId !== 'string') {
+      return res.status(400).json({ message: 'Missing or invalid promoId' });
+    }
+
+    const existingPromo = await prisma.promo.findUnique({ where: { promoId } });
+    if (!existingPromo) {
+      return res.status(404).json({ message: 'Promo not found' });
+    }
+
+    const allowedFields = ["name", "description", "startDate", "endDate"];
+    const dataToUpdate = buildUpdateData(req.body, allowedFields);
+
+    if (req.file) {
+      const newImageUrl = await uploadImage(req.file, ImageType.PROMO);
+      dataToUpdate.images = { push: newImageUrl };
+    }
+
+    const updatedPromo = await prisma.promo.update({
+      where: { promoId },
+      data: dataToUpdate,
+    });
+
+    res.status(200).json({ message: "Promo updated", promo: updatedPromo });
+  } catch (error: any) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+
 const deletePromo = async (req: Request, res: Response) => {
   try {
     const { promoId } = req.query;
 
     if (!promoId || typeof promoId !== 'string') {
       return res.status(400).json({ message: 'Missing or invalid promoId' });
+    }
+    const existingPromo = await prisma.promo.findUnique({ where: { promoId } });
+    if (!existingPromo) {
+      return res.status(404).json({ message: 'Promo not found' });
     }
 
     await prisma.promo.delete({ where: { promoId } });
@@ -353,17 +567,43 @@ const addProduct = async (req: Request, res: Response) => {
   }
 };
 
+const uploadBusinessFlier = async (req: Request, res: Response) => {
+  try {
+    const { businessId } = req.params;
+
+    if (!req.file) throw new Error("No file uploaded");
+
+    const flierUrl = await uploadImage(req.file, ImageType.GENERAL);
+
+    const updatedBusiness = await prisma.business.update({
+      where: { businessId },
+      data: { image: flierUrl },
+    });
+
+    res.status(200).json({ message: "Business cover image uploaded", cover_image: flierUrl });
+  } catch (error: any) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+
 export {
   registerBusiness,
   activateBusiness,
   getBusinessDetails,
   getAllBusinesses,
+  updateBusinessDetails,
+  deleteBusiness,
   addEventToBusiness,
   getEvents,
   getAllEvents,
+  updateEvent,
+  deleteEvent,
   addPromo,
   getPromos,
   getAllPromos,
+  updatePromo,
   deletePromo,
   addProduct,
+  uploadBusinessFlier
 };

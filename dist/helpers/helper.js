@@ -12,8 +12,16 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.sendEmail = void 0;
+exports.buildUpdateData = exports.sendEmail = exports.uploadImage = void 0;
 const nodemailer_1 = __importDefault(require("nodemailer"));
+const cloudinary_1 = require("cloudinary");
+const uploadImage = (file, folder) => __awaiter(void 0, void 0, void 0, function* () {
+    if (!file)
+        return;
+    const result = yield cloudinary_1.v2.uploader.upload(file.path, { folder });
+    return result.secure_url;
+});
+exports.uploadImage = uploadImage;
 const sendEmail = (email, subject, text, html, attachments) => __awaiter(void 0, void 0, void 0, function* () {
     const transporter = nodemailer_1.default.createTransport({
         service: 'gmail',
@@ -40,3 +48,14 @@ const sendEmail = (email, subject, text, html, attachments) => __awaiter(void 0,
     }
 });
 exports.sendEmail = sendEmail;
+function buildUpdateData(body, allowedFields) {
+    const updateData = {};
+    for (const key of allowedFields) {
+        const value = body[key];
+        if (value !== undefined && value !== null) {
+            updateData[key] = value;
+        }
+    }
+    return updateData;
+}
+exports.buildUpdateData = buildUpdateData;

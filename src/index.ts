@@ -12,6 +12,7 @@ import businessRoute from "./routes/bussinesRoute"
 // import {botware} from "./middlewares/botMiddleware"
 import uploadRoute from './routes/uploadRoute';
 import { getAllEvents, getAllPromos } from './controllers/businessControllers';
+import { loginUser } from './controllers/authController';
 // import upload from './config/multer';
 // import cloudinary from './config/cloudinary';
 
@@ -54,10 +55,12 @@ app.use("/business", businessRoute)
 app.use("/events", getAllEvents)
 app.use("/promos", getAllPromos)
 app.use("/upload", uploadRoute);
+app.use("/login", loginUser)
 
 app.options('/*', cors());
 app.options('/chatbot', cors());
 app.options('/user', cors());
+
 
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);

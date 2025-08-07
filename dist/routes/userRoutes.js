@@ -22,11 +22,14 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
+const multer_1 = __importDefault(require("../config/multer"));
 const user = __importStar(require("../controllers/authController"));
 const express_1 = require("express");
 // import { protect } from "../middlewares/authMiddleware";
 const router = (0, express_1.Router)();
-router.post("/signup", user.createUser);
-router.post("/login", user.loginUser);
+router.post("/signup", multer_1.default.single('image'), user.createUser);
 exports.default = router;

@@ -20,7 +20,7 @@ const authenticate = (req, res, next) => __awaiter(void 0, void 0, void 0, funct
     try {
         const authHeader = req.headers.authorization;
         if (!authHeader || !authHeader.startsWith("Bearer ")) {
-            return res.status(401).json({ message: "Missing token" });
+            return res.status(401).json({ message: "Unauthorized!" });
         }
         const token = authHeader.split(" ")[1];
         const decoded = jsonwebtoken_1.default.verify(token, process.env.JWT_SECRET);
@@ -35,6 +35,9 @@ const authenticate = (req, res, next) => __awaiter(void 0, void 0, void 0, funct
             const business = yield prisma.business.findUnique({ where: { businessId: userId } });
             if (!business || business.status !== 'APPROVED') {
                 return res.status(403).json({ message: "Business account is not active" });
+            }
+            if (business.suspended) {
+                return res.status(403).json({ message: "Your business account is suspended, please contact admin for support" });
             }
             req.user = business;
         }

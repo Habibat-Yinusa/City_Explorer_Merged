@@ -1,23 +1,26 @@
 import { Router } from 'express';
 import * as businessController from '../controllers/businessControllers';
 import upload from '../config/multer';
+import { authenticate } from '../middlewares/authMiddleware';
 
 const router = Router();
 
 router.post('/register', upload.single('image'), businessController.registerBusiness);
 router.get('/activate/:id', businessController.activateBusiness);
-router.get('/', businessController.getBusinessDetails);
-router.get('/', businessController.getAllBusinesses);
+router.get('/', authenticate, businessController.getBusinessDetails);
+router.get('/all', authenticate, businessController.getAllBusinesses);
 
-router.post('/event', businessController.addEventToBusiness);
-router.get('/events', businessController.getEvents);
-// router.get('/events', businessController.getAllEvents);
+router.post('/event', authenticate, upload.single('image'), businessController.addEventToBusiness);
+router.get('/events', authenticate, businessController.getEvents);
+router.put('/event', authenticate, upload.single('image'), businessController.updateEvent);
+router.delete('/event', authenticate, businessController.deleteEvent);
 
-router.post('/promo', businessController.addPromo);
-router.get('/promo', businessController.getPromos);
-// router.get('/promos', businessController.getAllPromos);
-router.delete('/promo', businessController.deletePromo);
+router.post('/promo', authenticate, upload.single('image'), businessController.addPromo);
+router.get('/promo', authenticate, businessController.getPromos);
+router.put('/promo', authenticate, upload.single('image'), businessController.updatePromo);
+router.delete('/promo', authenticate, businessController.deletePromo);
 
-router.post('/:businessId/product', upload.single('file'), businessController.addProduct);
+router.post('/:businessId/product', authenticate, upload.single('image'), businessController.addProduct);
+router.post('/:businessId/upload-flier', authenticate, upload.single('image'), businessController.uploadBusinessFlier);
 
 export default router;
