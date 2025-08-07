@@ -35,13 +35,15 @@ router.post('/register', multer_1.default.single('image'), businessController.re
 router.get('/activate/:id', businessController.activateBusiness);
 router.get('/', authMiddleware_1.authenticate, businessController.getBusinessDetails);
 router.get('/all', authMiddleware_1.authenticate, businessController.getAllBusinesses);
+router.patch('/update', authMiddleware_1.authenticate, multer_1.default.single('image'), businessController.updateBusinessDetails);
+router.delete('/delete', authMiddleware_1.authenticate, businessController.deleteBusiness);
 router.post('/event', authMiddleware_1.authenticate, multer_1.default.single('image'), businessController.addEventToBusiness);
 router.get('/events', authMiddleware_1.authenticate, businessController.getEvents);
-router.put('/event', authMiddleware_1.authenticate, multer_1.default.single('image'), businessController.updateEvent);
+router.patch('/event', authMiddleware_1.authenticate, multer_1.default.single('image'), businessController.updateEvent);
 router.delete('/event', authMiddleware_1.authenticate, businessController.deleteEvent);
 router.post('/promo', authMiddleware_1.authenticate, multer_1.default.single('image'), businessController.addPromo);
 router.get('/promo', authMiddleware_1.authenticate, businessController.getPromos);
-router.put('/promo', authMiddleware_1.authenticate, multer_1.default.single('image'), businessController.updatePromo);
+router.patch('/promo', authMiddleware_1.authenticate, multer_1.default.single('image'), businessController.updatePromo);
 router.delete('/promo', authMiddleware_1.authenticate, businessController.deletePromo);
 router.post('/:businessId/product', authMiddleware_1.authenticate, multer_1.default.single('image'), businessController.addProduct);
 router.post('/:businessId/upload-flier', authMiddleware_1.authenticate, multer_1.default.single('image'), businessController.uploadBusinessFlier);

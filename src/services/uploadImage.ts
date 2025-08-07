@@ -28,14 +28,15 @@ const uploadImages = async (req: Request, res: Response) => {
         break;
     }
 
+    // Upload using in-memory buffer
+    const base64Image = file.buffer.toString('base64');
+    const dataUri = `data:${file.mimetype};base64,${base64Image}`;
+
     // Upload to Cloudinary
-    const result = await cloudinary.uploader.upload(file.path, {
+    const result = await cloudinary.uploader.upload(dataUri, {
       folder,
       public_id: `${Date.now()}-${file.originalname.split('.')[0]}`,
     });
-
-    // Remove local temp file
-    fs.unlinkSync(file.path);
 
     return res.status(200).json({
       message: 'Image uploaded successfully',

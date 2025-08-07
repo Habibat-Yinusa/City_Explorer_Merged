@@ -13,7 +13,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const cloudinary_1 = __importDefault(require("../config/cloudinary"));
-const fs_1 = __importDefault(require("fs"));
 const uploadImages = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     var _a;
     try {
@@ -39,13 +38,14 @@ const uploadImages = (req, res) => __awaiter(void 0, void 0, void 0, function* (
                 folder = 'logo';
                 break;
         }
+        // Upload using in-memory buffer
+        const base64Image = file.buffer.toString('base64');
+        const dataUri = `data:${file.mimetype};base64,${base64Image}`;
         // Upload to Cloudinary
-        const result = yield cloudinary_1.default.uploader.upload(file.path, {
+        const result = yield cloudinary_1.default.uploader.upload(dataUri, {
             folder,
             public_id: `${Date.now()}-${file.originalname.split('.')[0]}`,
         });
-        // Remove local temp file
-        fs_1.default.unlinkSync(file.path);
         return res.status(200).json({
             message: 'Image uploaded successfully',
             url: result.secure_url,
