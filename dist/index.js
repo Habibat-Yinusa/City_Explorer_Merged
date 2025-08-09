@@ -26,8 +26,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const swagger_1 = require("./config/swagger");
 const express_1 = __importDefault(require("express"));
+const swagger_ui_express_1 = __importDefault(require("swagger-ui-express"));
+const swagger_1 = require("./config/swagger");
 const body_parser_1 = __importDefault(require("body-parser"));
 const cookie_parser_1 = __importDefault(require("cookie-parser"));
 const compression_1 = __importDefault(require("compression"));
@@ -58,7 +59,20 @@ app.options('*', (req, res) => {
     res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
     res.sendStatus(204);
 });
-app.use('/api-docs', swagger_1.swaggerUi.serve, swagger_1.swaggerUi.setup(swagger_1.specs, { explorer: true }));
+// Serve swagger.json separately
+app.get('/swagger.json', (req, res) => {
+    res.setHeader('Content-Type', 'application/json');
+    res.send(swagger_1.specs);
+});
+// Use CDN-based setup for Vercel
+if (process.env.NODE_ENV === 'production') {
+    app.use('/api-docs', swagger_ui_express_1.default.serve);
+    app.get('/api-docs', swagger_ui_express_1.default.setup(swagger_1.specs, Object.assign(Object.assign({}, swagger_1.swaggerOptions), { swaggerOptions: Object.assign(Object.assign({}, swagger_1.swaggerOptions.swaggerOptions), { url: `${process.env.API_BASE_URL}/swagger.json` }) })));
+}
+else {
+    // Local 
+    app.use('/api-docs', swagger_ui_express_1.default.serve, swagger_ui_express_1.default.setup(swagger_1.specs, swagger_1.swaggerOptions));
+}
 const port = 3000;
 app.use((0, compression_1.default)());
 app.use((0, cookie_parser_1.default)());

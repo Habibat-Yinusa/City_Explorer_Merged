@@ -11,23 +11,25 @@ const options = {
     },
     servers: [
       {
-        url:  process.env.NODE_ENV === 'production' ? `${process.env.API_BASE_URL}` : 'http://localhost:3000',
-        description: 'Production server',
+        url: process.env.NODE_ENV === 'production' 
+          ? `${process.env.API_BASE_URL}` 
+          : 'http://localhost:3000',
+        description: process.env.NODE_ENV === 'production' ? 'Production server' : 'Development server',
       },
     ],
     components: {
-        securitySchemes: {
-            BearerAuth: {
-                type: 'http',
-                scheme: 'bearer',
-                bearerFormat: 'JWT',
-            },
+      securitySchemes: {
+        BearerAuth: {
+          type: 'http',
+          scheme: 'bearer',
+          bearerFormat: 'JWT',
         },
+      },
     },
     security: [
-        {
-            BearerAuth: [],
-        },
+      {
+        BearerAuth: [],
+      },
     ],
   },
   apis: ['dist/**/*.js', 'src/**/*.ts'],
@@ -35,4 +37,14 @@ const options = {
 
 const specs = swaggerJsdoc(options);
 
-export { swaggerUi, specs };
+const swaggerOptions = {
+  explorer: true,
+  swaggerOptions: {
+    url: '/swagger.json',
+  },
+  customCss: '.swagger-ui .topbar { display: none }',
+  customSiteTitle: 'City Explorer API Documentation',
+  customfavIcon: '/favicon.ico',
+};
+
+export { swaggerUi, specs, swaggerOptions };

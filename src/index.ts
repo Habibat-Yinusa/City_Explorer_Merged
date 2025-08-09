@@ -1,5 +1,6 @@
-import { swaggerUi, specs } from './config/swagger';
 import express from 'express';
+import swaggerUi from 'swagger-ui-express';
+import { specs, swaggerOptions } from './config/swagger';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import compression from 'compression';
@@ -36,7 +37,26 @@ app.options('*', (req, res) => {
   res.sendStatus(204);
 });
 
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs, { explorer: true }));
+// Serve swagger.json separately
+app.get('/swagger.json', (req, res) => {
+  res.setHeader('Content-Type', 'application/json');
+  res.send(specs);
+});
+
+// Use CDN-based setup for Vercel
+if (process.env.NODE_ENV === 'production') {
+  app.use('/api-docs', swaggerUi.serve);
+  app.get('/api-docs', swaggerUi.setup(specs, {
+    ...swaggerOptions,
+    swaggerOptions: {
+      ...swaggerOptions.swaggerOptions,
+      url: `${process.env.API_BASE_URL}/swagger.json`,
+    },
+  }));
+} else {
+  // Local 
+  app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs, swaggerOptions));
+}
 
 const port = 3000;
 

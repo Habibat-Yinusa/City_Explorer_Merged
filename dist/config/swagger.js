@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.specs = exports.swaggerUi = void 0;
+exports.swaggerOptions = exports.specs = exports.swaggerUi = void 0;
 const swagger_jsdoc_1 = __importDefault(require("swagger-jsdoc"));
 const swagger_ui_express_1 = __importDefault(require("swagger-ui-express"));
 exports.swaggerUi = swagger_ui_express_1.default;
@@ -17,8 +17,10 @@ const options = {
         },
         servers: [
             {
-                url: process.env.NODE_ENV === 'production' ? `${process.env.API_BASE_URL}` : 'http://localhost:3000',
-                description: 'Production server',
+                url: process.env.NODE_ENV === 'production'
+                    ? `${process.env.API_BASE_URL}`
+                    : 'http://localhost:3000',
+                description: process.env.NODE_ENV === 'production' ? 'Production server' : 'Development server',
             },
         ],
         components: {
@@ -40,3 +42,13 @@ const options = {
 };
 const specs = (0, swagger_jsdoc_1.default)(options);
 exports.specs = specs;
+const swaggerOptions = {
+    explorer: true,
+    swaggerOptions: {
+        url: '/swagger.json',
+    },
+    customCss: '.swagger-ui .topbar { display: none }',
+    customSiteTitle: 'City Explorer API Documentation',
+    customfavIcon: '/favicon.ico',
+};
+exports.swaggerOptions = swaggerOptions;
