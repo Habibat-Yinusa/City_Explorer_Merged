@@ -43,6 +43,7 @@ const router = (0, express_1.Router)();
  *   post:
  *     summary: Register a new business
  *     tags: [Business]
+ *     security: []
  *     consumes:
  *       - multipart/form-data
  *     requestBody:
@@ -96,7 +97,7 @@ const router = (0, express_1.Router)();
  *     summary: Get business details
  *     tags: [Business]
  *     security:
- *       - bearerAuth: []
+ *       - BearerAuth: []
  *     parameters:
  *       - in: query
  *         name: businessId
@@ -116,7 +117,7 @@ const router = (0, express_1.Router)();
  *     summary: Get all businesses
  *     tags: [Business]
  *     security:
- *       - bearerAuth: []
+ *       - BearerAuth: []
  *     parameters:
  *       - in: query
  *         name: category
@@ -136,7 +137,7 @@ const router = (0, express_1.Router)();
  *     summary: Update business details
  *     tags: [Business]
  *     security:
- *       - bearerAuth: []
+ *       - BearerAuth: []
  *     consumes:
  *       - multipart/form-data
  *     parameters:
@@ -188,7 +189,7 @@ const router = (0, express_1.Router)();
  *     summary: Delete business account
  *     tags: [Business]
  *     security:
- *       - bearerAuth: []
+ *       - BearerAuth: []
  *     parameters:
  *       - in: query
  *         name: businessId
@@ -220,7 +221,7 @@ router.delete('/delete', authMiddleware_1.authenticate, businessController.delet
  *     summary: Add a new event to a business
  *     tags: [Events]
  *     security:
- *       - bearerAuth: []
+ *       - BearerAuth: []
  *     consumes:
  *       - multipart/form-data
  *     parameters:
@@ -278,7 +279,7 @@ router.delete('/delete', authMiddleware_1.authenticate, businessController.delet
  *     summary: Get all events for a business
  *     tags: [Events]
  *     security:
- *       - bearerAuth: []
+ *       - BearerAuth: []
  *     parameters:
  *       - in: query
  *         name: businessId
@@ -301,7 +302,7 @@ router.delete('/delete', authMiddleware_1.authenticate, businessController.delet
  *     summary: Update an existing event
  *     tags: [Events]
  *     security:
- *       - bearerAuth: []
+ *       - BearerAuth: []
  *     consumes:
  *       - multipart/form-data
  *     parameters:
@@ -355,7 +356,7 @@ router.delete('/delete', authMiddleware_1.authenticate, businessController.delet
  *     summary: Delete an event
  *     tags: [Events]
  *     security:
- *       - bearerAuth: []
+ *       - BearerAuth: []
  *     parameters:
  *       - in: query
  *         name: eventId
@@ -390,7 +391,7 @@ router.delete('/event', authMiddleware_1.authenticate, businessController.delete
  *     summary: Add a new promotion to a business
  *     tags: [Promos]
  *     security:
- *       - bearerAuth: []
+ *       - BearerAuth: []
  *     consumes:
  *       - multipart/form-data
  *     parameters:
@@ -440,7 +441,7 @@ router.delete('/event', authMiddleware_1.authenticate, businessController.delete
  *     summary: Get all active promos for a business
  *     tags: [Promos]
  *     security:
- *       - bearerAuth: []
+ *       - BearerAuth: []
  *     parameters:
  *       - in: query
  *         name: businessId
@@ -463,7 +464,7 @@ router.delete('/event', authMiddleware_1.authenticate, businessController.delete
  *     summary: Update an existing promo
  *     tags: [Promos]
  *     security:
- *       - bearerAuth: []
+ *       - BearerAuth: []
  *     consumes:
  *       - multipart/form-data
  *     parameters:
@@ -510,7 +511,7 @@ router.delete('/event', authMiddleware_1.authenticate, businessController.delete
  *     summary: Delete a promo
  *     tags: [Promos]
  *     security:
- *       - bearerAuth: []
+ *       - BearerAuth: []
  *     parameters:
  *       - in: query
  *         name: promoId

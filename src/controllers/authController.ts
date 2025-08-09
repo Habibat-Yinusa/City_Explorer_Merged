@@ -22,6 +22,7 @@ let messages: string[] = [];
  *   post:
  *     summary: Create a new user account
  *     tags: [Auth]
+ *     security: []
  *     consumes:
  *       - multipart/form-data
  *     requestBody:
@@ -62,6 +63,7 @@ let messages: string[] = [];
  *   post:
  *     summary: Login for both users and businesses
  *     tags: [Auth]
+ *     security: []
  *     requestBody:
  *       required: true
  *       content:

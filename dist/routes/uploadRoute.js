@@ -20,7 +20,7 @@ const authMiddleware_1 = require("../middlewares/authMiddleware");
  *     summary: Upload a business flier or cover image
  *     tags: [Image Uploads]
  *     security:
- *       - bearerAuth: []
+ *       - BearerAuth: []
  *     consumes:
  *       - multipart/form-data
  *     parameters:
