@@ -26,6 +26,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const swagger_1 = require("./config/swagger");
 const express_1 = __importDefault(require("express"));
 const body_parser_1 = __importDefault(require("body-parser"));
 const cookie_parser_1 = __importDefault(require("cookie-parser"));
@@ -39,7 +40,6 @@ const bussinesRoute_1 = __importDefault(require("./routes/bussinesRoute"));
 const uploadRoute_1 = __importDefault(require("./routes/uploadRoute"));
 const businessControllers_1 = require("./controllers/businessControllers");
 const authController_1 = require("./controllers/authController");
-const swagger_1 = require("./config/swagger");
 const authMiddleware_1 = require("./middlewares/authMiddleware");
 dotenv.config();
 (0, db_1.connectDB)();
@@ -58,6 +58,7 @@ app.options('*', (req, res) => {
     res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
     res.sendStatus(204);
 });
+app.use('/api-docs', swagger_1.swaggerUi.serve, swagger_1.swaggerUi.setup(swagger_1.specs, { explorer: true }));
 const port = 3000;
 app.use((0, compression_1.default)());
 app.use((0, cookie_parser_1.default)());
@@ -107,7 +108,6 @@ app.use("/events", authMiddleware_1.authenticate, businessControllers_1.getAllEv
 app.use("/promos", authMiddleware_1.authenticate, businessControllers_1.getAllPromos);
 app.use("/upload", uploadRoute_1.default);
 app.use("/login", authController_1.loginUser);
-app.use('/api-docs', swagger_1.swaggerUi.serve, swagger_1.swaggerUi.setup(swagger_1.specs));
 app.options('/*', (0, cors_1.default)());
 app.options('/chatbot', (0, cors_1.default)());
 app.options('/user', (0, cors_1.default)());
