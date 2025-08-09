@@ -1,3 +1,4 @@
+import { swaggerUi, specs } from './config/swagger';
 import express from 'express';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
@@ -11,7 +12,6 @@ import businessRoute from "./routes/bussinesRoute"
 import uploadRoute from './routes/uploadRoute';
 import { getAllEvents, getAllPromos } from './controllers/businessControllers';
 import { loginUser } from './controllers/authController';
-import { swaggerUi, specs } from './config/swagger';
 import { authenticate } from './middlewares/authMiddleware';
 
 dotenv.config();
@@ -36,8 +36,7 @@ app.options('*', (req, res) => {
   res.sendStatus(204);
 });
 
-
-
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs, { explorer: true }));
 
 const port = 3000;
 
@@ -92,8 +91,6 @@ app.use("/events", authenticate, getAllEvents)
 app.use("/promos", authenticate, getAllPromos)
 app.use("/upload", uploadRoute);
 app.use("/login", loginUser)
-
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 
 app.options('/*', cors());
 app.options('/chatbot', cors());
