@@ -41,6 +41,8 @@
     "nodemailer": "^7.0.5",
     "path": "^0.12.7",
     "pg": "^8.16.3",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1",
     "twilio": "^5.0.3",
     "typescript": "^5.4.3"
   },
@@ -53,6 +55,8 @@
     "@types/mongoose": "^5.11.97",
     "@types/node": "^24.0.13",
     "@types/nodemailer": "^6.4.17",
+    "@types/swagger-jsdoc": "^6.0.4",
+    "@types/swagger-ui-express": "^4.1.8",
     "nodemon": "^3.1.0",
     "pre-commit": "^1.2.2",
     "prisma": "^6.13.0",

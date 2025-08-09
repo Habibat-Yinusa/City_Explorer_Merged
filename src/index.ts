@@ -8,13 +8,11 @@ import { connectDB } from "./config/db"
 import userRoutes from "./routes/userRoutes";
 import chatbotRoute from "./routes/chatbotRoute";
 import businessRoute from "./routes/bussinesRoute"
-// import { protect } from "./middlewares/authMiddleware";
-// import {botware} from "./middlewares/botMiddleware"
 import uploadRoute from './routes/uploadRoute';
 import { getAllEvents, getAllPromos } from './controllers/businessControllers';
 import { loginUser } from './controllers/authController';
-// import upload from './config/multer';
-// import cloudinary from './config/cloudinary';
+import { swaggerUi, specs } from './config/swagger';
+import { authenticate } from './middlewares/authMiddleware';
 
 dotenv.config();
 connectDB();
@@ -52,14 +50,55 @@ app.use("/user", userRoutes)
 app.use("/", chatbotRoute)
 app.use("/business", businessRoute)
 // app.use("/business", uploadRoute)
-app.use("/events", getAllEvents)
-app.use("/promos", getAllPromos)
+
+/**
+ * @swagger
+ * /events:
+ *   get:
+ *     summary: Get all events
+ *     tags: [Events]
+ *     responses:
+ *       200:
+ *         description: List of all events
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Event'
+ *       500:
+ *         description: Server error
+ */
+app.use("/events", authenticate, getAllEvents)
+
+/**
+ * @swagger
+ * /promos:
+ *   get:
+ *     summary: Get all active promos
+ *     tags: [Promos]
+ *     responses:
+ *       200:
+ *         description: List of all active promos
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Promo'
+ *       500:
+ *         description: Server error
+ */
+app.use("/promos", authenticate, getAllPromos)
 app.use("/upload", uploadRoute);
 app.use("/login", loginUser)
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 
 app.options('/*', cors());
 app.options('/chatbot', cors());
 app.options('/user', cors());
+
 
 
 app.listen(port, () => {
