@@ -1,6 +1,6 @@
 import express from 'express';
-import swaggerUi from 'swagger-ui-express';
-import { specs, swaggerOptions } from './config/swagger';
+import { specs, getSwaggerHTML } from './config/swagger';
+// import { specs, swaggerOptions } from './config/swagger';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import compression from 'compression';
@@ -37,26 +37,29 @@ app.options('*', (req, res) => {
   res.sendStatus(204);
 });
 
-// Serve swagger.json separately
+// Serve the OpenAPI JSON specification
 app.get('/swagger.json', (req, res) => {
   res.setHeader('Content-Type', 'application/json');
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
   res.send(specs);
 });
 
-// Use CDN-based setup for Vercel
-if (process.env.NODE_ENV === 'production') {
-  app.use('/api-docs', swaggerUi.serve);
-  app.get('/api-docs', swaggerUi.setup(specs, {
-    ...swaggerOptions,
-    swaggerOptions: {
-      ...swaggerOptions.swaggerOptions,
-      url: `${process.env.API_BASE_URL}/swagger.json`,
-    },
-  }));
-} else {
-  // Local 
-  app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs, swaggerOptions));
-}
+// Serve the Swagger UI HTML page
+app.get('/api-docs', (req, res) => {
+  const baseUrl = process.env.NODE_ENV === 'production' 
+    ? process.env.API_BASE_URL 
+    : 'http://localhost:3000';
+  
+  const specUrl = `${baseUrl}/swagger.json`;
+  
+  res.setHeader('Content-Type', 'text/html');
+  res.send(getSwaggerHTML(specUrl));
+});
+
+app.get('/api-docs/', (req, res) => {
+  res.redirect('/api-docs');
+});
 
 const port = 3000;
 

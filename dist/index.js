@@ -27,8 +27,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
-const swagger_ui_express_1 = __importDefault(require("swagger-ui-express"));
 const swagger_1 = require("./config/swagger");
+// import { specs, swaggerOptions } from './config/swagger';
 const body_parser_1 = __importDefault(require("body-parser"));
 const cookie_parser_1 = __importDefault(require("cookie-parser"));
 const compression_1 = __importDefault(require("compression"));
@@ -59,20 +59,25 @@ app.options('*', (req, res) => {
     res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
     res.sendStatus(204);
 });
-// Serve swagger.json separately
+// Serve the OpenAPI JSON specification
 app.get('/swagger.json', (req, res) => {
     res.setHeader('Content-Type', 'application/json');
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
     res.send(swagger_1.specs);
 });
-// Use CDN-based setup for Vercel
-if (process.env.NODE_ENV === 'production') {
-    app.use('/api-docs', swagger_ui_express_1.default.serve);
-    app.get('/api-docs', swagger_ui_express_1.default.setup(swagger_1.specs, Object.assign(Object.assign({}, swagger_1.swaggerOptions), { swaggerOptions: Object.assign(Object.assign({}, swagger_1.swaggerOptions.swaggerOptions), { url: `${process.env.API_BASE_URL}/swagger.json` }) })));
-}
-else {
-    // Local 
-    app.use('/api-docs', swagger_ui_express_1.default.serve, swagger_ui_express_1.default.setup(swagger_1.specs, swagger_1.swaggerOptions));
-}
+// Serve the Swagger UI HTML page
+app.get('/api-docs', (req, res) => {
+    const baseUrl = process.env.NODE_ENV === 'production'
+        ? process.env.API_BASE_URL
+        : 'http://localhost:3000';
+    const specUrl = `${baseUrl}/swagger.json`;
+    res.setHeader('Content-Type', 'text/html');
+    res.send((0, swagger_1.getSwaggerHTML)(specUrl));
+});
+app.get('/api-docs/', (req, res) => {
+    res.redirect('/api-docs');
+});
 const port = 3000;
 app.use((0, compression_1.default)());
 app.use((0, cookie_parser_1.default)());
