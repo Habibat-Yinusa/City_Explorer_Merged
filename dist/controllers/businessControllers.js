@@ -115,8 +115,7 @@ const activateBusiness = (req, res) => __awaiter(void 0, void 0, void 0, functio
         <body style="font-family: Arial, sans-serif; text-align: center; padding: 40px;">
           <h2>Account Activated ✅</h2>
           <p>Your account has been successfully activated!</p>
-          <p>You can now <a href="${CLIENT_BASE_URL}/login">login here</a>.</p>
-          <p>You will be redirected shortly...</p>
+          <p>You can now return to the login page</a>.</p>
         </body>
       </html>
     `);
