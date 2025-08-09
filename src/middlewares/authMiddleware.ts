@@ -22,13 +22,14 @@ interface AuthPayload {
 
 export const authenticate = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const authHeader = req.headers.authorization;
+    const authHeader = req.headers['authorization'] || req.headers['Authorization'];
+    const headerValue = Array.isArray(authHeader) ? authHeader[0] : authHeader;
     
-    if (!authHeader || !authHeader.startsWith("Bearer ")) {
+    if (!headerValue || !headerValue.startsWith("Bearer ")) {
       return res.status(401).json({ message: "Unauthorized!" });
     }
 
-    const token = authHeader.split(" ")[1];
+    const token = headerValue.split(" ")[1];
 
     const decoded = jwt.verify(token, process.env.JWT_SECRET!) as AuthPayload;
 

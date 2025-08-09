@@ -18,11 +18,12 @@ const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const prisma_1 = __importDefault(require("../helpers/prisma"));
 const authenticate = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const authHeader = req.headers.authorization;
-        if (!authHeader || !authHeader.startsWith("Bearer ")) {
+        const authHeader = req.headers['authorization'] || req.headers['Authorization'];
+        const headerValue = Array.isArray(authHeader) ? authHeader[0] : authHeader;
+        if (!headerValue || !headerValue.startsWith("Bearer ")) {
             return res.status(401).json({ message: "Unauthorized!" });
         }
-        const token = authHeader.split(" ")[1];
+        const token = headerValue.split(" ")[1];
         const decoded = jsonwebtoken_1.default.verify(token, process.env.JWT_SECRET);
         const { userId, role } = decoded;
         if (role === 'USER') {
