@@ -36,13 +36,11 @@ const db_1 = require("./config/db");
 const userRoutes_1 = __importDefault(require("./routes/userRoutes"));
 const chatbotRoute_1 = __importDefault(require("./routes/chatbotRoute"));
 const bussinesRoute_1 = __importDefault(require("./routes/bussinesRoute"));
-// import { protect } from "./middlewares/authMiddleware";
-// import {botware} from "./middlewares/botMiddleware"
 const uploadRoute_1 = __importDefault(require("./routes/uploadRoute"));
 const businessControllers_1 = require("./controllers/businessControllers");
 const authController_1 = require("./controllers/authController");
-// import upload from './config/multer';
-// import cloudinary from './config/cloudinary';
+const swagger_1 = require("./config/swagger");
+const authMiddleware_1 = require("./middlewares/authMiddleware");
 dotenv.config();
 (0, db_1.connectDB)();
 const app = (0, express_1.default)();
@@ -69,10 +67,47 @@ app.use("/user", userRoutes_1.default);
 app.use("/", chatbotRoute_1.default);
 app.use("/business", bussinesRoute_1.default);
 // app.use("/business", uploadRoute)
-app.use("/events", businessControllers_1.getAllEvents);
-app.use("/promos", businessControllers_1.getAllPromos);
+/**
+ * @swagger
+ * /events:
+ *   get:
+ *     summary: Get all events
+ *     tags: [Events]
+ *     responses:
+ *       200:
+ *         description: List of all events
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Event'
+ *       500:
+ *         description: Server error
+ */
+app.use("/events", authMiddleware_1.authenticate, businessControllers_1.getAllEvents);
+/**
+ * @swagger
+ * /promos:
+ *   get:
+ *     summary: Get all active promos
+ *     tags: [Promos]
+ *     responses:
+ *       200:
+ *         description: List of all active promos
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Promo'
+ *       500:
+ *         description: Server error
+ */
+app.use("/promos", authMiddleware_1.authenticate, businessControllers_1.getAllPromos);
 app.use("/upload", uploadRoute_1.default);
 app.use("/login", authController_1.loginUser);
+app.use('/api-docs', swagger_1.swaggerUi.serve, swagger_1.swaggerUi.setup(swagger_1.specs));
 app.options('/*', (0, cors_1.default)());
 app.options('/chatbot', (0, cors_1.default)());
 app.options('/user', (0, cors_1.default)());

@@ -42,8 +42,142 @@ const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const helper_1 = require("../helpers/helper");
 const imageType_1 = require("../constants/imageType");
 const prisma_1 = __importDefault(require("../helpers/prisma"));
-// const prisma = new PrismaClient();
 let messages = [];
+/**
+ * @swagger
+ * tags:
+ *   name: Auth
+ *   description: User and business authentication
+ */
+/**
+ * @swagger
+ * /signup:
+ *   post:
+ *     summary: Create a new user account
+ *     tags: [Auth]
+ *     consumes:
+ *       - multipart/form-data
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         multipart/form-data:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - username
+ *               - email
+ *               - password
+ *             properties:
+ *               username:
+ *                 type: string
+ *               email:
+ *                 type: string
+ *               password:
+ *                 type: string
+ *               role:
+ *                 type: string
+ *                 enum: [USER, BUSINESS]
+ *                 default: USER
+ *               image:
+ *                 type: string
+ *                 format: binary
+ *                 description: Profile picture for the user
+ *     responses:
+ *       201:
+ *         description: Account created successfully
+ *       400:
+ *         description: Validation error or duplicate account
+ */
+/**
+ * @swagger
+ * /login:
+ *   post:
+ *     summary: Login for both users and businesses
+ *     tags: [Auth]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - email
+ *               - password
+ *               - role
+ *             properties:
+ *               email:
+ *                 type: string
+ *               password:
+ *                 type: string
+ *               role:
+ *                 type: string
+ *                 enum: [USER, BUSINESS]
+ *     responses:
+ *       200:
+ *         description: Login successful
+ *       400:
+ *         description: Invalid credentials or missing fields
+ */
+// /**
+//  * @swagger
+//  * /forgot-password:
+//  *   post:
+//  *     summary: Request a password reset
+//  *     tags: [Auth]
+//  *     requestBody:
+//  *       required: true
+//  *       content:
+//  *         application/json:
+//  *           schema:
+//  *             type: object
+//  *             required:
+//  *               - email
+//  *               - role
+//  *             properties:
+//  *               email:
+//  *                 type: string
+//  *               role:
+//  *                 type: string
+//  *                 enum: [USER, BUSINESS]
+//  *     responses:
+//  *       200:
+//  *         description: Reset token generated
+//  *       400:
+//  *         description: Account not found or invalid role
+//  */
+// /**
+//  * @swagger
+//  * /reset-password:
+//  *   post:
+//  *     summary: Reset password using reset token
+//  *     tags: [Auth]
+//  *     requestBody:
+//  *       required: true
+//  *       content:
+//  *         application/json:
+//  *           schema:
+//  *             type: object
+//  *             required:
+//  *               - email
+//  *               - role
+//  *               - resetToken
+//  *               - newPassword
+//  *             properties:
+//  *               email:
+//  *                 type: string
+//  *               role:
+//  *                 type: string
+//  *                 enum: [USER, BUSINESS]
+//  *               resetToken:
+//  *                 type: string
+//  *               newPassword:
+//  *                 type: string
+//  *     responses:
+//  *       200:
+//  *         description: Password reset successful
+//  *       400:
+//  *         description: Invalid or expired reset token
+//  */
 const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { username, email, password, role = 'USER' } = req.body;
@@ -56,7 +190,7 @@ const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         const hashedPassword = yield (0, bcrypt_1.hash)(password, 10);
         let imageUrl;
         if (req.file) {
-            imageUrl = yield (0, helper_1.uploadImage)(req.file, imageType_1.ImageType.PROMO);
+            imageUrl = yield (0, helper_1.uploadImage)(req.file, imageType_1.ImageType.PROFILE_PICTURE);
         }
         const user = yield prisma_1.default.user.create({
             data: {
