@@ -529,6 +529,5 @@ router.patch('/promo', authenticate, upload.single('image'), businessController.
 router.delete('/promo', authenticate, businessController.deletePromo);
 
 router.post('/:businessId/product', authenticate, upload.single('image'), businessController.addProduct);
-router.post('/:businessId/upload-flier', authenticate, upload.single('image'), businessController.uploadBusinessFlier);
 
 export default router;

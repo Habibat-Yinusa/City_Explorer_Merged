@@ -3,7 +3,7 @@ import { hash, compare } from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { Request, Response } from 'express';
 import { uploadImage } from '../helpers/helper';
-import { ImageType } from '../constants/imageType';
+import { ImageType } from '../constants/constants';
 import prisma from '../helpers/prisma';
 
 

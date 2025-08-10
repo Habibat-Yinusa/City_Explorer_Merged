@@ -8,45 +8,7 @@ import { authenticate } from '../middlewares/authMiddleware';
  * @swagger
  * tags:
  *   name: Image Uploads
- *   description: Endpoints for uploading business and general images
- */
-
-/**
- * @swagger
- * /business/{businessId}/upload-flier:
- *   post:
- *     summary: Upload a business flier or cover image
- *     tags: [Image Uploads]
- *     security:
- *       - BearerAuth: []
- *     consumes:
- *       - multipart/form-data
- *     parameters:
- *       - in: path
- *         name: businessId
- *         schema:
- *           type: string
- *         required: true
- *         description: ID of the business
- *     requestBody:
- *       required: true
- *       content:
- *         multipart/form-data:
- *           schema:
- *             type: object
- *             required:
- *               - image
- *             properties:
- *               image:
- *                 type: string
- *                 format: binary
- *     responses:
- *       200:
- *         description: Business cover image uploaded successfully
- *       400:
- *         description: No file uploaded
- *       500:
- *         description: Server error
+ *   description: Endpoints for uploading images
  */
 
 /**

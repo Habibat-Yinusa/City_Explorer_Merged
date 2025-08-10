@@ -4,7 +4,7 @@ import { hash } from "bcrypt";
 import type { Request as ExpressRequest } from "express";
 import uploadImages from "../services/uploadImage";
 import { buildUpdateData, sendEmail, uploadImage } from "../helpers/helper";
-import { ImageType } from "../constants/imageType";
+import { ImageType } from "../constants/constants";
 import prisma from '../helpers/prisma';
 
 type MulterFile = Express.Multer.File;
@@ -566,25 +566,6 @@ const addProduct = async (req: Request, res: Response) => {
   }
 };
 
-const uploadBusinessFlier = async (req: Request, res: Response) => {
-  try {
-    const { businessId } = req.params;
-
-    if (!req.file) throw new Error("No file uploaded");
-
-    const flierUrl = await uploadImage(req.file, ImageType.GENERAL);
-
-    const updatedBusiness = await prisma.business.update({
-      where: { businessId },
-      data: { image: flierUrl },
-    });
-
-    res.status(200).json({ message: "Business cover image uploaded", cover_image: flierUrl });
-  } catch (error: any) {
-    res.status(500).json({ error: error.message });
-  }
-};
-
 
 export {
   registerBusiness,
@@ -604,5 +585,4 @@ export {
   updatePromo,
   deletePromo,
   addProduct,
-  uploadBusinessFlier
 };

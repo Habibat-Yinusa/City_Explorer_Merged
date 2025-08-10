@@ -1,30 +1,48 @@
 import cloudinary from '../config/cloudinary';
 import fs from 'fs';
 import { Request, Response } from 'express';
+import { ImageType, TableMaps, TableConfig } from '../constants/constants';
+import prisma from '../helpers/prisma';
 
 const uploadImages = async (req: Request, res: Response) => {
   try {
-    const file = req.file;
-    if (!file) {
-      return res.status(400).json({ message: 'No image file provided' });
+
+    const { imageType, targetId } = req.body;
+
+    if (!imageType) {
+      throw new Error('Missing imageType');
+    }
+    
+    const config = TableConfig[imageType as keyof typeof TableConfig];
+    if (!config) {
+      throw new Error('Invalid imageType');
     }
 
-    let folder = 'general';
-    switch (req.body.imageType?.toUpperCase()) {
-      case 'PROFILE_PICTURE':
-        folder = 'profile_pic';
+    const file = req.file;
+    if (!file) {
+      throw new Error('Missing or invalid image');;
+    }
+
+    if (!targetId || typeof targetId !== 'string') {
+      throw new Error('Missing or invalid target ID');
+    }
+
+    let folder = ImageType.GENERAL;
+    switch (imageType) {
+      case ImageType.PROFILE_PICTURE:
+        folder = ImageType.PROFILE_PICTURE;
         break;
-      case 'EVENT':
-        folder = 'event';
+      case ImageType.EVENT:
+        folder = ImageType.EVENT;
         break;
-      case 'PROMO':
-        folder = 'promo';
+      case ImageType.PROMO:
+        folder = ImageType.PROMO;
         break;
-      case 'PRODUCT':
-        folder = 'product';
+      case ImageType.LOGO:
+        folder = ImageType.LOGO;
         break;
-      case 'LOGO':
-        folder = 'logo';
+      case ImageType.BUSINESS_COVER:
+        folder = ImageType.BUSINESS_COVER;
         break;
     }
 
@@ -38,11 +56,25 @@ const uploadImages = async (req: Request, res: Response) => {
       public_id: `${Date.now()}-${file.originalname.split('.')[0]}`,
     });
 
+    const imageUrl = result.secure_url;
+
+     const data = config.isArray
+      ? { [config.field]: { push: imageUrl } }
+      : { [config.field]: imageUrl };
+
+     const model = (prisma as any)[config.table];
+     if (!model || typeof model.update !== 'function') {
+       throw new Error(`Invalid table: ${config.table}`);
+     }
+     const updatedRecord = await model.update({
+      where: { [config.pk]: targetId },
+      data,
+    });
+
     return res.status(200).json({
-      message: 'Image uploaded successfully',
-      url: result.secure_url,
-      public_id: result.public_id,
-      folder,
+      message: 'Image uploaded and saved successfully',
+      url: imageUrl,
+      data: updatedRecord,
     });
   } catch (error: any) {
     console.error('Upload failed:', error);
