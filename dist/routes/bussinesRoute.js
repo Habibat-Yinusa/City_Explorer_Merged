@@ -534,5 +534,4 @@ router.get('/promo', authMiddleware_1.authenticate, businessController.getPromos
 router.patch('/promo', authMiddleware_1.authenticate, multer_1.default.single('image'), businessController.updatePromo);
 router.delete('/promo', authMiddleware_1.authenticate, businessController.deletePromo);
 router.post('/:businessId/product', authMiddleware_1.authenticate, multer_1.default.single('image'), businessController.addProduct);
-router.post('/:businessId/upload-flier', authMiddleware_1.authenticate, multer_1.default.single('image'), businessController.uploadBusinessFlier);
 exports.default = router;

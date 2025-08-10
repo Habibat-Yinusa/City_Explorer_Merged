@@ -12,12 +12,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.uploadBusinessFlier = exports.addProduct = exports.deletePromo = exports.updatePromo = exports.getAllPromos = exports.getPromos = exports.addPromo = exports.deleteEvent = exports.updateEvent = exports.getAllEvents = exports.getEvents = exports.addEventToBusiness = exports.deleteBusiness = exports.updateBusinessDetails = exports.getAllBusinesses = exports.getBusinessDetails = exports.activateBusiness = exports.registerBusiness = void 0;
+exports.addProduct = exports.deletePromo = exports.updatePromo = exports.getAllPromos = exports.getPromos = exports.addPromo = exports.deleteEvent = exports.updateEvent = exports.getAllEvents = exports.getEvents = exports.addEventToBusiness = exports.deleteBusiness = exports.updateBusinessDetails = exports.getAllBusinesses = exports.getBusinessDetails = exports.activateBusiness = exports.registerBusiness = void 0;
 // import { PrismaClient } from '../generated/prisma';
 const bcrypt_1 = require("bcrypt");
 const uploadImage_1 = __importDefault(require("../services/uploadImage"));
 const helper_1 = require("../helpers/helper");
-const imageType_1 = require("../constants/imageType");
+const constants_1 = require("../constants/constants");
 const prisma_1 = __importDefault(require("../helpers/prisma"));
 // const prisma = new PrismaClient();
 const API_BASE_URL = process.env.API_BASE_URL;
@@ -36,7 +36,7 @@ const registerBusiness = (req, res) => __awaiter(void 0, void 0, void 0, functio
         const hashedPassword = yield (0, bcrypt_1.hash)(password, 10);
         let logoUrl;
         if (req.file) {
-            logoUrl = yield (0, helper_1.uploadImage)(req.file, imageType_1.ImageType.LOGO);
+            logoUrl = yield (0, helper_1.uploadImage)(req.file, constants_1.ImageType.LOGO);
         }
         const newBusiness = yield prisma_1.default.business.create({
             data: {
@@ -192,7 +192,7 @@ const updateBusinessDetails = (req, res) => __awaiter(void 0, void 0, void 0, fu
         const { name, category, location, longitude, latitude, openHours, phone, email, website, description } = req.body;
         let logoUrl;
         if (req.file) {
-            logoUrl = yield (0, helper_1.uploadImage)(req.file, imageType_1.ImageType.LOGO);
+            logoUrl = yield (0, helper_1.uploadImage)(req.file, constants_1.ImageType.LOGO);
         }
         const updatedBusiness = yield prisma_1.default.business.update({
             where: { businessId },
@@ -239,7 +239,7 @@ const addEventToBusiness = (req, res) => __awaiter(void 0, void 0, void 0, funct
         const { title, description, location, longitude, latitude, date, paid, amount } = req.body;
         let eventImageUrl;
         if (req.file) {
-            eventImageUrl = yield (0, helper_1.uploadImage)(req.file, imageType_1.ImageType.EVENT);
+            eventImageUrl = yield (0, helper_1.uploadImage)(req.file, constants_1.ImageType.EVENT);
         }
         const event = yield prisma_1.default.event.create({
             data: {
@@ -308,7 +308,7 @@ const updateEvent = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
         ];
         const dataToUpdate = (0, helper_1.buildUpdateData)(req.body, allowedFields);
         if (req.file) {
-            const newImageUrl = yield (0, helper_1.uploadImage)(req.file, imageType_1.ImageType.EVENT);
+            const newImageUrl = yield (0, helper_1.uploadImage)(req.file, constants_1.ImageType.EVENT);
             dataToUpdate.images = { push: newImageUrl };
         }
         const updatedEvent = yield prisma_1.default.event.update({
@@ -350,7 +350,7 @@ const addPromo = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         const { name, description, startDate, endDate } = req.body;
         let promoImageUrl;
         if (req.file) {
-            promoImageUrl = yield (0, helper_1.uploadImage)(req.file, imageType_1.ImageType.PROMO);
+            promoImageUrl = yield (0, helper_1.uploadImage)(req.file, constants_1.ImageType.PROMO);
         }
         const promo = yield prisma_1.default.promo.create({
             data: {
@@ -419,7 +419,7 @@ const updatePromo = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
         const allowedFields = ["name", "description", "startDate", "endDate"];
         const dataToUpdate = (0, helper_1.buildUpdateData)(req.body, allowedFields);
         if (req.file) {
-            const newImageUrl = yield (0, helper_1.uploadImage)(req.file, imageType_1.ImageType.PROMO);
+            const newImageUrl = yield (0, helper_1.uploadImage)(req.file, constants_1.ImageType.PROMO);
             dataToUpdate.images = { push: newImageUrl };
         }
         const updatedPromo = yield prisma_1.default.promo.update({
@@ -491,20 +491,3 @@ const addProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     }
 });
 exports.addProduct = addProduct;
-const uploadBusinessFlier = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const { businessId } = req.params;
-        if (!req.file)
-            throw new Error("No file uploaded");
-        const flierUrl = yield (0, helper_1.uploadImage)(req.file, imageType_1.ImageType.GENERAL);
-        const updatedBusiness = yield prisma_1.default.business.update({
-            where: { businessId },
-            data: { image: flierUrl },
-        });
-        res.status(200).json({ message: "Business cover image uploaded", cover_image: flierUrl });
-    }
-    catch (error) {
-        res.status(500).json({ error: error.message });
-    }
-});
-exports.uploadBusinessFlier = uploadBusinessFlier;

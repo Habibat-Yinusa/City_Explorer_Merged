@@ -13,29 +13,42 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const cloudinary_1 = __importDefault(require("../config/cloudinary"));
+const constants_1 = require("../constants/constants");
+const prisma_1 = __importDefault(require("../helpers/prisma"));
 const uploadImages = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    var _a;
     try {
+        const { imageType, targetId } = req.body;
+        if (!imageType) {
+            throw new Error('Missing imageType');
+        }
+        const config = constants_1.TableConfig[imageType];
+        if (!config) {
+            throw new Error('Invalid imageType');
+        }
         const file = req.file;
         if (!file) {
-            return res.status(400).json({ message: 'No image file provided' });
+            throw new Error('Missing or invalid image');
+            ;
         }
-        let folder = 'general';
-        switch ((_a = req.body.imageType) === null || _a === void 0 ? void 0 : _a.toUpperCase()) {
-            case 'PROFILE_PICTURE':
-                folder = 'profile_pic';
+        if (!targetId || typeof targetId !== 'string') {
+            throw new Error('Missing or invalid target ID');
+        }
+        let folder = constants_1.ImageType.GENERAL;
+        switch (imageType) {
+            case constants_1.ImageType.PROFILE_PICTURE:
+                folder = constants_1.ImageType.PROFILE_PICTURE;
                 break;
-            case 'EVENT':
-                folder = 'event';
+            case constants_1.ImageType.EVENT:
+                folder = constants_1.ImageType.EVENT;
                 break;
-            case 'PROMO':
-                folder = 'promo';
+            case constants_1.ImageType.PROMO:
+                folder = constants_1.ImageType.PROMO;
                 break;
-            case 'PRODUCT':
-                folder = 'product';
+            case constants_1.ImageType.LOGO:
+                folder = constants_1.ImageType.LOGO;
                 break;
-            case 'LOGO':
-                folder = 'logo';
+            case constants_1.ImageType.BUSINESS_COVER:
+                folder = constants_1.ImageType.BUSINESS_COVER;
                 break;
         }
         // Upload using in-memory buffer
@@ -46,11 +59,22 @@ const uploadImages = (req, res) => __awaiter(void 0, void 0, void 0, function* (
             folder,
             public_id: `${Date.now()}-${file.originalname.split('.')[0]}`,
         });
+        const imageUrl = result.secure_url;
+        const data = config.isArray
+            ? { [config.field]: { push: imageUrl } }
+            : { [config.field]: imageUrl };
+        const model = prisma_1.default[config.table];
+        if (!model || typeof model.update !== 'function') {
+            throw new Error(`Invalid table: ${config.table}`);
+        }
+        const updatedRecord = yield model.update({
+            where: { [config.pk]: targetId },
+            data,
+        });
         return res.status(200).json({
-            message: 'Image uploaded successfully',
-            url: result.secure_url,
-            public_id: result.public_id,
-            folder,
+            message: 'Image uploaded and saved successfully',
+            url: imageUrl,
+            data: updatedRecord,
         });
     }
     catch (error) {

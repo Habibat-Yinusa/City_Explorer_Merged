@@ -40,7 +40,7 @@ exports.resetPassword = exports.forgotPassword = exports.loginUser = exports.cre
 const bcrypt_1 = require("bcrypt");
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const helper_1 = require("../helpers/helper");
-const imageType_1 = require("../constants/imageType");
+const constants_1 = require("../constants/constants");
 const prisma_1 = __importDefault(require("../helpers/prisma"));
 let messages = [];
 /**
@@ -192,7 +192,7 @@ const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         const hashedPassword = yield (0, bcrypt_1.hash)(password, 10);
         let imageUrl;
         if (req.file) {
-            imageUrl = yield (0, helper_1.uploadImage)(req.file, imageType_1.ImageType.PROFILE_PICTURE);
+            imageUrl = yield (0, helper_1.uploadImage)(req.file, constants_1.ImageType.PROFILE_PICTURE);
         }
         const user = yield prisma_1.default.user.create({
             data: {
